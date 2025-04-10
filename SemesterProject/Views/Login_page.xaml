@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SemesterProject.Login_page"
+             BackgroundColor ="#3f3c40">
+
+    
+    <ScrollView>
+        <VerticalStackLayout
+            Padding="30,100"
+            Spacing="25">
+            <Label Text ="Select a Profile" HorizontalOptions="Center"></Label>
+            <Border HeightRequest="300" 
+                    WidthRequest ="350"
+                    BackgroundColor="#191919"
+                    StrokeShape="RoundRectangle 15">
+                
+                
+
+            </Border>
+        </VerticalStackLayout>
+    </ScrollView>
+
+
+</ContentPage>

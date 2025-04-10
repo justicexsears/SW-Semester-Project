@@ -9,6 +9,15 @@ public partial class App : Application
 
 	protected override Window CreateWindow(IActivationState? activationState)
 	{
-		return new Window(new AppShell());
+		const int newHeight = 720;
+    	const int newWidth = 1280;
+
+    	var newWindow = new Window(new Login_page())
+    	{
+        	Height = newHeight,
+       	 	Width = newWidth
+    	};
+
+    	return newWindow;
 	}
 }
