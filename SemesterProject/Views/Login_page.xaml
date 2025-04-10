@@ -5,21 +5,17 @@
              BackgroundColor ="#3f3c40">
 
     
-    <ScrollView>
         <VerticalStackLayout
             Padding="30,100"
             Spacing="25">
-            <Label Text ="Select a Profile" HorizontalOptions="Center"></Label>
+            <Label Text ="Select a Profile" HorizontalOptions="Center"/>
             <Border HeightRequest="300" 
                     WidthRequest ="350"
                     BackgroundColor="#191919"
                     StrokeShape="RoundRectangle 15">
-                
-                
-
+                    
             </Border>
         </VerticalStackLayout>
-    </ScrollView>
 
 
 </ContentPage>
