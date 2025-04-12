@@ -66,19 +66,25 @@
                     <CheckBox/>
                 </HorizontalStackLayout>
 
-                <HorizontalStackLayout HorizontalOptions="Center" Margin="5">
-                    <Label Text="???" VerticalOptions="Center" HorizontalTextAlignment="Center" WidthRequest="175" FontSize="15" TextColor="#e5e3bd"/>
-                    <Picker WidthRequest="100"/>
-                </HorizontalStackLayout>
 
             </VerticalStackLayout>
         </ScrollView>
         
         <VerticalStackLayout Grid.Column="1" Grid.Row="1" Margin="75">
-            <Label Text="Preview Changes" WidthRequest="175" FontSize="15" TextColor="#e5e3bd"/>
+            <Label Text="Preview Changes" Margin="5" WidthRequest="175" FontSize="15" TextColor="#e5e3bd" HorizontalOptions="Start"/>
 
-            <Image Source="quizpreviewgreen.png" />
+            <Border BackgroundColor="White" StrokeThickness="2" HeightRequest="350" WidthRequest="595" StrokeShape="RoundRectangle 5" Margin="5">
+                <Image Source="quizpreviewgreen.png" />
+            </Border>
 
+            <Label Text="Changes hightlighted in sidebar" FontSize="10" TextColor="#e5e3bd"/>
+
+            <HorizontalStackLayout HorizontalOptions="End">
+                <Button Margin ="5,0,10,0" WidthRequest="100" BackgroundColor="#2f2e2f" TextColor="#e5e3bd"
+                    Text="Cancel"/>
+                <Button Margin ="5,0,10,0" WidthRequest="100" BackgroundColor="#99cc99" TextColor="#2f2e2f"
+                   Text="Apply"/>
+            </HorizontalStackLayout>
 
         </VerticalStackLayout>
 
