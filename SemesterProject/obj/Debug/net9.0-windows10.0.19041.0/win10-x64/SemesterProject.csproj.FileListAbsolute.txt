@@ -470,3 +470,5 @@ C:\Users\jtic2\OneDrive\Desktop\SW Dev Found\Semester Project\SW-Semester-Projec
 C:\Users\jtic2\OneDrive\Desktop\SW Dev Found\Semester Project\SW-Semester-Project\SemesterProject\obj\Debug\net9.0-windows10.0.19041.0\win10-x64\qualifiers.txt
 C:\Users\jtic2\OneDrive\Desktop\SW Dev Found\Semester Project\SW-Semester-Project\SemesterProject\obj\Debug\net9.0-windows10.0.19041.0\win10-x64\qualifiers.txt.intermediate
 C:\Users\jtic2\OneDrive\Desktop\SW Dev Found\Semester Project\SW-Semester-Project\SemesterProject\obj\Debug\net9.0-windows10.0.19041.0\win10-x64\MultipleQualifiersPerDimensionFound.txt
+C:\Users\jtic2\OneDrive\Desktop\SW Dev Found\Semester Project\SW-Semester-Project\SemesterProject\obj\Debug\net9.0-windows10.0.19041.0\win10-x64\resizetizer\r\logo.scale-100.png
+C:\Users\jtic2\OneDrive\Desktop\SW Dev Found\Semester Project\SW-Semester-Project\SemesterProject\bin\Debug\net9.0-windows10.0.19041.0\win10-x64\logo.scale-100.png

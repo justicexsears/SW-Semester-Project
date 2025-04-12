@@ -1,5 +1,6 @@
 using System.Collections.ObjectModel;
 using System.Security.AccessControl;
+using SemesterProject.Models;
 
 namespace SemesterProject.Controllers
 {
@@ -34,11 +35,11 @@ namespace SemesterProject.Controllers
     {
         public ObservableCollection<ProfileConverter> Profiles { get; set;}
 
-        public bool RemoveProfile(int ID)
+       public bool RemoveProfile(string _name)
         {
             for(int i = 0; i < Profiles.Count; i++)
             {
-                if (Profiles[i].ProfileID == ID)
+                if (Profiles[i].ProfileName == _name)
                 {
                     Profiles.RemoveAt(i);
                     return true;

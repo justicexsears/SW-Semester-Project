@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SemesterProject.Settings_page"
+             BackgroundColor ="#3f3c40">
+
+    <Grid RowDefinitions="80,*" ColumnDefinitions="450,*">
+        <HorizontalStackLayout BackgroundColor="#191919" Grid.ColumnSpan="2">
+            <Button BackgroundColor="White" WidthRequest="75" HorizontalOptions="Start" Text="Back" TextColor="Black" FontSize="18"/>
+            <Label Text="Settings" WidthRequest="1115" VerticalOptions="Center" Padding="20" FontSize="30" TextColor="#e5e3bd"/> 
+            <ImageButton Source="logo.png" WidthRequest="75"/>    
+        </HorizontalStackLayout>
+
+       
+        <ScrollView Grid.Column="0" Grid.Row="1" Margin="50">
+            <VerticalStackLayout Margin="25">
+
+                <Label Text="UI Settings" HorizontalOptions="Center" FontSize="20" TextColor="#e5e3bd"/>
+                <Border BackgroundColor="#e5e3bd" StrokeThickness="1.5"/>
+
+                <HorizontalStackLayout HorizontalOptions="Center" Margin="5">
+                    <Label Text="Theme Base" VerticalOptions="Center" HorizontalTextAlignment="Center" WidthRequest="175" FontSize="15" TextColor="#e5e3bd"/>
+                    <Picker WidthRequest="100"/>
+                </HorizontalStackLayout>
+
+                <HorizontalStackLayout HorizontalOptions="Center" Margin="5">
+                    <Label Text="Theme Accent" VerticalOptions="Center" HorizontalTextAlignment="Center" WidthRequest="175" FontSize="15" TextColor="#e5e3bd"/>
+                    <Picker WidthRequest="100"/>
+                </HorizontalStackLayout>
+
+                <HorizontalStackLayout HorizontalOptions="Center" Margin="5">
+                    <Label Text="Card Style" VerticalOptions="Center" HorizontalTextAlignment="Center" WidthRequest="175" FontSize="15" TextColor="#e5e3bd"/>
+                    <Picker WidthRequest="100"/>
+                </HorizontalStackLayout>
+
+                <HorizontalStackLayout HorizontalOptions="Center" Margin="5">
+                    <Label Text="Card Animations" VerticalOptions="Center" HorizontalTextAlignment="Center" WidthRequest="175" FontSize="15" TextColor="#e5e3bd"/>
+                    <CheckBox/>
+                </HorizontalStackLayout>
+
+                <Label Text="Quiz Mode Settings" HorizontalOptions="Center" FontSize="20" TextColor="#e5e3bd"/>
+                <Border BackgroundColor="#e5e3bd" StrokeThickness="1.5"/>
+
+                <HorizontalStackLayout HorizontalOptions="Center" Margin="5">
+                    <Label Text="Question Time" VerticalOptions="Center" HorizontalTextAlignment="Center" WidthRequest="175" FontSize="15" TextColor="#e5e3bd"/>
+                    <Picker WidthRequest="100"/>
+                </HorizontalStackLayout>
+
+                <HorizontalStackLayout HorizontalOptions="Center" Margin="5">
+                    <Label Text="Question Attempts" VerticalOptions="Center" HorizontalTextAlignment="Center" WidthRequest="175" FontSize="15" TextColor="#e5e3bd"/>
+                    <Picker WidthRequest="100"/>
+                </HorizontalStackLayout>
+
+                <HorizontalStackLayout HorizontalOptions="Center" Margin="5">
+                    <Label Text="Shuffle Questions" VerticalOptions="Center" HorizontalTextAlignment="Center" WidthRequest="175" FontSize="15" TextColor="#e5e3bd"/>
+                    <CheckBox/>
+                </HorizontalStackLayout>
+
+                <HorizontalStackLayout HorizontalOptions="Center" Margin="5">
+                    <Label Text="Show Incorrect Guesses" VerticalOptions="Center" HorizontalTextAlignment="Center" WidthRequest="175" FontSize="15" TextColor="#e5e3bd"/>
+                    <CheckBox/>
+                </HorizontalStackLayout>
+
+                <HorizontalStackLayout HorizontalOptions="Center" Margin="5">
+                    <Label Text="Give Half-Time Hint" VerticalOptions="Center" HorizontalTextAlignment="Center" WidthRequest="175" FontSize="15" TextColor="#e5e3bd"/>
+                    <CheckBox/>
+                </HorizontalStackLayout>
+
+                <HorizontalStackLayout HorizontalOptions="Center" Margin="5">
+                    <Label Text="???" VerticalOptions="Center" HorizontalTextAlignment="Center" WidthRequest="175" FontSize="15" TextColor="#e5e3bd"/>
+                    <Picker WidthRequest="100"/>
+                </HorizontalStackLayout>
+
+            </VerticalStackLayout>
+        </ScrollView>
+        
+        <VerticalStackLayout Grid.Column="1" Grid.Row="1" Margin="75">
+            <Label Text="Preview Changes" WidthRequest="175" FontSize="15" TextColor="#e5e3bd"/>
+
+            <Image Source="quizpreviewgreen.png" />
+
+
+        </VerticalStackLayout>
+
+    </Grid>
+
+
+</ContentPage>

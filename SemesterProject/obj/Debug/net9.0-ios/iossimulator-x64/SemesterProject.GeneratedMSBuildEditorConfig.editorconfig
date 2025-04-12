@@ -30,6 +30,42 @@ build_metadata.AdditionalFiles.ManifestResourceName = SemesterProject.AppShell.x
 build_metadata.AdditionalFiles.TargetPath = AppShell.xaml
 build_metadata.AdditionalFiles.RelativePath = AppShell.xaml
 
+[C:/Users/jtic2/OneDrive/Desktop/SW Dev Found/Semester Project/SW-Semester-Project/SemesterProject/Project/Views/Edit_page.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = SemesterProject.Project.Views.Edit_page.xaml
+build_metadata.AdditionalFiles.TargetPath = Project\Views\Edit_page.xaml
+build_metadata.AdditionalFiles.RelativePath = Project\Views\Edit_page.xaml
+
+[C:/Users/jtic2/OneDrive/Desktop/SW Dev Found/Semester Project/SW-Semester-Project/SemesterProject/Project/Views/Login_page.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = SemesterProject.Project.Views.Login_page.xaml
+build_metadata.AdditionalFiles.TargetPath = Project\Views\Login_page.xaml
+build_metadata.AdditionalFiles.RelativePath = Project\Views\Login_page.xaml
+
+[C:/Users/jtic2/OneDrive/Desktop/SW Dev Found/Semester Project/SW-Semester-Project/SemesterProject/Project/Views/MainPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = SemesterProject.Project.Views.MainPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Project\Views\MainPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Project\Views\MainPage.xaml
+
+[C:/Users/jtic2/OneDrive/Desktop/SW Dev Found/Semester Project/SW-Semester-Project/SemesterProject/Project/Views/Quiz_page.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = SemesterProject.Project.Views.Quiz_page.xaml
+build_metadata.AdditionalFiles.TargetPath = Project\Views\Quiz_page.xaml
+build_metadata.AdditionalFiles.RelativePath = Project\Views\Quiz_page.xaml
+
+[C:/Users/jtic2/OneDrive/Desktop/SW Dev Found/Semester Project/SW-Semester-Project/SemesterProject/Project/Views/Review_page.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = SemesterProject.Project.Views.Review_page.xaml
+build_metadata.AdditionalFiles.TargetPath = Project\Views\Review_page.xaml
+build_metadata.AdditionalFiles.RelativePath = Project\Views\Review_page.xaml
+
+[C:/Users/jtic2/OneDrive/Desktop/SW Dev Found/Semester Project/SW-Semester-Project/SemesterProject/Project/Views/Settings_page.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = SemesterProject.Project.Views.Settings_page.xaml
+build_metadata.AdditionalFiles.TargetPath = Project\Views\Settings_page.xaml
+build_metadata.AdditionalFiles.RelativePath = Project\Views\Settings_page.xaml
+
 [C:/Users/jtic2/OneDrive/Desktop/SW Dev Found/Semester Project/SW-Semester-Project/SemesterProject/Resources/Styles/Colors.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = SemesterProject.Resources.Styles.Colors.xaml
@@ -41,39 +77,3 @@ build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = SemesterProject.Resources.Styles.Styles.xaml
 build_metadata.AdditionalFiles.TargetPath = Resources\Styles\Styles.xaml
 build_metadata.AdditionalFiles.RelativePath = Resources\Styles\Styles.xaml
-
-[C:/Users/jtic2/OneDrive/Desktop/SW Dev Found/Semester Project/SW-Semester-Project/SemesterProject/Views/Edit_page.xaml]
-build_metadata.AdditionalFiles.GenKind = Xaml
-build_metadata.AdditionalFiles.ManifestResourceName = SemesterProject.Views.Edit_page.xaml
-build_metadata.AdditionalFiles.TargetPath = Views\Edit_page.xaml
-build_metadata.AdditionalFiles.RelativePath = Views\Edit_page.xaml
-
-[C:/Users/jtic2/OneDrive/Desktop/SW Dev Found/Semester Project/SW-Semester-Project/SemesterProject/Views/Login_page.xaml]
-build_metadata.AdditionalFiles.GenKind = Xaml
-build_metadata.AdditionalFiles.ManifestResourceName = SemesterProject.Views.Login_page.xaml
-build_metadata.AdditionalFiles.TargetPath = Views\Login_page.xaml
-build_metadata.AdditionalFiles.RelativePath = Views\Login_page.xaml
-
-[C:/Users/jtic2/OneDrive/Desktop/SW Dev Found/Semester Project/SW-Semester-Project/SemesterProject/Views/MainPage.xaml]
-build_metadata.AdditionalFiles.GenKind = Xaml
-build_metadata.AdditionalFiles.ManifestResourceName = SemesterProject.Views.MainPage.xaml
-build_metadata.AdditionalFiles.TargetPath = Views\MainPage.xaml
-build_metadata.AdditionalFiles.RelativePath = Views\MainPage.xaml
-
-[C:/Users/jtic2/OneDrive/Desktop/SW Dev Found/Semester Project/SW-Semester-Project/SemesterProject/Views/Quiz_page.xaml]
-build_metadata.AdditionalFiles.GenKind = Xaml
-build_metadata.AdditionalFiles.ManifestResourceName = SemesterProject.Views.Quiz_page.xaml
-build_metadata.AdditionalFiles.TargetPath = Views\Quiz_page.xaml
-build_metadata.AdditionalFiles.RelativePath = Views\Quiz_page.xaml
-
-[C:/Users/jtic2/OneDrive/Desktop/SW Dev Found/Semester Project/SW-Semester-Project/SemesterProject/Views/Review_page.xaml]
-build_metadata.AdditionalFiles.GenKind = Xaml
-build_metadata.AdditionalFiles.ManifestResourceName = SemesterProject.Views.Review_page.xaml
-build_metadata.AdditionalFiles.TargetPath = Views\Review_page.xaml
-build_metadata.AdditionalFiles.RelativePath = Views\Review_page.xaml
-
-[C:/Users/jtic2/OneDrive/Desktop/SW Dev Found/Semester Project/SW-Semester-Project/SemesterProject/Views/Settings_page.xaml]
-build_metadata.AdditionalFiles.GenKind = Xaml
-build_metadata.AdditionalFiles.ManifestResourceName = SemesterProject.Views.Settings_page.xaml
-build_metadata.AdditionalFiles.TargetPath = Views\Settings_page.xaml
-build_metadata.AdditionalFiles.RelativePath = Views\Settings_page.xaml
