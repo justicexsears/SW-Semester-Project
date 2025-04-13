@@ -4,12 +4,12 @@ namespace SemesterProject;
 
 public partial class Login_page : ContentPage
 {
-	private Controllers.ProfileController controller;
+	private Controllers.ProfileController profilecontroller;
 	public Login_page()
 	{
 		InitializeComponent();
 
-		controller = new(CollProfiles);
+		profilecontroller = new(CollProfiles);
 	}
 
 	private async void BtnAddProfile(object sender, EventArgs e)
@@ -17,7 +17,7 @@ public partial class Login_page : ContentPage
 
 		string name = await DisplayPromptAsync("Add New Profile", "Enter Name:");
 
-		controller.AddNewProfile(name);
+		profilecontroller.AddNewProfile(name);
 	}
 
 	private async void BtnRemoveProfile(object sender, EventArgs e)
@@ -30,7 +30,7 @@ public partial class Login_page : ContentPage
 
 		if (answer == true)
 		{
-			var result = controller.RemoveProfile(name);
+			var result = profilecontroller.RemoveProfile(name);
 			DisplayAlert("Removed", "Profile Sucessfully Removed!", "OK"); 
 		}
     }

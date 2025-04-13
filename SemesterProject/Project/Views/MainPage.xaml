@@ -5,12 +5,95 @@
              BackgroundColor ="#3f3c40">
              
 
-    <ScrollView>
-        <VerticalStackLayout
-            Padding="30,0"
-            Spacing="25">
-            
+    <Grid RowDefinitions="80,*" ColumnDefinitions="450,5,*">
+        <HorizontalStackLayout BackgroundColor="#191919" Grid.ColumnSpan="3">
+            <Button FontFamily="Roboto" FontAttributes="Bold" BackgroundColor="White" WidthRequest="75" HorizontalOptions="Start" Text="Back" TextColor="Black" FontSize="18"/>
+            <Label WidthRequest="1115" VerticalOptions="Center" Padding="20" FontSize="30" TextColor="#e5e3bd"/> 
+            <ImageButton Source="logo.png" WidthRequest="75" BackgroundColor="#191919"/>    
+        </HorizontalStackLayout>
+
+            <VerticalStackLayout Margin="55" Grid.Column="0" Grid.Row="1" HeightRequest="525">
+
+                <SearchBar WidthRequest="200" HeightRequest="10" Placeholder="Search for..."/>
+
+                <Label Text="Search By" Margin="0,15,0,5"/>
+                <Picker>
+                    <Picker.ItemsSource>
+                        <x:Array Type="{x:Type x:String}">
+                            <x:String>Author</x:String>
+                            <x:String>Title</x:String>
+                        </x:Array>
+                    </Picker.ItemsSource>
+                </Picker>
+
+                <Label Text="Sort By" Margin="0,15,0,5"/>
+                <Picker>
+                    <Picker.ItemsSource>
+                        <x:Array Type="{x:Type x:String}">
+                            <x:String>Alphabetical A-Z</x:String>
+                            <x:String>Alphabetical Z-A</x:String>
+                            <x:String>Date Oldest</x:String>
+                            <x:String>Date Newest</x:String>
+                        </x:Array>
+                    </Picker.ItemsSource>
+                </Picker>
+
+                <HorizontalStackLayout Margin="5">
+                    <CheckBox Color="#99cc99"/>
+                    <Label Text="Filter by Date Range" VerticalOptions="Center"/>
+                </HorizontalStackLayout>
+
+                <HorizontalStackLayout Margin="10">
+                    <Label Text="Range Start:" VerticalOptions="Center" Margin="0,0,50,0"/>
+                    <Entry WidthRequest="100"/>
+                </HorizontalStackLayout>
+
+                <HorizontalStackLayout Margin="10">
+                    <Label Text="Range End:" VerticalOptions="Center" Margin="0,0,57,0"/>
+                    <Entry WidthRequest="100"/>
+                </HorizontalStackLayout>
+
+                <HorizontalStackLayout Margin="0,10,0,10" HorizontalOptions="End" VerticalOptions="End">
+                    <Button Text="Edit" BackgroundColor="#e2e1e0" WidthRequest="75" Margin="5,0"/>
+                    <Button Text="Quiz" BackgroundColor="#e2e1e0" WidthRequest="75" Margin="5,0"/>
+                    <Button Text="Review" BackgroundColor="#e2e1e0" WidthRequest="75" Margin="5,0"/>
+                </HorizontalStackLayout>
+
+                <HorizontalStackLayout Margin="0,10,0,10" HorizontalOptions="End" VerticalOptions="End">
+                    <Button Text="Add" BackgroundColor="#e2e1e0" WidthRequest="75" Margin="5,0"
+                        x:Name="AddSetBtn" Clicked="BtnAddSet"/>
+                </HorizontalStackLayout>
+
+            </VerticalStackLayout>
+
+        <VerticalStackLayout Grid.Row="1" Grid.Column="1" VerticalOptions="Center">
+            <Border BackgroundColor="#99cc99" HeightRequest="500"/>
         </VerticalStackLayout>
-    </ScrollView>
+
+        <CollectionView x:Name ="CollFlashCardSets" Grid.Column="2" Grid.Row="1" Margin="20">
+
+            <CollectionView.ItemsLayout>
+                 <GridItemsLayout Orientation="Vertical" Span="3"/>
+            </CollectionView.ItemsLayout>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <VerticalStackLayout>
+                        <Border Margin="10,15,10,5" BackgroundColor="#3f3c40" StrokeShape="RoundRectangle 8" HeightRequest="100" WidthRequest="150">
+                            
+                            <VerticalStackLayout>
+                                <Label Text="{Binding SetName}" Margin="10,5"/>  
+                                <Label Text="Author" Margin="10,5"/>
+                                <Label Text="Date" Margin="10,5"/>
+                            </VerticalStackLayout>                     
+                        </Border>
+
+                        
+                    </VerticalStackLayout>
+                 </DataTemplate>
+             </CollectionView.ItemTemplate>
+         </CollectionView>
+
+    </Grid>
 
 </ContentPage>

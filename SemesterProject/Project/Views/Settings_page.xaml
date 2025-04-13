@@ -4,86 +4,144 @@
              x:Class="SemesterProject.Settings_page"
              BackgroundColor ="#3f3c40">
 
-    <Grid RowDefinitions="80,*" ColumnDefinitions="450,*">
-        <HorizontalStackLayout BackgroundColor="#191919" Grid.ColumnSpan="2">
-            <Button BackgroundColor="White" WidthRequest="75" HorizontalOptions="Start" Text="Back" TextColor="Black" FontSize="18"/>
-            <Label Text="Settings" WidthRequest="1115" VerticalOptions="Center" Padding="20" FontSize="30" TextColor="#e5e3bd"/> 
-            <ImageButton Source="logo.png" WidthRequest="75"/>    
+    <ContentPage.Resources>
+        <Style TargetType="Label" x:Key="Label Font">
+            <Setter Property="FontFamily" Value="Roboto"/>
+        </Style>
+    </ContentPage.Resources>
+
+    <Grid RowDefinitions="80,*" ColumnDefinitions="450,5,*">
+        <HorizontalStackLayout BackgroundColor="#191919" Grid.ColumnSpan="3">
+            <Button FontFamily="Roboto" FontAttributes="Bold" BackgroundColor="White" WidthRequest="75" HorizontalOptions="Start" Text="Back" TextColor="Black" FontSize="18"/>
+            <Label Style="{StaticResource Label Font}" Text="Settings" WidthRequest="1115" VerticalOptions="Center" Padding="20" FontSize="30" TextColor="#e5e3bd"/> 
+            <ImageButton Source="logo.png" WidthRequest="75" BackgroundColor="#191919"/>    
         </HorizontalStackLayout>
 
        
         <ScrollView Grid.Column="0" Grid.Row="1" Margin="50">
             <VerticalStackLayout Margin="25">
 
-                <Label Text="UI Settings" HorizontalOptions="Center" FontSize="20" TextColor="#e5e3bd"/>
+                <Label Style="{StaticResource Label Font}" Text="UI Settings" HorizontalOptions="Center" FontSize="20" TextColor="#e5e3bd"/>
                 <Border BackgroundColor="#e5e3bd" StrokeThickness="1.5"/>
 
                 <HorizontalStackLayout HorizontalOptions="Center" Margin="5">
-                    <Label Text="Theme Base" VerticalOptions="Center" HorizontalTextAlignment="Center" WidthRequest="175" FontSize="15" TextColor="#e5e3bd"/>
-                    <Picker WidthRequest="100"/>
+                    <Label Style="{StaticResource Label Font}" Text="Theme Base" VerticalOptions="Center" HorizontalTextAlignment="Center" WidthRequest="175" FontSize="15" TextColor="#e5e3bd"/>
+                    <Picker WidthRequest="100">
+                        <Picker.ItemsSource>
+                                <x:Array Type="{x:Type x:String}">
+                                    <x:String>Light Theme</x:String>
+                                    <x:String>Dark Theme</x:String>
+                                </x:Array>
+                        </Picker.ItemsSource>
+                    </Picker>
                 </HorizontalStackLayout>
 
                 <HorizontalStackLayout HorizontalOptions="Center" Margin="5">
-                    <Label Text="Theme Accent" VerticalOptions="Center" HorizontalTextAlignment="Center" WidthRequest="175" FontSize="15" TextColor="#e5e3bd"/>
-                    <Picker WidthRequest="100"/>
+                    <Label Style="{StaticResource Label Font}" Text="Theme Accent" VerticalOptions="Center" HorizontalTextAlignment="Center" WidthRequest="175" FontSize="15" TextColor="#e5e3bd"/>
+                    <Picker WidthRequest="100">
+                        <Picker.ItemsSource>
+                                <x:Array Type="{x:Type x:String}">
+                                    <x:String>Green</x:String>
+                                    <x:String>Red</x:String>
+                                    <x:String>Orange</x:String>
+                                    <x:String>Yellow</x:String>
+                                    <x:String>Blue</x:String>
+                                    <x:String>Purple</x:String>
+                                    <x:String>Black/White</x:String>
+                                </x:Array>
+                        </Picker.ItemsSource>
+                    </Picker>
                 </HorizontalStackLayout>
 
                 <HorizontalStackLayout HorizontalOptions="Center" Margin="5">
-                    <Label Text="Card Style" VerticalOptions="Center" HorizontalTextAlignment="Center" WidthRequest="175" FontSize="15" TextColor="#e5e3bd"/>
-                    <Picker WidthRequest="100"/>
+                    <Label Style="{StaticResource Label Font}" Text="Card Style" VerticalOptions="Center" HorizontalTextAlignment="Center" WidthRequest="175" FontSize="15" TextColor="#e5e3bd"/>
+                    <Picker WidthRequest="100">
+                        <Picker.ItemsSource>
+                                <x:Array Type="{x:Type x:String}">
+                                    <x:String>Black on White</x:String>
+                                    <x:String>White on Black</x:String>
+                                    
+                                </x:Array>
+                        </Picker.ItemsSource>
+                    </Picker>
                 </HorizontalStackLayout>
 
                 <HorizontalStackLayout HorizontalOptions="Center" Margin="5">
-                    <Label Text="Card Animations" VerticalOptions="Center" HorizontalTextAlignment="Center" WidthRequest="175" FontSize="15" TextColor="#e5e3bd"/>
-                    <CheckBox/>
+                    <Label Style="{StaticResource Label Font}" Text="Card Animations" VerticalOptions="Center" HorizontalTextAlignment="Center" WidthRequest="175" FontSize="15" TextColor="#e5e3bd"/>
+                    <CheckBox Color="#99cc99"/>
                 </HorizontalStackLayout>
 
-                <Label Text="Quiz Mode Settings" HorizontalOptions="Center" FontSize="20" TextColor="#e5e3bd"/>
+                <Label Style="{StaticResource Label Font}" Text="Quiz Mode Settings" HorizontalOptions="Center" FontSize="20" TextColor="#e5e3bd"/>
                 <Border BackgroundColor="#e5e3bd" StrokeThickness="1.5"/>
 
                 <HorizontalStackLayout HorizontalOptions="Center" Margin="5">
-                    <Label Text="Question Time" VerticalOptions="Center" HorizontalTextAlignment="Center" WidthRequest="175" FontSize="15" TextColor="#e5e3bd"/>
-                    <Picker WidthRequest="100"/>
+                    <Label Style="{StaticResource Label Font}" Text="Question Time" VerticalOptions="Center" HorizontalTextAlignment="Center" WidthRequest="175" FontSize="15" TextColor="#e5e3bd"/>
+                    <Picker WidthRequest="100">
+                        <Picker.ItemsSource>
+                                <x:Array Type="{x:Type x:String}">
+                                    <x:String>10 sec</x:String>
+                                    <x:String>15 sec</x:String>
+                                    <x:String>20 sec</x:String>
+                                    <x:String>30 sec</x:String>
+                                    <x:String>45 sec</x:String>
+                                    <x:String>60 sec</x:String>
+                                </x:Array>
+                        </Picker.ItemsSource>
+                    </Picker>
                 </HorizontalStackLayout>
 
                 <HorizontalStackLayout HorizontalOptions="Center" Margin="5">
-                    <Label Text="Question Attempts" VerticalOptions="Center" HorizontalTextAlignment="Center" WidthRequest="175" FontSize="15" TextColor="#e5e3bd"/>
-                    <Picker WidthRequest="100"/>
+                    <Label Style="{StaticResource Label Font}" Text="Question Attempts" VerticalOptions="Center" HorizontalTextAlignment="Center" WidthRequest="175" FontSize="15" TextColor="#e5e3bd"/>
+                    <Picker WidthRequest="100">
+                        <Picker.ItemsSource>
+                                <x:Array Type="{x:Type x:String}">
+                                    <x:String>1</x:String>
+                                    <x:String>2</x:String>
+                                    <x:String>3</x:String>
+                                    <x:String>5</x:String>
+                                </x:Array>
+                        </Picker.ItemsSource>
+                    </Picker>
                 </HorizontalStackLayout>
 
                 <HorizontalStackLayout HorizontalOptions="Center" Margin="5">
-                    <Label Text="Shuffle Questions" VerticalOptions="Center" HorizontalTextAlignment="Center" WidthRequest="175" FontSize="15" TextColor="#e5e3bd"/>
-                    <CheckBox/>
+                    <Label Style="{StaticResource Label Font}" Text="Shuffle Questions" VerticalOptions="Center" HorizontalTextAlignment="Center" WidthRequest="175" FontSize="15" TextColor="#e5e3bd"/>
+                    <CheckBox Color="#99cc99"/>
                 </HorizontalStackLayout>
 
                 <HorizontalStackLayout HorizontalOptions="Center" Margin="5">
-                    <Label Text="Show Incorrect Guesses" VerticalOptions="Center" HorizontalTextAlignment="Center" WidthRequest="175" FontSize="15" TextColor="#e5e3bd"/>
-                    <CheckBox/>
+                    <Label Style="{StaticResource Label Font}" Text="Show Incorrect Guesses" VerticalOptions="Center" HorizontalTextAlignment="Center" WidthRequest="175" FontSize="15" TextColor="#e5e3bd"/>
+                    <CheckBox Color="#99cc99"/>
                 </HorizontalStackLayout>
 
                 <HorizontalStackLayout HorizontalOptions="Center" Margin="5">
-                    <Label Text="Give Half-Time Hint" VerticalOptions="Center" HorizontalTextAlignment="Center" WidthRequest="175" FontSize="15" TextColor="#e5e3bd"/>
-                    <CheckBox/>
+                    <Label Style="{StaticResource Label Font}" Text="Give Half-Time Hint" VerticalOptions="Center" HorizontalTextAlignment="Center" WidthRequest="175" FontSize="15" TextColor="#e5e3bd"/>
+                    <CheckBox Color="#99cc99"/>
                 </HorizontalStackLayout>
 
 
             </VerticalStackLayout>
         </ScrollView>
         
-        <VerticalStackLayout Grid.Column="1" Grid.Row="1" Margin="75">
-            <Label Text="Preview Changes" Margin="5" WidthRequest="175" FontSize="15" TextColor="#e5e3bd" HorizontalOptions="Start"/>
+
+        <VerticalStackLayout Grid.Row="1" Grid.Column="1" VerticalOptions="Center">
+            <Border BackgroundColor="#99cc99" HeightRequest="500"/>
+        </VerticalStackLayout> 
+
+        <VerticalStackLayout Grid.Column="2" Grid.Row="1" Margin="75">
+            <Label Style="{StaticResource Label Font}" Text="Preview Changes" Margin="5" WidthRequest="175" FontSize="15" TextColor="#e5e3bd" HorizontalOptions="Start"/>
 
             <Border BackgroundColor="White" StrokeThickness="2" HeightRequest="350" WidthRequest="595" StrokeShape="RoundRectangle 5" Margin="5">
                 <Image Source="quizpreviewgreen.png" />
             </Border>
 
-            <Label Text="Changes hightlighted in sidebar" FontSize="10" TextColor="#e5e3bd"/>
+            <Label Style="{StaticResource Label Font}" Text="Changes hightlighted in sidebar" FontSize="10" TextColor="#e5e3bd"/>
 
             <HorizontalStackLayout HorizontalOptions="End">
                 <Button Margin ="5,0,10,0" WidthRequest="100" BackgroundColor="#2f2e2f" TextColor="#e5e3bd"
-                    Text="Cancel"/>
+                    Text="Cancel" FontFamily="Roboto" FontAttributes="Bold"/>
                 <Button Margin ="5,0,10,0" WidthRequest="100" BackgroundColor="#99cc99" TextColor="#2f2e2f"
-                   Text="Apply"/>
+                   Text="Apply" FontFamily="Roboto" FontAttributes="Bold"/>
             </HorizontalStackLayout>
 
         </VerticalStackLayout>
