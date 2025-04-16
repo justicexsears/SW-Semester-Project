@@ -1,7 +1,159 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="SemesterProject.Quiz_page">
+             x:Class="SemesterProject.Quiz_page"
+             BackgroundColor="#3f3c40">
+    <ContentPage.Resources>
+        <Style TargetType="Label" x:Key="Label Font">
+            <Setter Property="FontFamily" Value="Roboto"/>
+        </Style>
+    </ContentPage.Resources>
 
+    <Grid RowDefinitions="85,Auto,*,50" ColumnDefinitions="*,400">
+        
+        <FlexLayout BackgroundColor="#191919" Grid.ColumnSpan="2"  JustifyContent="SpaceBetween" Padding="10">
+            <HorizontalStackLayout Spacing="10">
+                
+                <ImageButton Source="left_arrow.png" WidthRequest="75" HorizontalOptions="Start"  BackgroundColor="Transparent"/>
+                <Label Style="{StaticResource Label Font}" Text="Quiz" VerticalOptions="Center" Padding="20" FontSize="30" TextColor="#e5e3bd"/>
+            </HorizontalStackLayout>
+            <HorizontalStackLayout Spacing="10">
+                <ImageButton Source="hamburger_icon.png" WidthRequest="75" HorizontalOptions="Start"  BackgroundColor="Transparent"/>
+                <ImageButton Source="logo.png" WidthRequest="75" Background="Transparent" HorizontalOptions="End"/>
+            </HorizontalStackLayout>
+        </FlexLayout>
+
+
+        <VerticalStackLayout Grid.Column="0" Grid.Row="1" Margin="25">
+            <HorizontalStackLayout>
+                <Label Style="{StaticResource Label Font}" Text="Justice S." Margin="5" WidthRequest="175" FontSize="20" TextColor="#e5e3bd" HorizontalOptions="Start" FontAttributes="Bold"/>
+                <Label Style="{StaticResource Label Font}" Text="03/12/2025" Margin="5" WidthRequest="175" FontSize="20" TextColor="#e5e3bd" FontAttributes="Bold"/>
+            </HorizontalStackLayout>
+
+            <Label Style="{StaticResource Label Font}" Text="Mineral Sciences Chapter 1" FontSize="38" FontAttributes="Bold" TextColor="#e5e3bd"/>
+
+        </VerticalStackLayout>
+
+        <VerticalStackLayout Grid.Row="2" Grid.Column="0">
+            <Border BackgroundColor="White"  HeightRequest="350" WidthRequest="595" StrokeShape="RoundRectangle 20" Margin="10,50" VerticalOptions="Start">
+                    <VerticalStackLayout VerticalOptions="Center"> 
+
+
+                        <Label Style="{StaticResource Label Font}" Text=" What are the three forms of the rock?"
+                       TextColor="Black"
+                       FontSize="30"
+                       Padding="50,0"
+                       HorizontalTextAlignment="Center"/>
+
+
+                    </VerticalStackLayout>
+
+                </Border>
+            
+            <Grid ColumnDefinitions="Auto,Auto,*,Auto" MaximumWidthRequest="595" ColumnSpacing="10">
+
+
+                    <Label Style="{StaticResource Label Font}"
+                           Grid.Column="0"
+                            Text ="Question:"
+                            HorizontalTextAlignment="Start"
+                            FontSize="18"
+                            TextColor="#e5e3bd"
+                            FontAttributes="Bold"
+                            />
+                    <Label Style="{StaticResource Label Font}"
+                           Grid.Column="1"
+                            Text ="1/8"
+                            HorizontalTextAlignment="Start"
+                            FontSize="18"
+                            TextColor="#e5e3bd"
+                            FontAttributes="Bold"
+                            />
+                    <Label Style="{StaticResource Label Font}"
+                           Grid.Column="2"
+                            Text ="Total Score: "
+                            HorizontalTextAlignment="End"
+                            FontSize="18"
+                            TextColor="#e5e3bd"
+                            FontAttributes="Bold"
+                            />
+                    <Label Style="{StaticResource Label Font}"
+                           Grid.Column="3"
+                            Text ="00"
+                            HorizontalTextAlignment="Center"
+                            FontSize="18"
+                            TextColor="#e5e3bd"
+                            FontAttributes="Bold"
+                            />
+                </Grid>
+            
+        </VerticalStackLayout>
+
+        <VerticalStackLayout Grid.Column="1" Grid.Row="2"
+                     Margin="20,50,75,0"
+                     Spacing="15"
+                     VerticalOptions="Start">
+
+           
+            <Border BackgroundColor="#2f2e2f"
+            Stroke="#e5e3bd"
+            StrokeThickness="2"
+            Padding="15"
+            HeightRequest="320"
+            StrokeShape="RoundRectangle 10">
+
+                <Grid RowDefinitions="Auto,*,Auto">
+
+
+                    <!-- Incorrect Answers -->
+                    <Label Grid.Row="0"
+                   x:Name="IncorrectAnswersLabel"
+                   Text="Incorrect: Crystal, Slag, Metal&#10;Incorrect: Minerals, Gems, Ore"
+                   TextColor="#e5e3bd"
+                   FontSize="14"
+                   Margin="0,0,0,10" />
+
+                    <!-- To manage space -->
+                    <BoxView Grid.Row="1"
+                             HeightRequest="0"
+                            IsVisible="False"/>
+
+                   
+                    <Entry Grid.Row="2"
+                   x:Name="AnswerInput"
+                   Placeholder="Enter Answers here..."
+                   PlaceholderColor="#e5e3bd"
+                   TextColor="White"
+                   BackgroundColor="#2f2e2f"
+                   FontSize="16"
+                   HeightRequest="40"
+                   HorizontalOptions="Fill"
+                   />
+                </Grid>
+            </Border>
+
+            <!-- Buttons -->
+
+            <HorizontalStackLayout>
+                <Button Margin ="5,0,10,0" WidthRequest="100" BackgroundColor="#2f2e2f" TextColor="#e5e3bd"
+                    Text="Pass" FontFamily="Roboto" FontAttributes="Bold"/>
+                <Button Margin ="5,0,10,0" WidthRequest="100" BackgroundColor="#99cc99" TextColor="#2f2e2f"
+                   Text="Submit" FontFamily="Roboto" FontAttributes="Bold"/>
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+
+
+
+        <!--Progress Bar needs further look, here like this for now:-->
+        <ProgressBar Progress="0.5"
+                     Grid.ColumnSpan="2"
+                     Grid.Row="3"
+                     ProgressColor="#99cc99" 
+                     BackgroundColor="#2f2e2f"
+                     Margin="75,0,75,0"
+                     
+                     />
+    </Grid>
+    
 
 </ContentPage>
