@@ -10,14 +10,20 @@
         </Style>
     </ContentPage.Resources>
 
-    <Grid RowDefinitions="80,*" ColumnDefinitions="450,5,*">
-        <HorizontalStackLayout BackgroundColor="#191919" Grid.ColumnSpan="3">
-            <Button FontFamily="Roboto" FontAttributes="Bold" BackgroundColor="White" WidthRequest="75" HorizontalOptions="Start" Text="Back" TextColor="Black" FontSize="18"/>
-            <Label Style="{StaticResource Label Font}" Text="Settings" WidthRequest="1115" VerticalOptions="Center" Padding="20" FontSize="30" TextColor="#e5e3bd"/> 
-            <ImageButton Source="logo.png" WidthRequest="75" BackgroundColor="#191919"/>    
-        </HorizontalStackLayout>
+    <Grid RowDefinitions="80,*" ColumnDefinitions="Auto,5,*">
+        <FlexLayout BackgroundColor="#191919" Grid.ColumnSpan="3"  JustifyContent="SpaceBetween" Padding="10, 0">
+            <HorizontalStackLayout>
 
-       
+                <ImageButton Source="left_arrow.png" WidthRequest="75" HorizontalOptions="Start"  BackgroundColor="Transparent"/>
+                <Label Style="{StaticResource Label Font}" Text="Settings" VerticalOptions="Center" Padding="20" FontSize="30" TextColor="#e5e3bd"/>
+            </HorizontalStackLayout>
+            <HorizontalStackLayout>
+                <ImageButton Source="hamburger_icon.png" WidthRequest="75" HorizontalOptions="Start"  BackgroundColor="Transparent"/>
+                <ImageButton Source="logo.png" WidthRequest="75" Background="Transparent" HorizontalOptions="End"/>
+            </HorizontalStackLayout>
+        </FlexLayout>
+
+
         <ScrollView Grid.Column="0" Grid.Row="1" Margin="50">
             <VerticalStackLayout Margin="25">
 
