@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SemesterProject.Login_page"
+             BackgroundColor ="#3f3c40">
+
+    
+        <VerticalStackLayout
+            Padding="30,100"
+            Spacing="25">
+            <Image Source="logo.png" HeightRequest="75"/>
+            <Label Text ="Select a Profile" HorizontalOptions="Center" FontFamily="Miriam" FontSize="25"/>
+            <Border HeightRequest="300" 
+                    WidthRequest ="350"
+                    BackgroundColor="#191919"
+                    StrokeShape="RoundRectangle 15">
+                    <CollectionView x:Name ="CollProfiles">
+
+                        <CollectionView.ItemsLayout>
+                                <LinearItemsLayout Orientation="Vertical"/>
+                        </CollectionView.ItemsLayout>
+
+                        <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                        <VerticalStackLayout>
+                                                <Border Margin="10,15,10,5" BackgroundColor="#3f3c40" StrokeShape="RoundRectangle 8" HeightRequest="50" WidthRequest="300">
+                                                        <HorizontalStackLayout>
+                                                                <Button Text="{Binding ProfileName}" TextColor="White" BackgroundColor="#00111111" HeightRequest="49" WidthRequest="255"
+                                                                         HorizontalOptions="Center" VerticalOptions="Center"/>
+                                                                <Button Text="X" TextColor="White" BackgroundColor="#FFF08A8A" HorizontalOptions="Center"
+                                                                         FontAttributes="Bold" FontSize="18" CommandParameter="{Binding ProfileName}" Clicked="BtnRemoveProfile" x:Name="{Binding ProfileName}"/> 
+                                                        </HorizontalStackLayout>
+                                                </Border>
+                                        </VerticalStackLayout>
+                                </DataTemplate>
+                        </CollectionView.ItemTemplate>
+
+                    </CollectionView>     
+            </Border>
+            <HorizontalStackLayout HorizontalOptions="Center">
+                <Button Margin="10,0,10,0" WidthRequest="80" Text="Add" BackgroundColor="#99cc99" FontAttributes="Bold"
+                        x:Name="AddProfileBtn" Clicked="BtnAddProfile"/>
+                <Button Margin="10,0,10,0" WidthRequest="80" Text="Sign In" BackgroundColor="#99cc99" FontAttributes="Bold"
+                        x:Name="SignInBtn" Clicked="BtnSignIn"/>
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+
+</ContentPage>
