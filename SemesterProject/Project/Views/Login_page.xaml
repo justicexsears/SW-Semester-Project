@@ -25,8 +25,9 @@
                                         <VerticalStackLayout>
                                                 <Border Margin="10,15,10,5" BackgroundColor="#3f3c40" StrokeShape="RoundRectangle 8" HeightRequest="50" WidthRequest="300">
                                                         <HorizontalStackLayout>
-                                                                <Button Text="{Binding ProfileName}" TextColor="White" BackgroundColor="#00111111" HeightRequest="49" WidthRequest="255"
-                                                                         HorizontalOptions="Center" VerticalOptions="Center"/>
+                                                                <Button Text="{Binding ProfileName}" TextColor="White" Background="#00111111" HeightRequest="49" WidthRequest="255"
+                                                                         HorizontalOptions="Center" VerticalOptions="Center" x:Name="{Binding ProfileID}"
+                                                                         Clicked="BtnSelectProfile" Pressed="BtnPressed" Released="BtnReleased"/>
                                                                 <Button Text="X" TextColor="White" BackgroundColor="#FFF08A8A" HorizontalOptions="Center"
                                                                          FontAttributes="Bold" FontSize="18" CommandParameter="{Binding ProfileName}" Clicked="BtnRemoveProfile" x:Name="{Binding ProfileName}"/> 
                                                         </HorizontalStackLayout>

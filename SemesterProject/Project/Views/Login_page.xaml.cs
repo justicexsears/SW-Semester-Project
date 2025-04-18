@@ -4,12 +4,33 @@ namespace SemesterProject;
 
 public partial class Login_page : ContentPage
 {
-	private Controllers.ProfileController profilecontroller;
+	private string selectedProfile = "";
+	private Controllers.ProfileController profileController;
+
+	private float highlightTint = 0.05f;
+	private float tintStrength = 0.7f;
+
 	public Login_page()
 	{
 		InitializeComponent();
 
-		profilecontroller = new(CollProfiles);
+		profileController = new(CollProfiles);
+	}
+
+	private async void BtnPressed(object sender, EventArgs e)
+	{
+		Button btn = sender as Button;
+
+		Color btnBG = Color.FromRgba(highlightTint, highlightTint, highlightTint, tintStrength);
+		btn.Background = btnBG;
+	}
+
+	private async void BtnReleased(object sender, EventArgs e)
+	{
+		Button btn = sender as Button;
+
+		Color btnBG = Color.FromRgba(0f, 0f, 0f, 0f);
+		btn.Background = btnBG;
 	}
 
 	private async void BtnAddProfile(object sender, EventArgs e)
@@ -17,7 +38,8 @@ public partial class Login_page : ContentPage
 
 		string name = await DisplayPromptAsync("Add New Profile", "Enter Name:");
 
-		profilecontroller.AddNewProfile(name);
+		if (name != null)
+			profileController.AddNewProfile(name);
 	}
 
 	private async void BtnRemoveProfile(object sender, EventArgs e)
@@ -30,10 +52,15 @@ public partial class Login_page : ContentPage
 
 		if (answer == true)
 		{
-			var result = profilecontroller.RemoveProfile(name);
+			var result = profileController.RemoveProfile(name);
 			DisplayAlert("Removed", "Profile Sucessfully Removed!", "OK"); 
 		}
     }
+
+	private async void BtnSelectProfile(object sender, EventArgs e) 
+	{
+		
+	}
 
 	private async void BtnSignIn(object sender, EventArgs e)
 	{
