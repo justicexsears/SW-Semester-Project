@@ -147,7 +147,7 @@
                 <Button Margin ="5,0,10,0" WidthRequest="100" BackgroundColor="#2f2e2f" TextColor="#e5e3bd"
                     Text="Cancel" FontFamily="Roboto" FontAttributes="Bold"/>
                 <Button Margin ="5,0,10,0" WidthRequest="100" BackgroundColor="#99cc99" TextColor="#2f2e2f"
-                   Text="Apply" FontFamily="Roboto" FontAttributes="Bold"/>
+                   Text="Apply" FontFamily="Roboto" FontAttributes="Bold" Clicked="BtnApplyChanges"/>
             </HorizontalStackLayout>
 
         </VerticalStackLayout>

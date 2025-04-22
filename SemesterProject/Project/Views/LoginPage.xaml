@@ -12,7 +12,7 @@
             <Label Text ="Select a Profile" HorizontalOptions="Center" FontFamily="Miriam" FontSize="25"/>
             <Border HeightRequest="300" 
                     WidthRequest ="350"
-                    BackgroundColor="#191919"
+                    BackgroundColor="{DynamicResource Primary}"
                     StrokeShape="RoundRectangle 15">
                     <CollectionView x:Name ="CollProfiles">
 
@@ -28,7 +28,7 @@
                                                                 <Button Text="{Binding ProfileName}" TextColor="White" Background="#00111111" HeightRequest="49" WidthRequest="255"
                                                                          HorizontalOptions="Center" VerticalOptions="Center" CommandParameter="{Binding ProfileID}"
                                                                          Clicked="BtnSelectProfile" Pressed="BtnPressed" Released="BtnReleased"/>
-                                                                <Button Text="X" TextColor="White" BackgroundColor="#FFF08A8A" HorizontalOptions="Center"
+                                                                <Button Text="X" TextColor="White" BackgroundColor="{DynamicResource DarkRedAccent}" HorizontalOptions="Center"
                                                                          FontAttributes="Bold" FontSize="18" CommandParameter="{Binding ProfileID}" Clicked="BtnRemoveProfile" x:Name="{Binding ProfileName}"/> 
                                                         </HorizontalStackLayout>
                                                 </Border>
@@ -39,9 +39,9 @@
                     </CollectionView>     
             </Border>
             <HorizontalStackLayout HorizontalOptions="Center">
-                <Button Margin="10,0,10,0" WidthRequest="80" Text="Add" BackgroundColor="#99cc99" FontAttributes="Bold"
+                <Button Margin="10,0,10,0" WidthRequest="80" Text="Add" BackgroundColor="{DynamicResource Accent}" FontAttributes="Bold"
                         x:Name="AddProfileBtn" Clicked="BtnAddProfile"/>
-                <Button Margin="10,0,10,0" WidthRequest="80" Text="Sign In" BackgroundColor="#99cc99" FontAttributes="Bold"
+                <Button Margin="10,0,10,0" WidthRequest="80" Text="Sign In" BackgroundColor="{DynamicResource Accent}" FontAttributes="Bold"
                         x:Name="SignInBtn" Clicked="BtnSignIn"/>
             </HorizontalStackLayout>
         </VerticalStackLayout>
