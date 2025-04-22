@@ -1,7 +1,161 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="SemesterProject.Edit_page">
+             x:Class="SemesterProject.Edit_page"
+             BackgroundColor ="#3f3c40">
+    <ContentPage.Resources>
+        <Style TargetType="Label" x:Key="Label Font">
+            <Setter Property="FontFamily" Value="Roboto"/>
+        </Style>
+    </ContentPage.Resources>
+    <Grid RowDefinitions="Auto,*, Auto" ColumnDefinitions="1.25*,5,3*">
+        <FlexLayout BackgroundColor="#191919" Grid.ColumnSpan="3"  JustifyContent="SpaceBetween" Padding="10, 0">
+            <HorizontalStackLayout>
 
+                <ImageButton Source="left_arrow.png" WidthRequest="75" HorizontalOptions="Start"  BackgroundColor="Transparent"/>
+                <Label Style="{StaticResource Label Font}" Text="Editing" VerticalOptions="Center" Padding="20" FontSize="30" TextColor="#e5e3bd"/>
+            </HorizontalStackLayout>
+            <HorizontalStackLayout>
+                <ImageButton Source="hamburger_icon.png" WidthRequest="75" HorizontalOptions="Start"  BackgroundColor="Transparent"/>
+                <ImageButton Source="logo.png" WidthRequest="75" Background="Transparent" HorizontalOptions="End"/>
+            </HorizontalStackLayout>
+        </FlexLayout>
+
+
+        <ScrollView Grid.Column="0" Grid.Row="1" Margin="20" Orientation="Both">
+            <VerticalStackLayout Margin="25">
+
+                <!--Selected -->
+                <HorizontalStackLayout HorizontalOptions="Center" Spacing="10" Margin="0, 10">
+                    <Label  Text="01" FontSize="14" TextColor="#99cc99" FontAttributes="Bold" VerticalOptions="Center"/>
+                    <Border BackgroundColor="White" StrokeThickness="5" Stroke="#99cc99" StrokeShape="RoundRectangle 20" Padding="10" HeightRequest="150" WidthRequest="200">
+                        <VerticalStackLayout VerticalOptions="Center">
+
+                            <Label Style="{StaticResource Label Font}" Text="What are the three form of rocks?" TextColor="#191919" HorizontalTextAlignment="Center"/>
+                        </VerticalStackLayout>
+                    </Border>
+                </HorizontalStackLayout>
+
+
+                <!--Other Questions-->
+                <HorizontalStackLayout HorizontalOptions="Center" Spacing="10" Margin="0, 10">
+                    <Label  Text="02" FontSize="14" TextColor="#99cc99" FontAttributes="Bold" VerticalOptions="Center"/>
+                    <Border BackgroundColor="White" StrokeShape="RoundRectangle 20" Padding="10" HeightRequest="150" WidthRequest="200">
+                        <VerticalStackLayout VerticalOptions="Center">
+
+                            <Label Style="{StaticResource Label Font}" Text="What are the three form of rocks?" TextColor="#191919" HorizontalTextAlignment="Center"/>
+                        </VerticalStackLayout>
+                    </Border>
+                </HorizontalStackLayout>
+
+                <HorizontalStackLayout HorizontalOptions="Center" Spacing="10" Margin="0, 10">
+                    <Label  Text="03" FontSize="14" TextColor="#99cc99" FontAttributes="Bold" VerticalOptions="Center"/>
+                    <Border BackgroundColor="White" StrokeThickness="5" Stroke="Transparent" StrokeShape="RoundRectangle 20" Padding="10" HeightRequest="150" WidthRequest="200">
+                        <VerticalStackLayout VerticalOptions="Center">
+
+                            <Label Style="{StaticResource Label Font}" Text="What are the three form of rocks?" TextColor="#191919" HorizontalTextAlignment="Center"/>
+                        </VerticalStackLayout>
+                    </Border>
+                </HorizontalStackLayout>
+
+                <HorizontalStackLayout HorizontalOptions="Center" Spacing="10" Margin="0, 10">
+                    <Label  Text="05" FontSize="14" TextColor="#99cc99" FontAttributes="Bold" VerticalOptions="Center"/>
+                    <Border BackgroundColor="White" StrokeThickness="5" Stroke="Transparent" StrokeShape="RoundRectangle 20" Padding="10" HeightRequest="150" WidthRequest="200">
+                        <VerticalStackLayout VerticalOptions="Center">
+
+                            <Label Style="{StaticResource Label Font}" Text="What are the three form of rocks?" TextColor="#191919" HorizontalTextAlignment="Center"/>
+                        </VerticalStackLayout>
+                    </Border>
+                </HorizontalStackLayout>
+
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- Center Separator-->
+        <VerticalStackLayout Grid.Row="1" Grid.Column="1" VerticalOptions="Center">
+            <Border BackgroundColor="#99cc99" HeightRequest="500"/>
+        </VerticalStackLayout>
+
+        <VerticalStackLayout Grid.Column="2" Grid.Row="1" Margin="75">
+            <HorizontalStackLayout>
+                <Label Style="{StaticResource Label Font}" Text="Justice S." Margin="5" WidthRequest="175" FontSize="20" TextColor="#e5e3bd" HorizontalOptions="Start" FontAttributes="Bold"/>
+                <Label Style="{StaticResource Label Font}" Text="03/12/2025" Margin="5" WidthRequest="175" FontSize="20" TextColor="#e5e3bd" FontAttributes="Bold"/>
+            </HorizontalStackLayout>
+
+            <Label Style="{StaticResource Label Font}" Text="Mineral Sciences Chapter 1" FontSize="38" FontAttributes="Bold" TextColor="#e5e3bd" Margin="0,10"/>
+
+            <Grid ColumnDefinitions="1*,1*" RowDefinitions="Auto, *" Padding="10" HeightRequest="350" WidthRequest="600" Margin="10" >
+                
+                <Label Grid.Row="0" Grid.Column="0" Text="Front Face" FontSize="18" FontAttributes="Bold" Padding="5" />
+                <Label Grid.Row="0" Grid.Column="1" Text="Back Face" FontSize="18" FontAttributes="Bold" Padding="5" />
+
+                <Border Grid.Row="1" Grid.Column="0" Padding="10" Margin="5" BackgroundColor="White" StrokeShape="RoundRectangle 20">
+                    <VerticalStackLayout>
+
+                       
+                        <Label Text="Question:" FontSize="14" FontAttributes="Bold" Margin="0,10,0,0" TextColor="Black"/>
+                        <Border Stroke="Black" StrokeShape="RoundRectangle 8" HeightRequest="200">
+                            
+                        <Editor Placeholder="Enter your question..." FontSize="16" AutoSize="TextChanges" TextColor="Black"/>
+                        </Border>
+
+                    </VerticalStackLayout>
+                    
+                </Border>
+
+                
+                <Border Grid.Row="1" Grid.Column="1" Padding="10" BackgroundColor="White" StrokeShape="RoundRectangle 20" Margin="5">
+                    <VerticalStackLayout>
+
+                        <Label Text="Answer (Short):" FontSize="14" FontAttributes="Bold" TextColor="Black"/>
+                        <Border Stroke="Black" StrokeShape="RoundRectangle 8" Padding="5" >
+                            <Entry Placeholder="Enter short answer..." FontSize="16" TextColor="Black" BackgroundColor="Transparent"/>
+                        </Border>
+
+                        <Label Text="Extra Information:" FontSize="14" FontAttributes="Bold" Margin="0,10,0,0" TextColor="Black"/>
+                        <Border Stroke="Black" StrokeShape="RoundRectangle 8" Padding="5" HeightRequest="120">
+                            <Editor Placeholder="Enter detailed explanation..." 
+                                    FontSize="14" 
+                                    AutoSize="TextChanges" 
+                                    TextColor="Black" 
+                                    BackgroundColor="Transparent"
+                                    />
+                        </Border>
+
+                    </VerticalStackLayout>
+
+                </Border>
+            </Grid>
+        </VerticalStackLayout>
+        <FlexLayout Grid.Row="2" Grid.ColumnSpan="3" JustifyContent="Center" AlignItems="Center" BackgroundColor="#3f3c40" Padding="20" >
+
+            <!-- Swap Face Contents -->
+            <HorizontalStackLayout Padding="10" HorizontalOptions="Center">
+                <ImageButton Source="swap_icon.png"  BackgroundColor="Transparent" WidthRequest="15"/>
+                <Label Text="Swap Face Contents" TextColor="#e5e3bd" FontSize="14" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+            </HorizontalStackLayout>
+
+            <!-- Spacer -->
+            <BoxView WidthRequest="100"/>
+
+            <!-- Navigation Arrows -->
+            <HorizontalStackLayout HorizontalOptions="Center">
+
+                <ImageButton Source="left_arrow.png" WidthRequest="75" HorizontalOptions="Start"  BackgroundColor="Transparent"/>
+                <Border Margin="10" BackgroundColor="#2f2e2f" StrokeShape="RoundRectangle 12" WidthRequest="100" HeightRequest="40">
+                    <Label Text="01"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                FontSize="18"
+                FontAttributes="Bold"
+                TextColor="AliceBlue"/>
+                </Border>
+                <ImageButton Source="left_arrow.png" WidthRequest="75" HorizontalOptions="Start"  BackgroundColor="Transparent" ScaleX="-1"/>
+            </HorizontalStackLayout>
+
+        </FlexLayout>
+
+    </Grid>
 
 </ContentPage>
