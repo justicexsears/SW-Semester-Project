@@ -14,7 +14,7 @@ public partial class App : Application
 		const int newHeight = 720;
     	const int newWidth = 1280;
 		
-    	var newWindow = new Window(new Login_page())
+    	var newWindow = new Window(new LoginPage())
     	{
         	Height = newHeight,
        	 	Width = newWidth
