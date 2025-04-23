@@ -13,10 +13,14 @@ public static class MauiProgram
 	public static string dirPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\CardStack\\";
 	public static string prefFile = "profiles.json";
 	public static string setFile = "stackCollection.json";
+	public static string stackFolder = "stacks\\";
 
 	//declare globally accesible profile fields
 	public static int activeID { get; set; } = -1;
 	public static JsonObject activeProfile { get; set; } = InstantiateProfile();
+
+	public static int stackID { get; set; } = -1;
+	public static JsonObject activeStack { get; set; } = InstantiateStack();
 
 
 	public static void updateTheme(JsonObject pref)
@@ -86,9 +90,39 @@ public static class MauiProgram
 		return tmpProfile;
 	}
 
+	public static JsonObject InstantiateStack(string name, int id)
+	{
+		JsonObject tmpStack = new JsonObject {
+			["id"] 			= id,
+			["set-name"]	= name,
+			["author-name"]	= "",
+			["last-edited"] = "01/01/1970" //unix epoch time, because why not i guess
+		};
+
+		return tmpStack;
+	}
+
+	public static JsonObject InstantiateCard(int id)
+	{
+		JsonObject tmpCard = new JsonObject {
+			["id"] 			= id,
+			["question"]	= "",
+			["a-short"]		= "",
+			["a-long"] 		= "" //the long side of the answer card is optional, but the rest must be filled to be saved
+		};
+
+		return tmpCard;
+	}
+
+
 	public static JsonObject InstantiateProfile()
 	{
 		return InstantiateProfile("NONE", -1);
+	}
+
+	public static JsonObject InstantiateStack()
+	{
+		return InstantiateStack("NONE", -1);
 	}
 
 	public static MauiApp CreateMauiApp()
