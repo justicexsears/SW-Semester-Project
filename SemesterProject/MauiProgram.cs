@@ -21,7 +21,62 @@ public static class MauiProgram
 
 	public static void updateTheme(JsonObject pref)
 	{
-		
+		string themename = "DarkGreen";
+
+		if (activeProfile["theme"].GetValue<int>() == 0 && activeProfile["accent"].GetValue<int>() == 0)
+			themename = "LightRed";
+		else if (activeProfile["theme"].GetValue<int>() == 0 && activeProfile["accent"].GetValue<int>() == 1)
+			themename = "LightOrange";
+		else if (activeProfile["theme"].GetValue<int>() == 0 && activeProfile["accent"].GetValue<int>() == 2)
+			themename = "LightYellow";
+		else if (activeProfile["theme"].GetValue<int>() == 0 && activeProfile["accent"].GetValue<int>() == 3)
+			themename = "LightGreen";
+		else if (activeProfile["theme"].GetValue<int>() == 0 && activeProfile["accent"].GetValue<int>() == 4)
+			themename = "LightBlue";
+		else if (activeProfile["theme"].GetValue<int>() == 0 && activeProfile["accent"].GetValue<int>() == 5)
+			themename = "LightPurple";
+		else if (activeProfile["theme"].GetValue<int>() == 1 && activeProfile["accent"].GetValue<int>() == 0)
+			themename = "DarkRed";
+		else if (activeProfile["theme"].GetValue<int>() == 1 && activeProfile["accent"].GetValue<int>() == 1)
+			themename = "DarkOrange";
+		else if (activeProfile["theme"].GetValue<int>() == 1 && activeProfile["accent"].GetValue<int>() == 2)
+			themename = "DarkYellow";
+		else if (activeProfile["theme"].GetValue<int>() == 1 && activeProfile["accent"].GetValue<int>() == 3)
+			themename = "DarkGreen";
+		else if (activeProfile["theme"].GetValue<int>() == 1 && activeProfile["accent"].GetValue<int>() == 4)
+			themename = "DarkBlue";
+		else if (activeProfile["theme"].GetValue<int>() == 1 && activeProfile["accent"].GetValue<int>() == 5)
+			themename = "DarkPurple";
+
+		SetTheme(themename);
+	}
+
+	public static void SetTheme(string themename)
+	{
+		Preferences.Set("Theme", themename);
+
+		ICollection<ResourceDictionary> mergedDictionaries = Application.Current.Resources.MergedDictionaries;
+		if (mergedDictionaries != null)
+		{
+			foreach (ResourceDictionary dictionaries in mergedDictionaries)
+			{
+				var primaryFound = dictionaries.TryGetValue(themename + "Primary", out var primary);
+				if (primaryFound)
+					dictionaries["Primary"] = primary;
+				
+				var secondaryFound = dictionaries.TryGetValue(themename + "Secondary", out var secondary);
+				if (secondaryFound)
+					dictionaries["Secondary"] = secondary;
+
+				var tertiaryFound = dictionaries.TryGetValue(themename + "Tertiary", out var tertiary);
+				if (tertiaryFound)
+					dictionaries["Tertiary"] = tertiary;
+
+				var accentFound = dictionaries.TryGetValue(themename + "Accent", out var accent);
+				if (accentFound)
+					dictionaries["Accent"] = accent;
+			}
+		}
 	}
 
 	public static void checkinProfile(JsonObject data)
