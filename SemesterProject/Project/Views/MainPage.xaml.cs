@@ -93,5 +93,15 @@ public partial class MainPage : ContentPage
 		App.Current.Windows[0].Page = new EditPage();
 	}
 
+	private async void BtnQuizPage(object sender, EventArgs e)
+	{
+		App.Current.Windows[0].Page = new QuizPage();
+	}
+
+	private async void BtnReviewPage(object sender, EventArgs e)
+	{
+		App.Current.Windows[0].Page = new ReviewPage();
+	}
+
 }
 

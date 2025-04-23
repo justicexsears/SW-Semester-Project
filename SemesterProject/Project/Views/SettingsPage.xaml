@@ -38,7 +38,7 @@
 
                 <HorizontalStackLayout HorizontalOptions="Center" Margin="5">
                     <Label Style="{StaticResource Label Font}" Text="Theme Base" VerticalOptions="Center" HorizontalTextAlignment="Center" WidthRequest="175" FontSize="15" TextColor="{DynamicResource MainText}"/>
-                    <Picker WidthRequest="100" x:Name="ThemePicker" SelectedIndexChanged="themePickerPreview">
+                    <Picker WidthRequest="100" x:Name="ThemePicker" SelectedIndexChanged="themePickerPreview" TextColor="{DynamicResource MainText}">
                         <Picker.ItemsSource>
                                 <x:Array Type="{x:Type x:String}">
                                     <x:String>Light Theme</x:String>
@@ -87,7 +87,7 @@
 
                 <HorizontalStackLayout HorizontalOptions="Center" Margin="5">
                     <Label Style="{StaticResource Label Font}" Text="Question Time" VerticalOptions="Center" HorizontalTextAlignment="Center" WidthRequest="175" FontSize="15" TextColor="{DynamicResource MainText}"/>
-                    <Picker WidthRequest="100" x:Name="QTimePicker" SelectedIndexChanged="qTimePickerPreview">
+                    <Picker WidthRequest="100" x:Name="QTimePicker" SelectedIndexChanged="qTimePickerPreview" TextColor="{DynamicResource MainText}">
                         <Picker.ItemsSource>
                                 <x:Array Type="{x:Type x:String}">
                                     <x:String>30 sec</x:String>

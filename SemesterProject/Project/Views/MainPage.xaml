@@ -63,8 +63,8 @@
 
                 <HorizontalStackLayout Margin="0,10,0,10" HorizontalOptions="End" VerticalOptions="End">
                     <Button Text="Edit" BackgroundColor="{DynamicResource Accent}" WidthRequest="75" Margin="5,0" Clicked="BtnEditPage" TextColor="{DynamicResource MainText}"/>
-                    <Button Text="Quiz" BackgroundColor="{DynamicResource Accent}" WidthRequest="75" Margin="5,0" TextColor="{DynamicResource MainText}"/>
-                    <Button Text="Review" BackgroundColor="{DynamicResource Accent}" WidthRequest="75" Margin="5,0" TextColor="{DynamicResource MainText}"/>
+                    <Button Text="Quiz" BackgroundColor="{DynamicResource Accent}" WidthRequest="75" Margin="5,0" Clicked="BtnQuizPage" TextColor="{DynamicResource MainText}"/>
+                    <Button Text="Review" BackgroundColor="{DynamicResource Accent}" WidthRequest="75" Margin="5,0" Clicked="BtnReviewPage" TextColor="{DynamicResource MainText}"/>
                 </HorizontalStackLayout>
 
                 <HorizontalStackLayout Margin="0,10,0,10" HorizontalOptions="End" VerticalOptions="End">
