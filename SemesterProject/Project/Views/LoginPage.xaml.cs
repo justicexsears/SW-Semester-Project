@@ -107,6 +107,10 @@ public partial class LoginPage : ContentPage
 			//save modified JSON array to file
 			MauiProgram.SaveJSONArrayToFile(profileDataset, (MauiProgram.dirPath + MauiProgram.prefFile));
 		}
+		else
+		{
+			DisplayAlert("Profile not added", "You must provide a name for the profile.", "OK");
+		}
 	}
 
 	private async void BtnRemoveProfile(object sender, EventArgs e)
@@ -148,7 +152,7 @@ public partial class LoginPage : ContentPage
 			//save modified JSON array to file
 			MauiProgram.SaveJSONArrayToFile(profileDataset, (MauiProgram.dirPath + MauiProgram.prefFile));
 
-			Debug.WriteLine($"Profiles saved to: {MauiProgram.dirPath + MauiProgram.prefFile}");
+			//Debug.WriteLine($"Profiles saved to: {MauiProgram.dirPath + MauiProgram.prefFile}");
 
 			if (MauiProgram.activeID == -1)
 			{
@@ -189,7 +193,7 @@ public partial class LoginPage : ContentPage
 		//set active profile fields to match profile at active id
 		MauiProgram.checkinProfile(profileDataset[MauiProgram.activeID].AsObject());
 
-		App.Current.Windows[0].Page = new MainPage();
+		App.Current.Windows[0].Page = new EditPage();
 	}
 
 	private void clearHighlights()
