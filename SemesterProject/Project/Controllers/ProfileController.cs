@@ -71,28 +71,28 @@ namespace SemesterProject.Controllers
             {
                 case 0:
                 default:
-                    if (t == 0) pfpColor = retrieveResource("DarkRedAccent");
-                    else        pfpColor = retrieveResource("LightRedAccent");
+                    if (t == 0) pfpColor = retrieveResource("LightRedAccent");
+                    else        pfpColor = retrieveResource("DarkRedAccent");
                     break;
                 case 1:
-                    if (t == 0) pfpColor = retrieveResource("DarkOrangeAccent");
-                    else        pfpColor = retrieveResource("LightOrangeAccent");
+                    if (t == 0) pfpColor = retrieveResource("LightOrangeAccent");
+                    else        pfpColor = retrieveResource("DarkOrangeAccent");
                     break;
                 case 2:
-                    if (t == 0) pfpColor = retrieveResource("DarkYellowAccent");
-                    else        pfpColor = retrieveResource("LightYellowAccent");
+                    if (t == 0) pfpColor = retrieveResource("LightYellowAccent");
+                    else        pfpColor = retrieveResource("DarkYellowAccent");
                     break;
                 case 3:
-                    if (t == 0) pfpColor = retrieveResource("DarkGreenAccent");
-                    else        pfpColor = retrieveResource("LightGreenAccent");
+                    if (t == 0) pfpColor = retrieveResource("LightGreenAccent");
+                    else        pfpColor = retrieveResource("DarkGreenAccent");
                     break;
                 case 4:
-                    if (t == 0) pfpColor = retrieveResource("DarkBlueAccent");
-                    else        pfpColor = retrieveResource("LightBlueAccent");
+                    if (t == 0) pfpColor = retrieveResource("LightBlueAccent");
+                    else        pfpColor = retrieveResource("DarkBlueAccent");
                     break;
                 case 5:
-                    if (t == 0) pfpColor = retrieveResource("DarkPurpleAccent");
-                    else        pfpColor = retrieveResource("LightPurpleAccent");
+                    if (t == 0) pfpColor = retrieveResource("LightPurpleAccent");
+                    else        pfpColor = retrieveResource("DarkPurpleAccent");
                     break;
             }
 
