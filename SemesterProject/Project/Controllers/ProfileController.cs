@@ -1,6 +1,7 @@
 using System.Collections.ObjectModel;
 using System.Security.AccessControl;
 using SemesterProject.Models;
+using System.Diagnostics;
 
 namespace SemesterProject.Controllers
 {
@@ -14,7 +15,7 @@ namespace SemesterProject.Controllers
             ProfileModel = data;
         }
 
-        public int ProfileID { get {return ProfileModel._id;} set{ ProfileModel._id = value;}}
+        public int ProfileID { get {return ProfileModel._id;} set{ ProfileModel._id = value;} }
 
         public string ProfileName
         {
@@ -24,10 +25,90 @@ namespace SemesterProject.Controllers
             }
         }
 
+        public bool IsHighlighted { 
+            get {return ProfileModel._isHighlighted;} 
+            set {
+                ProfileModel._isHighlighted = value;
+                OnPropertyChanged(nameof(IsHighlighted));
+            }
+        }
+
+        public int ProfileTheme { get; set; }
+
+        public int ProfileAccent { 
+            get {return ProfileModel.profile_accent;} 
+            set {
+                AccentResource = calcColor(ProfileTheme, value);
+                ProfileModel.profile_accent = value;
+
+                Debug.WriteLine($"profile accent set to #{value}: {AccentResource}");
+            } 
+        }
+
+        private Color _accentResource = Colors.White;
+
+        public Color AccentResource {
+            get { return _accentResource; }
+            set {
+                _accentResource = value;
+                OnPropertyChanged(nameof(AccentResource));
+            }
+        }
+
         private void NotifyView()
         {
             OnPropertyChanged(nameof(ProfileID));
             OnPropertyChanged(nameof(ProfileName));
+            OnPropertyChanged(nameof(IsHighlighted));
+            OnPropertyChanged(nameof(AccentResource));
+        }
+
+        private Color calcColor(int t, int a)
+        {
+            Color pfpColor = Colors.Transparent;
+
+            switch (a)
+            {
+                case 0:
+                default:
+                    if (t == 0) pfpColor = retrieveResource("DarkRedAccent");
+                    else        pfpColor = retrieveResource("LightRedAccent");
+                    break;
+                case 1:
+                    if (t == 0) pfpColor = retrieveResource("DarkOrangeAccent");
+                    else        pfpColor = retrieveResource("LightOrangeAccent");
+                    break;
+                case 2:
+                    if (t == 0) pfpColor = retrieveResource("DarkYellowAccent");
+                    else        pfpColor = retrieveResource("LightYellowAccent");
+                    break;
+                case 3:
+                    if (t == 0) pfpColor = retrieveResource("DarkGreenAccent");
+                    else        pfpColor = retrieveResource("LightGreenAccent");
+                    break;
+                case 4:
+                    if (t == 0) pfpColor = retrieveResource("DarkBlueAccent");
+                    else        pfpColor = retrieveResource("LightBlueAccent");
+                    break;
+                case 5:
+                    if (t == 0) pfpColor = retrieveResource("DarkPurpleAccent");
+                    else        pfpColor = retrieveResource("LightPurpleAccent");
+                    break;
+            }
+
+            return pfpColor;
+        }
+
+        private Color retrieveResource(string res)
+        {
+            Color resourceColor = Colors.Transparent;
+
+            if (Application.Current.Resources.TryGetValue(res, out var resObj) && resObj is Color color)
+            {
+                resourceColor = color;
+            }
+
+            return resourceColor;
         }
     }
 
@@ -37,17 +118,6 @@ namespace SemesterProject.Controllers
 
         public bool RemoveProfile(int _ind)
         {
-            /*
-            for(int i = 0; i < Profiles.Count; i++)
-            {
-                if (Profiles[i].ProfileName == _name)
-                {
-                    Profiles.RemoveAt(i);
-                    return true;
-                }
-            }
-            */
-
             if (Profiles.Count > _ind)
             {
                 Profiles.RemoveAt(_ind);
@@ -74,10 +144,13 @@ namespace SemesterProject.Controllers
             var profile = new Models.ProfileModel
             {
                 profile_name = name,
-                _id = Profiles.Count
+                _id = Profiles.Count,
             };
 
             Profiles.Add(new ProfileConverter(profile));
+
+            Profiles[Profiles.Count - 1].ProfileTheme = theme;
+            Profiles[Profiles.Count - 1].ProfileAccent = accent;
         }
 
         public void ReindexProfiles()

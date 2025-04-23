@@ -10,7 +10,7 @@ public static class MauiProgram
 {
 
 	//declare globally accessible field for page loading, profile selections, and file info
-	public static string dirPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+	public static string dirPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\CardStack\\";
 	public static string prefFile = "profiles.json";
 	public static string setFile = "stackCollection.json";
 

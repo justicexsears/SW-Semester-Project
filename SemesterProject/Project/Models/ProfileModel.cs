@@ -12,6 +12,11 @@ namespace SemesterProject.Models
     
         public string profile_name { get; set;} = "";
 
+        public bool _isHighlighted = false;
+
+        public int profile_theme { get; set;} = 0;
+        public int profile_accent { get; set;} = 0;
+
         public ProfileModel()
         {
             //_id = _profile_counter++;
