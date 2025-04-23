@@ -2,19 +2,19 @@
 
 public partial class MainPage : ContentPage
 {
-	private Controllers.FlashCardController flashcardcontroller;
+	private Controllers.FlashSetController flashsetscontroller;
 	public MainPage()
 	{
 		InitializeComponent();
 
-		flashcardcontroller = new(CollFlashCardSets);
+		flashsetscontroller = new(CollFlashCardSets);
 	}
 
 	private async void BtnAddSet(object sender, EventArgs e)
 	{
 		string name = await DisplayPromptAsync("Add New Set", "Enter Name of Set:");
 
-		flashcardcontroller.AddNewFlashCardSet(name);
+		flashsetscontroller.AddNewFlashCardSet(name);
 	}
 	
 }

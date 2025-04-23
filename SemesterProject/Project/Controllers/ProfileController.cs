@@ -41,7 +41,7 @@ namespace SemesterProject.Controllers
                 AccentResource = calcColor(ProfileTheme, value);
                 ProfileModel.profile_accent = value;
 
-                Debug.WriteLine($"profile accent set to #{value}: {AccentResource}");
+                //Debug.WriteLine($"profile accent set to #{value}: {AccentResource}");
             } 
         }
 
