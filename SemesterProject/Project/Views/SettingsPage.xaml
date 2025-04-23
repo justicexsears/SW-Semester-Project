@@ -14,11 +14,17 @@
         <FlexLayout BackgroundColor="{DynamicResource Primary}" Grid.ColumnSpan="3"  JustifyContent="SpaceBetween" Padding="10, 0">
             <HorizontalStackLayout>
 
-                <ImageButton Source="left_arrow.png" WidthRequest="75" HorizontalOptions="Start"  BackgroundColor="Transparent"/>
+                <ImageButton Source="left_arrow.png" WidthRequest="75" HorizontalOptions="Start"  BackgroundColor="Transparent" Clicked="BtnBack"/>
                 <Label Style="{StaticResource Label Font}" Text="Settings" VerticalOptions="Center" Padding="20" FontSize="30" TextColor="#e5e3bd"/>
             </HorizontalStackLayout>
             <HorizontalStackLayout>
-                <ImageButton Source="hamburger_icon.png" WidthRequest="75" HorizontalOptions="Start"  BackgroundColor="Transparent"/>
+                <ImageButton Source="hamburger_icon.png" WidthRequest="75" HorizontalOptions="Start"  BackgroundColor="Transparent">
+                    <FlyoutBase.ContextFlyout>
+                    <MenuFlyout>
+                        <MenuFlyoutItem Text="Sign Out" Clicked="BtnSignOut"/>
+                    </MenuFlyout>
+                </FlyoutBase.ContextFlyout>
+                </ImageButton>
                 <ImageButton Source="logo.png" WidthRequest="75" Background="Transparent" HorizontalOptions="End"/>
             </HorizontalStackLayout>
         </FlexLayout>

@@ -79,6 +79,10 @@ public static class MauiProgram
 				var accentFound = dictionaries.TryGetValue(themename + "Accent", out var accent);
 				if (accentFound)
 					dictionaries["Accent"] = accent;
+				
+				var textFound = dictionaries.TryGetValue(themename + "Text", out var text);
+				if (textFound)
+					dictionaries["MainText"] = text;
 			}
 		}
 	}

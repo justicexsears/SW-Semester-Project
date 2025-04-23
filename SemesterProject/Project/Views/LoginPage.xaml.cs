@@ -195,7 +195,7 @@ public partial class LoginPage : ContentPage
 		//set active profile fields to match profile at active id
 		MauiProgram.checkinProfile(profileDataset[MauiProgram.activeID].AsObject());
 
-		App.Current.Windows[0].Page = new EditPage();
+		App.Current.Windows[0].Page = new MainPage();
 	}
 
 	private void clearHighlights()

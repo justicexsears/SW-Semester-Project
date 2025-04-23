@@ -28,6 +28,16 @@ public partial class SettingsPage : ContentPage
 		btn.Background = btnBG;
 	}
 
+	private async void BtnSignOut(object sender, EventArgs e)
+	{
+		App.Current.Windows[0].Page = new LoginPage();
+	}
+
+	private async void BtnBack(object sender, EventArgs e)
+	{
+		App.Current.Windows[0].Page = new MainPage();
+	}
+
 	private void BtnReleased(object sender, EventArgs e)
 	{
 		Button btn = sender as Button;
