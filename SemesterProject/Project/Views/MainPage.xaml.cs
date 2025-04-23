@@ -53,9 +53,24 @@ public partial class MainPage : ContentPage
 
 	private async void BtnAddSet(object sender, EventArgs e)
 	{
-		string name = await DisplayPromptAsync("Add New Set", "Enter Name of Set:");
+		string name = await DisplayPromptAsync("Add New Set", "Enter Name:");
 
-		flashsetscontroller.AddNewFlashCardSet(name);
+		if (name != null)
+		{
+			int tmpID = flashsetscontroller.FlashCardSets.Count;
+			flashsetscontroller.AddNewFlashCardSet(name);
+
+			//call JSON profile instantiator, give name & id, rest are defaults
+			JsonObject tmpSet = MauiProgram.InstantiateStack(name, tmpID);
+			setDataset.Add(tmpSet);
+
+			//save modified JSON array to file
+			MauiProgram.SaveJSONArrayToFile(setDataset, (MauiProgram.dirPath + MauiProgram.prefFile));
+		}
+		else
+		{
+			DisplayAlert("Set not added", "You must provide a name for the set.", "OK");
+		}
 	}
 	
 	private async void BtnSignOut(object sender, EventArgs e)

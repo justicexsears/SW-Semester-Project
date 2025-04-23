@@ -84,7 +84,9 @@ namespace SemesterProject.Controllers
             var flashcardset = new Models.FlashSetModel
             {
                 set_name = name,
-                _setID = FlashCardSets.Count
+                _setID = FlashCardSets.Count,
+                set_date = DateTime.Today.ToString("MM/dd/yyyy"),
+                set_auth = MauiProgram.activeProfile["name"].ToString()
             };
 
             FlashCardSets.Add(new FlashSetConverter(flashcardset));
