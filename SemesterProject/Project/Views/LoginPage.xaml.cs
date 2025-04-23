@@ -2,6 +2,7 @@
 using System;
 using System.IO;
 using System.Text.Json.Nodes;
+using System.Diagnostics;
 
 namespace SemesterProject;
 
@@ -19,6 +20,8 @@ public partial class LoginPage : ContentPage
 	public LoginPage()
 	{
 		InitializeComponent();
+
+		updateSignInState(false);
 
 		//does the profiles file exist on the system?
 		if(File.Exists((MauiProgram.dirPath + MauiProgram.prefFile)))
@@ -50,7 +53,7 @@ public partial class LoginPage : ContentPage
 				try {
 					tmpProf = profileDataset[p].AsObject();
 
-					name = tmpProf["name"]?.ToString();
+					name = tmpProf["name"]?.ToString() ?? "";
 					theme = tmpProf["theme"]?.GetValue<int>() ?? 0;
 					accent = tmpProf["accent"]?.GetValue<int>() ?? 0;
 
@@ -102,12 +105,19 @@ public partial class LoginPage : ContentPage
 			//call JSON profile instantiator, give name & id, rest are defaults
 			JsonObject tmpProfile = MauiProgram.InstantiateProfile(name, tmpID);
 			profileDataset.Add(tmpProfile);
+
+			//save modified JSON array to file
+			MauiProgram.SaveJSONArrayToFile(profileDataset, (MauiProgram.dirPath + MauiProgram.prefFile));
+		}
+		else
+		{
+			DisplayAlert("Profile not added", "You must provide a name for the profile.", "OK");
 		}
 	}
 
 	private async void BtnRemoveProfile(object sender, EventArgs e)
     {
-		Button btn = sender as Button;
+		ImageButton btn = sender as ImageButton;
 
 		int id = (int) btn.CommandParameter; 
 
@@ -140,6 +150,16 @@ public partial class LoginPage : ContentPage
 			DisplayAlert("Removed", "Profile Sucessfully Removed!", "OK"); 
 
 			ReindexJSONArray();
+
+			//save modified JSON array to file
+			MauiProgram.SaveJSONArrayToFile(profileDataset, (MauiProgram.dirPath + MauiProgram.prefFile));
+
+			//Debug.WriteLine($"Profiles saved to: {MauiProgram.dirPath + MauiProgram.prefFile}");
+
+			if (MauiProgram.activeID == -1)
+			{
+				updateSignInState(false);
+			}
 		}
     }
 
@@ -154,29 +174,56 @@ public partial class LoginPage : ContentPage
 
 		//set active id to id attached to button
 		MauiProgram.activeID = (int) btn.CommandParameter;
+
+		if (MauiProgram.activeID >= 0 && MauiProgram.activeID < profileController.Profiles.Count)
+		{
+			updateSignInState(true);
+		}
 	}
 
 	private async void BtnSignIn(object sender, EventArgs e)
 	{
+		if (MauiProgram.activeID < 0 || MauiProgram.activeID >= profileController.Profiles.Count)
+		{
+			updateSignInState(false);
+			return;
+		}
+
 		//save modified JSON array to file
 		MauiProgram.SaveJSONArrayToFile(profileDataset, (MauiProgram.dirPath + MauiProgram.prefFile));
 
 		//set active profile fields to match profile at active id
 		MauiProgram.checkinProfile(profileDataset[MauiProgram.activeID].AsObject());
 
-		App.Current.Windows[0].Page = new SettingsPage();
+		App.Current.Windows[0].Page = new EditPage();
 	}
 
 	private void clearHighlights()
 	{
 		for (int b = 0; b < profileController.Profiles.Count; b++)
 		{
-
+			profileController.Profiles[b].IsHighlighted = false;
 		}
 	}
 
 	private void highlightProfile (object sender)
 	{
-		
+		Button btn = sender as Button;
+
+		int id = (int) btn.CommandParameter; 
+
+		profileController.Profiles[id].IsHighlighted = true;
+	}
+
+	private void updateSignInState(bool state)
+	{
+		if (state)
+		{
+			SignInBtn.SetDynamicResource(VisualElement.BackgroundColorProperty, "Accent");
+		}
+		else
+		{
+			SignInBtn.SetDynamicResource(VisualElement.BackgroundColorProperty, "Primary");
+		}
 	}
 }

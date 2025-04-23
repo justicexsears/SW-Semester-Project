@@ -8,17 +8,17 @@ namespace SemesterProject.Models
 {
     public class FlashCardModel
     {
-        private static int _FCset_counter = 0;
+        public int _cardID { get; set;} = 0;
 
-        private int _setID;
+        public string card_q {get; set;} = "";
 
-        public int SetID {get {return _setID; } }
+        public bool _isHighlighted = false;
 
-        public string set_name {get; set;} = "";
+
 
         public FlashCardModel()
         {
-            _setID = _FCset_counter++;
+           
         }
 
     }
