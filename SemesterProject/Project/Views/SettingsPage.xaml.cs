@@ -121,6 +121,8 @@ public partial class SettingsPage : ContentPage
 
 		//overwrite profile to disk and to local mem as activeProfile in the process
 		MauiProgram.applyProfileChanges(localProf);
+
+		MauiProgram.updateTheme(localProf);
 	}
 
 	private void setDefaults()
@@ -215,6 +217,8 @@ public partial class SettingsPage : ContentPage
 			HintCheckbox.IsChecked = true;
 		else
 			HintCheckbox.IsChecked = false;
+
+		MauiProgram.updateTheme(localProf);
 	}
 
 	public void themePickerPreview(object sender, EventArgs e)
