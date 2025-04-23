@@ -1,4 +1,5 @@
 using System.Text.Json.Nodes;
+using System.Diagnostics;
 
 namespace SemesterProject;
 
@@ -12,10 +13,11 @@ public partial class SettingsPage : ContentPage
 
 	public SettingsPage()
 	{
-		localProf = MauiProgram.activeProfile;
+		localProf = JsonNode.Parse(MauiProgram.activeProfile.ToJsonString()).AsObject();
 		InitializeComponent();
 
 		setDefaults();
+		MauiProgram.updateTheme(localProf);
 	}
 
 	private void BtnPressed(object sender, EventArgs e)
@@ -125,6 +127,13 @@ public partial class SettingsPage : ContentPage
 		MauiProgram.updateTheme(localProf);
 	}
 
+	public void BtnRevertChanges(object sender, EventArgs e)
+	{
+		//Debug.WriteLine($"Settings revert: {localProf["theme"]?.GetValue<int>()} to {MauiProgram.activeProfile["theme"]?.GetValue<int>()}");
+		localProf = JsonNode.Parse(MauiProgram.activeProfile.ToJsonString()).AsObject();
+		setDefaults();
+	}
+
 	private void setDefaults()
 	{
 		//this will be used as the storage for any evaluated ints from the json to reduce formatting calls
@@ -217,8 +226,6 @@ public partial class SettingsPage : ContentPage
 			HintCheckbox.IsChecked = true;
 		else
 			HintCheckbox.IsChecked = false;
-
-		MauiProgram.updateTheme(localProf);
 	}
 
 	public void themePickerPreview(object sender, EventArgs e)

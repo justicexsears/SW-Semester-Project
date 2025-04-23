@@ -24,12 +24,14 @@ public partial class LoginPage : ContentPage
 		if(File.Exists((MauiProgram.dirPath + MauiProgram.prefFile)))
 		{
 			//retrieve profile file as array, has length > 0?
+			JsonObject masterProf = MauiProgram.InstantiateProfile();
 			profileDataset = MauiProgram.LoadJSONArrayFromFile(MauiProgram.dirPath + MauiProgram.prefFile);
 			if (profileDataset.Count > 0)
 			{
+				masterProf = profileDataset[0].AsObject();
 				//update global theme fields, and update local UI controls
-				MauiProgram.updateTheme(profileDataset[0].AsObject());
-				updateUI(profileDataset[0].AsObject());
+				//MauiProgram.updateTheme(profileDataset[0].AsObject());
+				updateUI(masterProf);
 			}
 		}
 
@@ -50,7 +52,7 @@ public partial class LoginPage : ContentPage
 
 					name = tmpProf["name"]?.ToString();
 					theme = tmpProf["theme"]?.GetValue<int>() ?? 0;
-					accent = tmpProf["theme"]?.GetValue<int>() ?? 0;
+					accent = tmpProf["accent"]?.GetValue<int>() ?? 0;
 
 					profileController.DisplayProfile(name, theme, accent);
 				} catch {}
@@ -68,7 +70,7 @@ public partial class LoginPage : ContentPage
 
 	private void updateUI(JsonObject pref)
 	{
-
+		MauiProgram.updateTheme(pref);
 	}
 
 	private void BtnPressed(object sender, EventArgs e)

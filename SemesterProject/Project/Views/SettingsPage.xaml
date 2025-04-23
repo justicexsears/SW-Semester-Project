@@ -143,10 +143,14 @@
             <Label Style="{StaticResource Label Font}" Text="Changes hightlighted in sidebar" FontSize="10" TextColor="#e5e3bd"/>
 
             <HorizontalStackLayout HorizontalOptions="End">
-                <Button Margin ="5,0,10,0" WidthRequest="100" BackgroundColor="#2f2e2f" TextColor="#e5e3bd"
-                    Text="Cancel" FontFamily="Roboto" FontAttributes="Bold"/>
-                <Button Margin ="5,0,10,0" WidthRequest="100" Background="{DynamicResource Accent}" TextColor="#2f2e2f"
-                   Text="Apply" FontFamily="Roboto" FontAttributes="Bold" Clicked="BtnApplyChanges" Pressed="BtnPressed" Released="BtnReleased"/>
+                <Border Margin="5,0,10,0" WidthRequest="100" BackgroundColor="{DynamicResource Secondary}" StrokeShape="RoundRectangle 8" Stroke="Transparent">
+                    <Button Margin ="0" WidthRequest="98" BackgroundColor="Transparent" TextColor="#e5e3bd"
+                        Text="Cancel" FontFamily="Roboto" FontAttributes="Bold" Clicked="BtnRevertChanges" Pressed="BtnPressed" Released="BtnReleased"/>
+                </Border>
+                <Border Margin="5,0,10,0" WidthRequest="100" BackgroundColor="{DynamicResource Accent}" StrokeShape="RoundRectangle 8" Stroke="Transparent">
+                    <Button Margin ="0" WidthRequest="98" Background="Transparent" TextColor="#2f2e2f"
+                        Text="Apply" FontFamily="Roboto" FontAttributes="Bold" Clicked="BtnApplyChanges" Pressed="BtnPressed" Released="BtnReleased"/>
+                </Border>
             </HorizontalStackLayout>
 
         </VerticalStackLayout>
