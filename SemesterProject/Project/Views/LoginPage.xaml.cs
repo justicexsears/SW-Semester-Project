@@ -177,7 +177,7 @@ public partial class LoginPage : ContentPage
 
 	private async void BtnSignIn(object sender, EventArgs e)
 	{
-		if (MauiProgram.activeID >= 0 && MauiProgram.activeID < profileController.Profiles.Count)
+		if (MauiProgram.activeID < 0 || MauiProgram.activeID >= profileController.Profiles.Count)
 		{
 			updateSignInState(false);
 			return;
