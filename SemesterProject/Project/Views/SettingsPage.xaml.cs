@@ -16,114 +16,135 @@ public partial class SettingsPage : ContentPage
 		InitializeComponent();
 
 		setDefaults();
+	}
 
+	private void BtnPressed(object sender, EventArgs e)
+	{
+		Button btn = sender as Button;
 
+		Color btnBG = Color.FromRgba(highlightTint, highlightTint, highlightTint, tintStrength);
+		btn.Background = btnBG;
+	}
 
+	private void BtnReleased(object sender, EventArgs e)
+	{
+		Button btn = sender as Button;
+
+		Color btnBG = Color.FromRgba(0f, 0f, 0f, 0f);
+		btn.Background = btnBG;
 	}
 
 	private async void BtnApplyChanges(object sender, EventArgs e)
 	{
-			// Theme Default
-		if (ThemePicker.SelectedIndex == 0)
-			localProf["theme"] = 0;
+		//this will be used as the storage for picker values so they may persist throgh conditionals
+		int tmpInt = ThemePicker.SelectedIndex;
+
+		// Theme
+		if (tmpInt >= 0)
+			localProf["theme"] = tmpInt;
 		else
 		 	localProf["theme"] = 1;
 
-		// Accent Default
-		if (AccentPicker.SelectedIndex == 0)
+		//Accent
+		tmpInt = AccentPicker.SelectedIndex;
+		if (tmpInt >= 0)
+			localProf["accent"] = tmpInt;
+		else
 			localProf["accent"] = 0;
-		else if (AccentPicker.SelectedIndex == 1)
-			localProf["accent"] = 1;
-		else if (AccentPicker.SelectedIndex == 2)
-			localProf["accent"] = 2;
-		else if (AccentPicker.SelectedIndex == 3)
-			localProf["accent"] = 3;
-		else if (AccentPicker.SelectedIndex == 4)
-			localProf["accent"] = 4;
-		else if (AccentPicker.SelectedIndex == 5)
-			localProf["accent"] = 5;
 
 		// Card Style Default
-		if (CStylePicker.SelectedIndex == 1)
-			localProf["preferences"].AsObject()["card-style"] = 1;
+		tmpInt = CStylePicker.SelectedIndex;
+		if (CStylePicker.SelectedIndex >= 0)
+			localProf["preferences"].AsObject()["card-style"] = tmpInt;
 		else
 			localProf["preferences"].AsObject()["card-style"] = 0; 
 
 		// Animations
-		if (CAniCheckbox.IsChecked == true)
-			localProf["preferences"].AsObject()["card-anims"] = 1;
-		else
-			localProf["preferences"].AsObject()["card-anims"] = 0;
+		localProf["preferences"].AsObject()["card-anims"] = CAniCheckbox.IsChecked ? 1 : 0 ;
 
 		//Q - time
-		if (QTimePicker.SelectedIndex == 0)
-			localProf["preferences"].AsObject()["q-time"] = 30;
-		else if (QTimePicker.SelectedIndex == 1)
-			localProf["preferences"].AsObject()["q-time"] = 45;
-		else if (QTimePicker.SelectedIndex == 2)
-			localProf["preferences"].AsObject()["q-time"] = 60;
-		else if (QTimePicker.SelectedIndex == 3)
-			localProf["preferences"].AsObject()["q-time"] = 90;
-		else if (QTimePicker.SelectedIndex == 4)
-			localProf["preferences"].AsObject()["q-time"] = 120;
+		int resultInt = 120;
+		tmpInt = QTimePicker.SelectedIndex;
+		switch(tmpInt)
+		{
+			case 0:
+				resultInt = 30;
+				break;
+			case 1:
+				resultInt = 45;
+				break;
+			case 2:
+				resultInt = 60;
+				break;
+			case 3:
+				resultInt = 90;
+				break;
+			case 4:
+			default:
+				resultInt = 120;
+				break;
+		}
+		localProf["preferences"].AsObject()["q-time"] = resultInt;
 
 		// Q - attempts
-		if (QAttemptPicker.SelectedIndex == 0)
-			localProf["preferences"].AsObject()["q-attempts"] = -1;
-		else if (QAttemptPicker.SelectedIndex == 1)
-			localProf["preferences"].AsObject()["q-attempts"] = 1;
-		else if (QAttemptPicker.SelectedIndex == 2)
-			localProf["preferences"].AsObject()["q-attempts"] = 2;
-		else if (QAttemptPicker.SelectedIndex == 3)
-			localProf["preferences"].AsObject()["q-attempts"] = 3;
-		else if (QAttemptPicker.SelectedIndex == 5)
-			localProf["preferences"].AsObject()["q-attempts"] = 4;
+		resultInt = -1;
+		tmpInt = QAttemptPicker.SelectedIndex;
+		switch(tmpInt)
+		{
+			case 0:
+			default:
+				resultInt = -1;
+				break;
+			case 1:
+				resultInt = 1;
+				break;
+			case 2:
+				resultInt = 2;
+				break;
+			case 3:
+				resultInt = 3;
+				break;
+			case 4:
+				resultInt = 5;
+				break;
+		}
 
 		// Q shuffle
-		if (ShuffCheckbox.IsChecked == true)
-			localProf["preferences"].AsObject()["q-shuffle"] = 1;
-		else 
-			localProf["preferences"].AsObject()["q-shuffle"] = 0;
+		localProf["preferences"].AsObject()["q-shuffle"] = ShuffCheckbox.IsChecked ? 1 : 0;
 		
 		// Q fails/guess
-		if (GuessCheckbox.IsChecked == true)
-			localProf["preferences"].AsObject()["q-fails"] = 1;
-		else
-			localProf["preferences"].AsObject()["q-fails"] = 0;
+		localProf["preferences"].AsObject()["q-fails"] = GuessCheckbox.IsChecked ? 1 : 0;
 		
 		// Q hint
-		if (HintCheckbox.IsChecked = true)
-			localProf["preferences"].AsObject()["q-hint"] = 1;
-		else
-			localProf["preferences"].AsObject()["q-hint"] = 0;
+		localProf["preferences"].AsObject()["q-hint"] = HintCheckbox.IsChecked ? 1 : 0;
 
+
+		//overwrite profile to disk and to local mem as activeProfile in the process
+		MauiProgram.applyProfileChanges(localProf);
 	}
 
 	private void setDefaults()
 	{
-		// Theme Default
-		if (localProf["theme"].GetValue<int>() == 0)
-			ThemePicker.SelectedIndex = 0;
+		//this will be used as the storage for any evaluated ints from the json to reduce formatting calls
+		int tmpInt = localProf["theme"]?.GetValue<int>() ?? 1;
+
+		//Eval Theme int
+		if (tmpInt >= 0 && tmpInt <= 1)
+			ThemePicker.SelectedIndex = tmpInt;
 		else
-		 	ThemePicker.SelectedIndex = 1;
+			ThemePicker.SelectedIndex = 0;
 
-		// Accent Default
-		if (localProf["accent"].GetValue<int>() == 0)
+		// Eval Accent int
+		tmpInt = localProf["accent"]?.GetValue<int>() ?? 0;
+		if (tmpInt >= 0 && tmpInt <= 5)
+			AccentPicker.SelectedIndex = tmpInt;
+		else
 			AccentPicker.SelectedIndex = 0;
-		else if (localProf["accent"].GetValue<int>() == 1)
-			AccentPicker.SelectedIndex = 1;
-		else if (localProf["accent"].GetValue<int>() == 2)
-			AccentPicker.SelectedIndex = 2;
-		else if (localProf["accent"].GetValue<int>() == 3)
-			AccentPicker.SelectedIndex = 3;
-		else if (localProf["accent"].GetValue<int>() == 4)
-			AccentPicker.SelectedIndex = 4;
-		else if (localProf["accent"]?.GetValue<int>() == 5)
-			AccentPicker.SelectedIndex = 5;
 
-		// Card Style Default
-		if (localProf["preferences"]?.AsObject()["card-style"]?.GetValue<int>() == 1)
-			CStylePicker.SelectedIndex = 1;
+		// Eval Card Int
+		tmpInt = localProf["preferences"]?.AsObject()["card-style"]?.GetValue<int>() ?? 0;
+		if (tmpInt >= 0 && tmpInt <= 1)
+			CStylePicker.SelectedIndex = tmpInt;
 		else
 			CStylePicker.SelectedIndex = 0; 
 
@@ -134,28 +155,48 @@ public partial class SettingsPage : ContentPage
 			CAniCheckbox.IsChecked = false;
 
 		//Q - time
-		if (localProf["preferences"]?.AsObject()["q-time"]?.GetValue<int>() == 30)
-			QTimePicker.SelectedIndex = 0;
-		else if (localProf["preferences"]?.AsObject()["q-time"]?.GetValue<int>() == 45)
-			QTimePicker.SelectedIndex = 1;
-		else if (localProf["preferences"]?.AsObject()["q-time"]?.GetValue<int>() == 60)
-			QTimePicker.SelectedIndex = 2;
-		else if (localProf["preferences"]?.AsObject()["q-time"]?.GetValue<int>() == 90)
-			QTimePicker.SelectedIndex = 3;
-		else if (localProf["preferences"]?.AsObject()["q-time"]?.GetValue<int>() == 120)
-			QTimePicker.SelectedIndex = 4;
+		tmpInt = localProf["preferences"]?.AsObject()["q-time"]?.GetValue<int>() ?? 120;
+		switch (tmpInt)
+		{
+			case 30:
+				QTimePicker.SelectedIndex = 0;
+				break;
+			case 45:
+				QTimePicker.SelectedIndex = 2;
+				break;
+			case 60:
+				QTimePicker.SelectedIndex = 3;
+				break;
+			case 90:
+				QTimePicker.SelectedIndex = 4;
+				break;
+			case 120:
+			default:
+				QTimePicker.SelectedIndex = 5;
+				break;
+		}
 
 		// Q - attempts
-		if (localProf["preferences"]?.AsObject()["q-attempts"]?.GetValue<int>() == -1)
-			QAttemptPicker.SelectedIndex = 0;
-		else if (localProf["preferences"]?.AsObject()["q-attempts"]?.GetValue<int>() == 1)
-			QAttemptPicker.SelectedIndex = 1;
-		else if (localProf["preferences"]?.AsObject()["q-attempts"]?.GetValue<int>() == 2)
-			QAttemptPicker.SelectedIndex = 2;
-		else if (localProf["preferences"]?.AsObject()["q-attempts"]?.GetValue<int>() == 3)
-			QAttemptPicker.SelectedIndex = 3;
-		else if (localProf["preferences"]?.AsObject()["q-attempts"]?.GetValue<int>() == 5)
-			QAttemptPicker.SelectedIndex = 4;
+		tmpInt = localProf["preferences"]?.AsObject()["q-attempts"]?.GetValue<int>() ?? -1;
+		switch (tmpInt)
+		{
+			case -1:
+				QAttemptPicker.SelectedIndex = 0;
+				break;
+			case 1:
+				QAttemptPicker.SelectedIndex = 1;
+				break;
+			case 2:
+				QAttemptPicker.SelectedIndex = 2;
+				break;
+			case 3:
+				QAttemptPicker.SelectedIndex = 3;
+				break;
+			case 5:
+			default:
+				QAttemptPicker.SelectedIndex = 4;
+				break;
+		}
 
 		// Q shuffle
 		if (localProf["preferences"]?.AsObject()["q-shuffle"]?.GetValue<int>() == 1)
@@ -174,6 +215,131 @@ public partial class SettingsPage : ContentPage
 			HintCheckbox.IsChecked = true;
 		else
 			HintCheckbox.IsChecked = false;
+	}
+
+	public void themePickerPreview(object sender, EventArgs e)
+	{
+		Picker pick = sender as Picker;
+
+		localProf["theme"] = pick.SelectedIndex;
+
+		//preview changes in small window
+	}
+
+	public void accentPickerPreview(object sender, EventArgs e)
+	{
+		Picker pick = sender as Picker;
+
+		localProf["accent"] = pick.SelectedIndex;
+
+		//preview changes in small window
+	}
+
+	public void cStylePickerPreview(object sender, EventArgs e)
+	{
+		Picker pick = sender as Picker;
+
+		localProf["preferences"].AsObject()["card-style"] = pick.SelectedIndex;
+
+		//preview changes in small window
+	}
+
+	public void cAniPreview(object sender, EventArgs e)
+	{
+		CheckBox cb = sender as CheckBox;
+
+		localProf["preferences"].AsObject()["card-anims"] = cb.IsChecked ? 1 : 0;
+
+		//preview changes in small window
+	}
+
+	public void qTimePickerPreview(object sender, EventArgs e)
+	{
+		Picker pick = sender as Picker;
+		int resultInt = 120;
+
+		switch (pick.SelectedIndex)
+		{
+			case 0:
+				resultInt = 30;
+				break;
+			case 1:
+				resultInt = 45;
+				break;
+			case 2:
+				resultInt = 60;
+				break;
+			case 3:
+				resultInt = 90;
+				break;
+			case 4:
+			default:
+				resultInt = 120;
+				break;
+		}
+
+		localProf["preferences"].AsObject()["q-time"] = resultInt;
+
+		//preview changes in small window
+	}
+
+	public void qAttemptPickerPreview(object sender, EventArgs e)
+	{
+		Picker pick = sender as Picker;
+		int resultInt = 120;
+
+		switch (pick.SelectedIndex)
+		{
+			case 0:
+			default:
+				resultInt = -1;
+				break;
+			case 1:
+				resultInt = 1;
+				break;
+			case 2:
+				resultInt = 2;
+				break;
+			case 3:
+				resultInt = 3;
+				break;
+			case 4:
+				resultInt = 5;
+				break;
+		}
+
+		localProf["preferences"].AsObject()["q-attempts"] = resultInt;
+
+		//preview changes in small window
+	}
+
+	public void shuffPreview(object sender, EventArgs e)
+	{
+		CheckBox cb = sender as CheckBox;
+
+		localProf["preferences"].AsObject()["q-shuffle"] = cb.IsChecked ? 1 : 0;
+
+		//preview changes in small window
+	}
+
+	//hard feature to describe with one word: show or do not show previous incorrect guesses to the current card?
+	//guess? fails? i dont know.
+	public void guessPreview(object sender, EventArgs e)
+	{
+		CheckBox cb = sender as CheckBox;
+
+		localProf["preferences"].AsObject()["q-fails"] = cb.IsChecked ? 1 : 0;
+
+		//preview changes in small window
+	}
+
+	public void hintPreview(object sender, EventArgs e)
+	{
+		CheckBox cb = sender as CheckBox;
+
+		localProf["preferences"].AsObject()["q-hint"] = cb.IsChecked ? 1 : 0;
+
+		//preview changes in small window
 	}
 }
 
