@@ -21,7 +21,7 @@ public static class MauiProgram
 
 	public static void updateTheme(JsonObject pref)
 	{
-
+		
 	}
 
 	public static void checkinProfile(JsonObject data)

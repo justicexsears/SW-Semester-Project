@@ -11,7 +11,7 @@
     </ContentPage.Resources>
 
     <Grid RowDefinitions="80,*" ColumnDefinitions="Auto,5,*">
-        <FlexLayout BackgroundColor="#191919" Grid.ColumnSpan="3"  JustifyContent="SpaceBetween" Padding="10, 0">
+        <FlexLayout BackgroundColor="{DynamicResource Primary}" Grid.ColumnSpan="3"  JustifyContent="SpaceBetween" Padding="10, 0">
             <HorizontalStackLayout>
 
                 <ImageButton Source="left_arrow.png" WidthRequest="75" HorizontalOptions="Start"  BackgroundColor="Transparent"/>
@@ -32,7 +32,7 @@
 
                 <HorizontalStackLayout HorizontalOptions="Center" Margin="5">
                     <Label Style="{StaticResource Label Font}" Text="Theme Base" VerticalOptions="Center" HorizontalTextAlignment="Center" WidthRequest="175" FontSize="15" TextColor="#e5e3bd"/>
-                    <Picker WidthRequest="100">
+                    <Picker WidthRequest="100" x:Name="ThemePicker">
                         <Picker.ItemsSource>
                                 <x:Array Type="{x:Type x:String}">
                                     <x:String>Light Theme</x:String>
@@ -44,16 +44,15 @@
 
                 <HorizontalStackLayout HorizontalOptions="Center" Margin="5">
                     <Label Style="{StaticResource Label Font}" Text="Theme Accent" VerticalOptions="Center" HorizontalTextAlignment="Center" WidthRequest="175" FontSize="15" TextColor="#e5e3bd"/>
-                    <Picker WidthRequest="100">
+                    <Picker WidthRequest="100" x:Name="AccentPicker">
                         <Picker.ItemsSource>
                                 <x:Array Type="{x:Type x:String}">
-                                    <x:String>Green</x:String>
                                     <x:String>Red</x:String>
                                     <x:String>Orange</x:String>
                                     <x:String>Yellow</x:String>
+                                    <x:String>Green</x:String>
                                     <x:String>Blue</x:String>
                                     <x:String>Purple</x:String>
-                                    <x:String>Black/White</x:String>
                                 </x:Array>
                         </Picker.ItemsSource>
                     </Picker>
@@ -61,7 +60,7 @@
 
                 <HorizontalStackLayout HorizontalOptions="Center" Margin="5">
                     <Label Style="{StaticResource Label Font}" Text="Card Style" VerticalOptions="Center" HorizontalTextAlignment="Center" WidthRequest="175" FontSize="15" TextColor="#e5e3bd"/>
-                    <Picker WidthRequest="100">
+                    <Picker WidthRequest="100" x:Name="CStylePicker">
                         <Picker.ItemsSource>
                                 <x:Array Type="{x:Type x:String}">
                                     <x:String>Black on White</x:String>
@@ -74,7 +73,7 @@
 
                 <HorizontalStackLayout HorizontalOptions="Center" Margin="5">
                     <Label Style="{StaticResource Label Font}" Text="Card Animations" VerticalOptions="Center" HorizontalTextAlignment="Center" WidthRequest="175" FontSize="15" TextColor="#e5e3bd"/>
-                    <CheckBox Color="#99cc99"/>
+                    <CheckBox Color="{DynamicResource Accent}" x:Name="CAniCheckbox"/>
                 </HorizontalStackLayout>
 
                 <Label Style="{StaticResource Label Font}" Text="Quiz Mode Settings" HorizontalOptions="Center" FontSize="20" TextColor="#e5e3bd"/>
@@ -82,15 +81,14 @@
 
                 <HorizontalStackLayout HorizontalOptions="Center" Margin="5">
                     <Label Style="{StaticResource Label Font}" Text="Question Time" VerticalOptions="Center" HorizontalTextAlignment="Center" WidthRequest="175" FontSize="15" TextColor="#e5e3bd"/>
-                    <Picker WidthRequest="100">
+                    <Picker WidthRequest="100" x:Name="QTimePicker">
                         <Picker.ItemsSource>
                                 <x:Array Type="{x:Type x:String}">
-                                    <x:String>10 sec</x:String>
-                                    <x:String>15 sec</x:String>
-                                    <x:String>20 sec</x:String>
                                     <x:String>30 sec</x:String>
                                     <x:String>45 sec</x:String>
                                     <x:String>60 sec</x:String>
+                                    <x:String>90 sec</x:String>
+                                    <x:String>120 sec</x:String>
                                 </x:Array>
                         </Picker.ItemsSource>
                     </Picker>
@@ -98,9 +96,10 @@
 
                 <HorizontalStackLayout HorizontalOptions="Center" Margin="5">
                     <Label Style="{StaticResource Label Font}" Text="Question Attempts" VerticalOptions="Center" HorizontalTextAlignment="Center" WidthRequest="175" FontSize="15" TextColor="#e5e3bd"/>
-                    <Picker WidthRequest="100">
+                    <Picker WidthRequest="100" x:Name="QAttemptPicker">
                         <Picker.ItemsSource>
                                 <x:Array Type="{x:Type x:String}">
+                                    <x:String>Inf</x:String>
                                     <x:String>1</x:String>
                                     <x:String>2</x:String>
                                     <x:String>3</x:String>
@@ -112,17 +111,17 @@
 
                 <HorizontalStackLayout HorizontalOptions="Center" Margin="5">
                     <Label Style="{StaticResource Label Font}" Text="Shuffle Questions" VerticalOptions="Center" HorizontalTextAlignment="Center" WidthRequest="175" FontSize="15" TextColor="#e5e3bd"/>
-                    <CheckBox Color="#99cc99"/>
+                    <CheckBox Color="{DynamicResource Accent}" x:Name="ShuffCheckbox"/>
                 </HorizontalStackLayout>
 
                 <HorizontalStackLayout HorizontalOptions="Center" Margin="5">
                     <Label Style="{StaticResource Label Font}" Text="Show Incorrect Guesses" VerticalOptions="Center" HorizontalTextAlignment="Center" WidthRequest="175" FontSize="15" TextColor="#e5e3bd"/>
-                    <CheckBox Color="#99cc99"/>
+                    <CheckBox Color="{DynamicResource Accent}" x:Name="GuessCheckbox"/>
                 </HorizontalStackLayout>
 
                 <HorizontalStackLayout HorizontalOptions="Center" Margin="5">
                     <Label Style="{StaticResource Label Font}" Text="Give Half-Time Hint" VerticalOptions="Center" HorizontalTextAlignment="Center" WidthRequest="175" FontSize="15" TextColor="#e5e3bd"/>
-                    <CheckBox Color="#99cc99"/>
+                    <CheckBox Color="{DynamicResource Accent}" x:Name="HintCheckbox"/>
                 </HorizontalStackLayout>
 
 
@@ -131,7 +130,7 @@
         
 
         <VerticalStackLayout Grid.Row="1" Grid.Column="1" VerticalOptions="Center">
-            <Border BackgroundColor="#99cc99" HeightRequest="500"/>
+            <Border BackgroundColor="{DynamicResource Accent}" HeightRequest="500"/>
         </VerticalStackLayout> 
 
         <VerticalStackLayout Grid.Column="2" Grid.Row="1" Margin="75">
@@ -146,7 +145,7 @@
             <HorizontalStackLayout HorizontalOptions="End">
                 <Button Margin ="5,0,10,0" WidthRequest="100" BackgroundColor="#2f2e2f" TextColor="#e5e3bd"
                     Text="Cancel" FontFamily="Roboto" FontAttributes="Bold"/>
-                <Button Margin ="5,0,10,0" WidthRequest="100" BackgroundColor="#99cc99" TextColor="#2f2e2f"
+                <Button Margin ="5,0,10,0" WidthRequest="100" BackgroundColor="{DynamicResource Accent}" TextColor="#2f2e2f"
                    Text="Apply" FontFamily="Roboto" FontAttributes="Bold" Clicked="BtnApplyChanges"/>
             </HorizontalStackLayout>
 
