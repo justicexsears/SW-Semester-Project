@@ -102,41 +102,6 @@ namespace SemesterProject.Controllers
         {
             FlashCards = new ObservableCollection<FlashCardConverter>();
 
-            var item = new Models.FlashCardModel
-            {
-                card_q = "What is the capital of Michigan?",
-                _cardID = FlashCards.Count
-            };
-            FlashCards.Add(new FlashCardConverter(item));
-
-            item = new Models.FlashCardModel
-            {
-                card_q = "How many are in a dozen?",
-                _cardID = FlashCards.Count
-            };
-            FlashCards.Add(new FlashCardConverter(item));
-
-            item = new Models.FlashCardModel
-            {
-                card_q = "What is a djungelskog?",
-                _cardID = FlashCards.Count
-            };
-            FlashCards.Add(new FlashCardConverter(item));
-
-            item = new Models.FlashCardModel
-            {
-                card_q = "3 + 4 = __?",
-                _cardID = FlashCards.Count
-            };
-            FlashCards.Add(new FlashCardConverter(item));
-
-            item = new Models.FlashCardModel
-            {
-                card_q = "Who invented the lightbulb?",
-                _cardID = FlashCards.Count
-            };
-            FlashCards.Add(new FlashCardConverter(item));
-
             view.ItemsSource = FlashCards;
         }
     }

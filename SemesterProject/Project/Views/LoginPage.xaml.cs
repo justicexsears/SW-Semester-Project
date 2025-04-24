@@ -62,6 +62,8 @@ public partial class LoginPage : ContentPage
 				} catch {}
 			}
 		}
+
+		MauiProgram.activeID = -1;
 	}
 
 	private void ReindexJSONArray()

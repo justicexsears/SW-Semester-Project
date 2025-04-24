@@ -2,80 +2,111 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SemesterProject.MainPage"
+             xmlns:converters="clr-namespace:SemesterProject.Converters"
              BackgroundColor ="{DynamicResource Secondary}">
+
+    <ContentPage.Resources>
+        <Style TargetType="Label" x:Key="Label Font">
+            <Setter Property="FontFamily" Value="Roboto"/>
+        </Style>
+
+        <converters:BoolToColorConverter x:Key="BoolToColorConverter" />
+    </ContentPage.Resources>
              
 
     <Grid RowDefinitions="80,*" ColumnDefinitions="450,5,*">
-        <HorizontalStackLayout BackgroundColor="{DynamicResource Primary}" Grid.ColumnSpan="3">
-            <ImageButton Source="left_arrow.png" WidthRequest="75" HorizontalOptions="Start"  BackgroundColor="Transparent" Clicked="BtnBack"/>
-            <Label WidthRequest="1115" VerticalOptions="Center" Padding="20" FontSize="30" TextColor="#e5e3bd"/> 
-            <ImageButton Source="logo.png" WidthRequest="75" BackgroundColor="Transparent">
-                <FlyoutBase.ContextFlyout>
-                    <MenuFlyout>
-                        <MenuFlyoutItem Text="Settings" Clicked="BtnSettings"/>
-                        <MenuFlyoutItem Text="Sign Out" Clicked="BtnSignOut"/>
-                    </MenuFlyout>
-                </FlyoutBase.ContextFlyout>
-            </ImageButton>   
-        </HorizontalStackLayout>
+        <!--BEGIN MASTER NAVBAR-->
+        <FlexLayout BackgroundColor="{DynamicResource Primary}" Grid.ColumnSpan="3"  JustifyContent="SpaceBetween" Padding="10, 0">
+            <HorizontalStackLayout>
+                <ImageButton Source="left_arrow.png" WidthRequest="75" HorizontalOptions="Start"  BackgroundColor="Transparent" Clicked="BtnBack" Scale="0.75"/>
+            </HorizontalStackLayout>
+            <HorizontalStackLayout>
+                <ImageButton Source="hamburger_icon.png" WidthRequest="75" HorizontalOptions="Start"  BackgroundColor="Transparent" Clicked="BtnMenuPopout" Scale="0.5"/>
+                <ImageButton Source="logo.png" WidthRequest="75" Background="Transparent" HorizontalOptions="End" Clicked="BtnHome" Scale="0.75"/>
+            </HorizontalStackLayout>
+        </FlexLayout>
 
-            <VerticalStackLayout Margin="55" Grid.Column="0" Grid.Row="1" HeightRequest="525">
+        <Grid Grid.Row="0" Grid.RowSpan="2" Grid.Column="2" WidthRequest="350" HeightRequest="200" RowDefinitions="1*, 1*, 2*" ColumnDefinitions="3*, 2*" 
+            VerticalOptions="Start" HorizontalOptions="End" ZIndex="3" IsVisible="False" x:Name="MenuPopout" Margin="0, 0, -50, 0">
+            <Border Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="2" Stroke="Transparent" StrokeShape="RoundRectangle 20" BackgroundColor="{DynamicResource Accent}"
+                />
 
-                <SearchBar WidthRequest="275" HeightRequest="10" Placeholder="Search for..." HorizontalOptions="End"
-                    BackgroundColor="{DynamicResource Tertiary}" TextColor="{DynamicResource MainText}"/>
+            <ImageButton Source="ui_exitdark.png" Grid.Row="0" Grid.Column="0" HorizontalOptions="Start" WidthRequest="35" BackgroundColor="Transparent" Clicked="BtnMenuPopoutClose"
+                Aspect="AspectFit" Scale="0.5"/>
 
-                <Label Text="Search By" Margin="65,15,0,5" TextColor="{DynamicResource MainText}"/>
-                <Picker TextColor="{DynamicResource MainText}" BackgroundColor="{DynamicResource Tertiary}"  Margin="65,0,0,0">
-                    <Picker.ItemsSource>
-                        <x:Array Type="{x:Type x:String}">
-                            <x:String>Author</x:String>
-                            <x:String>Title</x:String>
-                        </x:Array>
-                    </Picker.ItemsSource>
-                </Picker>
+            <Label Text="Profile N." Grid.Row="1" Grid.Column="0" HorizontalOptions="Start" VerticalOptions="Center" TextColor="{DynamicResource Primary}" FontSize="24"
+                FontAttributes="Bold" Margin="30, 0, 15, 0" x:Name="MenuProfileNameLbl"/>
+            
+            <Image Source="pfpdark.png" Grid.Row="0" Grid.RowSpan="3" Grid.Column="1" Aspect="AspectFit" HorizontalOptions="Start" VerticalOptions="Center"
+                Margin="15, 20, 0, 80" HeightRequest="50"/>
 
-                <Label Text="Sort By" Margin="65,15,0,5" TextColor="{DynamicResource MainText}"/>
-                <Picker TextColor="{DynamicResource MainText}" BackgroundColor="{DynamicResource Tertiary}" Margin="65,0,0,0">
-                    <Picker.ItemsSource>
-                        <x:Array Type="{x:Type x:String}">
-                            <x:String>Alphabetical A-Z</x:String>
-                            <x:String>Alphabetical Z-A</x:String>
-                            <x:String>Date Oldest</x:String>
-                            <x:String>Date Newest</x:String>
-                        </x:Array>
-                    </Picker.ItemsSource>
-                </Picker>
-
-                <HorizontalStackLayout Margin="65, 5, 0, 5">
-                    <CheckBox Color="{DynamicResource Accent}"/>
-                    <Label Text="Filter by Date Range" VerticalOptions="Center" TextColor="{DynamicResource MainText}"/>
-                </HorizontalStackLayout>
-
-                <HorizontalStackLayout Margin="65, 10, 0, 10">
-                    <Label Text="Range Start:" VerticalOptions="Center" Margin="0,0,50,0" TextColor="{DynamicResource MainText}"/>
-                    <Entry WidthRequest="140" TextColor="{DynamicResource MainText}" BackgroundColor="{DynamicResource Tertiary}"/>
-                </HorizontalStackLayout>
-
-                <HorizontalStackLayout Margin="65, 10, 0, 10">
-                    <Label Text="Range End:" VerticalOptions="Center" Margin="0,0,57,0" TextColor="{DynamicResource MainText}"/>
-                    <Entry WidthRequest="140" TextColor="{DynamicResource MainText}" BackgroundColor="{DynamicResource Tertiary}"/>
-                </HorizontalStackLayout>
-
-                <HorizontalStackLayout Margin="0,10,0,10" HorizontalOptions="End" VerticalOptions="End">
-                    <Button Text="Edit" BackgroundColor="{DynamicResource Primary}" WidthRequest="75" Margin="5,0" Clicked="BtnEditPage" TextColor="{DynamicResource Primary}"
-                        x:Name="EditBtn"/>
-                    <Button Text="Quiz" BackgroundColor="{DynamicResource Primary}" WidthRequest="75" Margin="5,0" Clicked="BtnQuizPage" TextColor="{DynamicResource Primary}"
-                        x:Name="QuizBtn"/>
-                    <Button Text="Review" BackgroundColor="{DynamicResource Primary}" WidthRequest="75" Margin="5,0" Clicked="BtnReviewPage" TextColor="{DynamicResource Primary}"
-                        x:Name="ReviewBtn"/>
-                </HorizontalStackLayout>
-
-                <HorizontalStackLayout Margin="0,10,0,10" HorizontalOptions="End" VerticalOptions="End">
-                    <Button Text="Add" BackgroundColor="{DynamicResource Accent}" WidthRequest="75" Margin="5,0"
-                        x:Name="AddSetBtn" Clicked="BtnAddSet" TextColor="{DynamicResource Primary}"/>
-                </HorizontalStackLayout>
-
+            <VerticalStackLayout Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" VerticalOptions="Start" HorizontalOptions="End" Margin="0, 0, 50, 0" BackgroundColor="Transparent"
+                WidthRequest="200">
+                <Button Text="Settings" BackgroundColor="Transparent" FontSize="18" HeightRequest="25" Margin="0" FontAttributes="Bold"
+                    Clicked="BtnSettings"/>
+                <Button Text="Sign Out" BackgroundColor="Transparent" FontSize="18" HeightRequest="25" Margin="0" FontAttributes="Bold"
+                    Clicked="BtnSignOut"/>
             </VerticalStackLayout>
+        </Grid>
+        <!--END MASTER NAVBAR-->
+
+        <VerticalStackLayout Margin="55" Grid.Column="0" Grid.Row="1" HeightRequest="525">
+
+            <SearchBar WidthRequest="275" HeightRequest="10" Placeholder="Search for..." HorizontalOptions="End"
+                BackgroundColor="{DynamicResource Tertiary}" TextColor="{DynamicResource MainText}"/>
+
+            <Label Text="Search By" Margin="65,15,0,5" TextColor="{DynamicResource MainText}"/>
+            <Picker TextColor="{DynamicResource MainText}" BackgroundColor="{DynamicResource Tertiary}"  Margin="65,0,0,0">
+                <Picker.ItemsSource>
+                    <x:Array Type="{x:Type x:String}">
+                        <x:String>Author</x:String>
+                        <x:String>Title</x:String>
+                    </x:Array>
+                </Picker.ItemsSource>
+            </Picker>
+
+            <Label Text="Sort By" Margin="65,15,0,5" TextColor="{DynamicResource MainText}"/>
+            <Picker TextColor="{DynamicResource MainText}" BackgroundColor="{DynamicResource Tertiary}" Margin="65,0,0,0">
+                <Picker.ItemsSource>
+                    <x:Array Type="{x:Type x:String}">
+                        <x:String>Alphabetical A-Z</x:String>
+                        <x:String>Alphabetical Z-A</x:String>
+                        <x:String>Date Oldest</x:String>
+                        <x:String>Date Newest</x:String>
+                    </x:Array>
+                </Picker.ItemsSource>
+            </Picker>
+
+            <HorizontalStackLayout Margin="65, 5, 0, 5">
+                <CheckBox Color="{DynamicResource Accent}"/>
+                <Label Text="Filter by Date Range" VerticalOptions="Center" TextColor="{DynamicResource MainText}"/>
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout Margin="65, 10, 0, 10">
+                <Label Text="Range Start:" VerticalOptions="Center" Margin="0,0,50,0" TextColor="{DynamicResource MainText}"/>
+                <Entry WidthRequest="140" TextColor="{DynamicResource MainText}" BackgroundColor="{DynamicResource Tertiary}"/>
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout Margin="65, 10, 0, 10">
+                <Label Text="Range End:" VerticalOptions="Center" Margin="0,0,57,0" TextColor="{DynamicResource MainText}"/>
+                <Entry WidthRequest="140" TextColor="{DynamicResource MainText}" BackgroundColor="{DynamicResource Tertiary}"/>
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout Margin="0,10,0,10" HorizontalOptions="End" VerticalOptions="End">
+                <Button Text="Edit" BackgroundColor="{DynamicResource Primary}" WidthRequest="75" Margin="5,0" Clicked="BtnEditPage" TextColor="{DynamicResource Primary}"
+                    x:Name="EditBtn"/>
+                <Button Text="Quiz" BackgroundColor="{DynamicResource Primary}" WidthRequest="75" Margin="5,0" Clicked="BtnQuizPage" TextColor="{DynamicResource Primary}"
+                    x:Name="QuizBtn"/>
+                <Button Text="Review" BackgroundColor="{DynamicResource Primary}" WidthRequest="75" Margin="5,0" Clicked="BtnReviewPage" TextColor="{DynamicResource Primary}"
+                    x:Name="ReviewBtn"/>
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout Margin="0,10,0,10" HorizontalOptions="End" VerticalOptions="End">
+                <Button Text="Add" BackgroundColor="{DynamicResource Accent}" WidthRequest="75" Margin="5,0"
+                    x:Name="AddSetBtn" Clicked="BtnAddSet" TextColor="{DynamicResource Primary}"/>
+            </HorizontalStackLayout>
+
+        </VerticalStackLayout>
 
         <VerticalStackLayout Grid.Row="1" Grid.Column="1" VerticalOptions="Center">
             <Border BackgroundColor="{DynamicResource Accent}" HeightRequest="500"/>
