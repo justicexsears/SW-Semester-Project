@@ -16,7 +16,7 @@
 
 
     <Grid RowDefinitions="Auto,*, Auto" ColumnDefinitions="1.25*,5,3*">
-        <FlexLayout BackgroundColor="#191919" Grid.ColumnSpan="3"  JustifyContent="SpaceBetween" Padding="10, 0">
+        <FlexLayout BackgroundColor="{DynamicResource Primary}" Grid.ColumnSpan="3"  JustifyContent="SpaceBetween" Padding="10, 0">
             <HorizontalStackLayout>
                 <ImageButton Source="left_arrow.png" WidthRequest="75" HorizontalOptions="Start"  BackgroundColor="Transparent"/>
                 <Label Style="{StaticResource Label Font}" Text="Editing" VerticalOptions="Center" Padding="20" FontSize="30" TextColor="#e5e3bd"/>

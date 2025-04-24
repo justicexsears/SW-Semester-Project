@@ -6,10 +6,10 @@
              
 
     <Grid RowDefinitions="80,*" ColumnDefinitions="450,5,*">
-        <HorizontalStackLayout BackgroundColor="{DynamicResource Primary}" Grid.ColumnSpan="3">
+        <HorizontalStackLayout BackgroundColor="{DynamicResource Primary}" Grid.ColumnSpan="3" Padding="15">
             <ImageButton Source="left_arrow.png" WidthRequest="75" HorizontalOptions="Start"  BackgroundColor="Transparent" Clicked="BtnBack"/>
             <Label WidthRequest="1115" VerticalOptions="Center" Padding="20" FontSize="30" TextColor="#e5e3bd"/> 
-            <ImageButton Source="logo.png" WidthRequest="75" BackgroundColor="Transparent">
+            <ImageButton Source="logo.png" WidthRequest="75" BackgroundColor="Transparent" Margin="0, 0, 20, 0">
                 <FlyoutBase.ContextFlyout>
                     <MenuFlyout>
                         <MenuFlyoutItem Text="Settings" Clicked="BtnSettings"/>
