@@ -30,7 +30,7 @@
                                         <DataTemplate>
                                                 <Border Margin="10, 10, 10, 5" Padding="5" BackgroundColor="Transparent" StrokeShape="RoundRectangle 12" 
                                                         HeightRequest="65" WidthRequest="325" Stroke="{Binding IsHighlighted, Converter={StaticResource BoolToColorConverter}}" StrokeThickness="3">
-                                                        <Border BackgroundColor="#3f3c40" StrokeShape="RoundRectangle 8">
+                                                        <Border BackgroundColor="{DynamicResource Tertiary}" StrokeShape="RoundRectangle 8">
                                                                 <Grid>
                                                                         <Grid.RowDefinitions>
                                                                                 <RowDefinition Height="*" /> <!-- This takes up the entire vertical space -->

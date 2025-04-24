@@ -95,7 +95,7 @@ namespace SemesterProject.Controllers
         {
             FlashCards = new ObservableCollection<FlashCardConverter>();
 
-            DisplayCard("Example");
+            //DisplayCard("Example");
 
             view.ItemsSource = FlashCards;
         }

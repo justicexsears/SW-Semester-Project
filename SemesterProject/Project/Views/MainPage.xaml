@@ -21,11 +21,11 @@
 
             <VerticalStackLayout Margin="55" Grid.Column="0" Grid.Row="1" HeightRequest="525">
 
-                <SearchBar WidthRequest="200" HeightRequest="10" Placeholder="Search for..."
+                <SearchBar WidthRequest="275" HeightRequest="10" Placeholder="Search for..." HorizontalOptions="End"
                     BackgroundColor="{DynamicResource Tertiary}" TextColor="{DynamicResource MainText}"/>
 
-                <Label Text="Search By" Margin="0,15,0,5" TextColor="{DynamicResource MainText}"/>
-                <Picker TextColor="{DynamicResource MainText}" BackgroundColor="{DynamicResource Tertiary}">
+                <Label Text="Search By" Margin="65,15,0,5" TextColor="{DynamicResource MainText}"/>
+                <Picker TextColor="{DynamicResource MainText}" BackgroundColor="{DynamicResource Tertiary}"  Margin="65,0,0,0">
                     <Picker.ItemsSource>
                         <x:Array Type="{x:Type x:String}">
                             <x:String>Author</x:String>
@@ -34,8 +34,8 @@
                     </Picker.ItemsSource>
                 </Picker>
 
-                <Label Text="Sort By" Margin="0,15,0,5" TextColor="{DynamicResource MainText}"/>
-                <Picker TextColor="{DynamicResource MainText}" BackgroundColor="{DynamicResource Tertiary}">
+                <Label Text="Sort By" Margin="65,15,0,5" TextColor="{DynamicResource MainText}"/>
+                <Picker TextColor="{DynamicResource MainText}" BackgroundColor="{DynamicResource Tertiary}" Margin="65,0,0,0">
                     <Picker.ItemsSource>
                         <x:Array Type="{x:Type x:String}">
                             <x:String>Alphabetical A-Z</x:String>
@@ -46,25 +46,28 @@
                     </Picker.ItemsSource>
                 </Picker>
 
-                <HorizontalStackLayout Margin="5">
+                <HorizontalStackLayout Margin="65, 5, 0, 5">
                     <CheckBox Color="{DynamicResource Accent}"/>
                     <Label Text="Filter by Date Range" VerticalOptions="Center" TextColor="{DynamicResource MainText}"/>
                 </HorizontalStackLayout>
 
-                <HorizontalStackLayout Margin="10">
+                <HorizontalStackLayout Margin="65, 10, 0, 10">
                     <Label Text="Range Start:" VerticalOptions="Center" Margin="0,0,50,0" TextColor="{DynamicResource MainText}"/>
-                    <Entry WidthRequest="100" TextColor="{DynamicResource MainText}" BackgroundColor="{DynamicResource Tertiary}"/>
+                    <Entry WidthRequest="140" TextColor="{DynamicResource MainText}" BackgroundColor="{DynamicResource Tertiary}"/>
                 </HorizontalStackLayout>
 
-                <HorizontalStackLayout Margin="10">
+                <HorizontalStackLayout Margin="65, 10, 0, 10">
                     <Label Text="Range End:" VerticalOptions="Center" Margin="0,0,57,0" TextColor="{DynamicResource MainText}"/>
-                    <Entry WidthRequest="100" TextColor="{DynamicResource MainText}" BackgroundColor="{DynamicResource Tertiary}"/>
+                    <Entry WidthRequest="140" TextColor="{DynamicResource MainText}" BackgroundColor="{DynamicResource Tertiary}"/>
                 </HorizontalStackLayout>
 
                 <HorizontalStackLayout Margin="0,10,0,10" HorizontalOptions="End" VerticalOptions="End">
-                    <Button Text="Edit" BackgroundColor="{DynamicResource Accent}" WidthRequest="75" Margin="5,0" Clicked="BtnEditPage" TextColor="{DynamicResource MainText}"/>
-                    <Button Text="Quiz" BackgroundColor="{DynamicResource Accent}" WidthRequest="75" Margin="5,0" Clicked="BtnQuizPage" TextColor="{DynamicResource MainText}"/>
-                    <Button Text="Review" BackgroundColor="{DynamicResource Accent}" WidthRequest="75" Margin="5,0" Clicked="BtnReviewPage" TextColor="{DynamicResource MainText}"/>
+                    <Button Text="Edit" BackgroundColor="{DynamicResource Primary}" WidthRequest="75" Margin="5,0" Clicked="BtnEditPage" TextColor="{DynamicResource MainText}"
+                        x:Name="EditBtn"/>
+                    <Button Text="Quiz" BackgroundColor="{DynamicResource Primary}" WidthRequest="75" Margin="5,0" Clicked="BtnQuizPage" TextColor="{DynamicResource MainText}"
+                        x:Name="QuizBtn"/>
+                    <Button Text="Review" BackgroundColor="{DynamicResource Primary}" WidthRequest="75" Margin="5,0" Clicked="BtnReviewPage" TextColor="{DynamicResource MainText}"
+                        x:Name="ReviewBtn"/>
                 </HorizontalStackLayout>
 
                 <HorizontalStackLayout Margin="0,10,0,10" HorizontalOptions="End" VerticalOptions="End">
@@ -86,18 +89,24 @@
 
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <VerticalStackLayout>
-                        <Border Margin="10,15,10,5" BackgroundColor="{DynamicResource Tertiary}" StrokeShape="RoundRectangle 8" HeightRequest="100" WidthRequest="150">
-                            
-                            <VerticalStackLayout>
-                                <Label Text="{Binding SetName}" Margin="10,5" TextColor="{DynamicResource MainText}"/>  
-                                <Label Text="{Binding SetAuth}" Margin="10,5" TextColor="{DynamicResource MainText}"/>
-                                <Label Text="{Binding SetDate}" Margin="10,5" TextColor="{DynamicResource MainText}"/>
-                            </VerticalStackLayout>                     
-                        </Border>
+                        <Border Margin="10, 15, 10, 5" Padding="5" BackgroundColor="Transparent" StrokeShape="RoundRectangle 12" 
+                            HeightRequest="160" WidthRequest="220" Stroke="{Binding IsHighlighted, Converter={StaticResource BoolToColorConverter}}" StrokeThickness="3">
+                            <Border BackgroundColor="{DynamicResource Primary}" StrokeShape="RoundRectangle 8" Stroke="Transparent">
+                                <Grid RowDefinitions="7*, 3*" ColumnDefinitions="*,*">
+                                    <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="{Binding SetName}" TextColor="{DynamicResource MainText}"
+                                        VerticalOptions="Center" HorizontalOptions="Center"/>  
 
-                        
-                    </VerticalStackLayout>
+                                    <BoxView Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" BackgroundColor="{DynamicResource Accent}"></BoxView>
+                                    <Label Grid.Row="1" Grid.Column="0" Text="{Binding SetAuth}" Margin="10, 8" TextColor="{DynamicResource Primary}" 
+                                        VerticalOptions="Start" HorizontalOptions="Start" FontSize="12" FontAttributes="Bold"/>
+                                    <Label Grid.Row="1" Grid.Column="1" Text="{Binding SetDate}" Margin="10, 8" TextColor="{DynamicResource Primary}" 
+                                        VerticalOptions="Start" HorizontalOptions="End" FontSize="12" FontAttributes="Bold"/>
+
+                                    <Button Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="2" Background="Transparent"
+                                        Clicked="BtnSelectSet" Pressed="BtnPressed" Released="BtnReleased" CommandParameter="{Binding SetID}"/>
+                                </Grid>
+                            </Border>
+                        </Border>
                  </DataTemplate>
              </CollectionView.ItemTemplate>
          </CollectionView>
