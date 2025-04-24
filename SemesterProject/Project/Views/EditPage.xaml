@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SemesterProject.EditPage"
              xmlns:converters="clr-namespace:SemesterProject.Converters"
-             BackgroundColor ="#3f3c40">
+             BackgroundColor ="{DynamicResource Secondary}">
 
 
     <ContentPage.Resources>
@@ -104,11 +104,14 @@
 
         <VerticalStackLayout Grid.Column="2" Grid.Row="1" Margin="25">
             <HorizontalStackLayout>
-                <Label Style="{StaticResource Label Font}" Text="Author Name" Margin="5" WidthRequest="175" FontSize="20" TextColor="#e5e3bd" HorizontalOptions="Start" FontAttributes="Bold"/>
-                <Label Style="{StaticResource Label Font}" Text="Last Edited" Margin="5" WidthRequest="175" FontSize="20" TextColor="#e5e3bd" FontAttributes="Bold"/>
+                <Label Style="{StaticResource Label Font}" Text="Author Name" Margin="5" WidthRequest="175" FontSize="20" TextColor="#e5e3bd" HorizontalOptions="Start" FontAttributes="Bold"
+                    x:Name="authorLbl"/>
+                <Label Style="{StaticResource Label Font}" Text="Last Edited" Margin="5" WidthRequest="175" FontSize="20" TextColor="#e5e3bd" FontAttributes="Bold"
+                    x:Name="lastEditedLbl"/>
             </HorizontalStackLayout>
 
-            <Label Style="{StaticResource Label Font}" Text="Stack title" FontSize="38" FontAttributes="Bold" TextColor="#e5e3bd" Margin="0,10"/>
+            <Label Style="{StaticResource Label Font}" Text="Stack title" FontSize="38" FontAttributes="Bold" TextColor="#e5e3bd" Margin="0,10"
+                x:Name="stackNameLbl"/>
 
             <Grid ColumnDefinitions="1*,1*" RowDefinitions="Auto, *" Padding="10" HeightRequest="350" WidthRequest="800" Margin="10, 0, 10, 10" >
                 
@@ -122,7 +125,8 @@
                         <Label Text="Question:" FontSize="14" FontAttributes="Bold" Margin="0,10,0,0" TextColor="Black"/>
                         <Border Stroke="{DynamicResource Primary}" StrokeShape="RoundRectangle 8" HeightRequest="200">
                             
-                        <Editor Placeholder="Enter your question..." FontSize="16" AutoSize="TextChanges" TextColor="Black"/>
+                        <Editor Placeholder="Enter your question..." FontSize="16" AutoSize="TextChanges" TextColor="Black"
+                            x:Name="qEditor"/>
                         </Border>
 
                     </VerticalStackLayout>
@@ -135,23 +139,23 @@
 
                         <Label Text="Answer (Short):" FontSize="14" FontAttributes="Bold" TextColor="Black"/>
                         <Border Stroke="{DynamicResource Primary}" StrokeShape="RoundRectangle 8" Padding="5" >
-                            <Entry Placeholder="Enter short answer..." FontSize="16" TextColor="Black" BackgroundColor="Transparent"/>
+                            <Entry Placeholder="Enter short answer..." FontSize="16" TextColor="{DynamicResource Black}" BackgroundColor="Transparent"
+                                x:Name="aShortEditor"/>
                         </Border>
 
                         <Label Text="Extra Information:" FontSize="14" FontAttributes="Bold" Margin="0,10,0,0" TextColor="Black"/>
                         <Border Stroke="{DynamicResource Primary}" StrokeShape="RoundRectangle 8" Padding="5" HeightRequest="120">
-                            <Editor Placeholder="Enter detailed explanation..." 
-                                    FontSize="14" 
-                                    AutoSize="TextChanges" 
-                                    TextColor="Black" 
-                                    BackgroundColor="Transparent"
-                                    />
+                            <Editor Placeholder="Enter detailed explanation..." x:Name="aLongEditor"
+                                    FontSize="14" AutoSize="TextChanges" TextColor="{DynamicResource Black}" BackgroundColor="Transparent"/>
                         </Border>
 
                     </VerticalStackLayout>
 
                 </Border>
+
+                <BoxView x:Name="previewShield" Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" Grid.ColumnSpan="2" ZIndex="-1" BackgroundColor="{DynamicResource Secondary}"></BoxView>
             </Grid>
+
         </VerticalStackLayout>
         <FlexLayout Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" JustifyContent="Center" AlignItems="Center" BackgroundColor="Transparent" Padding="20" >
 
