@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SemesterProject.EditPage"
              xmlns:converters="clr-namespace:SemesterProject.Converters"
-             BackgroundColor ="#3f3c40">
+             BackgroundColor ="{DynamicResource Secondary}">
 
 
     <ContentPage.Resources>
@@ -16,67 +16,41 @@
 
 
     <Grid RowDefinitions="Auto,*, Auto" ColumnDefinitions="1.25*,5,3*">
-        <FlexLayout BackgroundColor="#191919" Grid.ColumnSpan="3"  JustifyContent="SpaceBetween" Padding="10, 0">
+        <!--BEGIN MASTER NAVBAR-->
+        <FlexLayout BackgroundColor="{DynamicResource Primary}" Grid.ColumnSpan="3"  JustifyContent="SpaceBetween" Padding="10, 0">
             <HorizontalStackLayout>
-                <ImageButton Source="left_arrow.png" WidthRequest="75" HorizontalOptions="Start"  BackgroundColor="Transparent"/>
-                <Label Style="{StaticResource Label Font}" Text="Editing" VerticalOptions="Center" Padding="20" FontSize="30" TextColor="#e5e3bd"/>
+                <ImageButton Source="left_arrow.png" WidthRequest="75" HorizontalOptions="Start"  BackgroundColor="Transparent" Clicked="BtnBack" Scale="0.75"/>
+                <Label Style="{StaticResource Label Font}" Text="Editing" VerticalOptions="Center" Padding="20" FontSize="30" TextColor="{DynamicResource HeaderText}"/>
             </HorizontalStackLayout>
             <HorizontalStackLayout>
-                <ImageButton Source="hamburger_icon.png" WidthRequest="75" HorizontalOptions="Start"  BackgroundColor="Transparent"/>
-                <ImageButton Source="logo.png" WidthRequest="75" Background="Transparent" HorizontalOptions="End"/>
+                <ImageButton Source="hamburger_icon.png" WidthRequest="75" HorizontalOptions="Start"  BackgroundColor="Transparent" Clicked="BtnMenuPopout" Scale="0.5"/>
+                <ImageButton Source="logo.png" WidthRequest="75" Background="Transparent" HorizontalOptions="End" Clicked="BtnHome" Scale="0.75"/>
             </HorizontalStackLayout>
         </FlexLayout>
 
+        <Grid Grid.Row="0" Grid.RowSpan="2" Grid.Column="2" WidthRequest="350" HeightRequest="200" RowDefinitions="1*, 1*, 2*" ColumnDefinitions="3*, 2*" 
+            VerticalOptions="Start" HorizontalOptions="End" ZIndex="3" IsVisible="False" x:Name="MenuPopout" Margin="0, 0, -50, 0">
+            <Border Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="2" Stroke="Transparent" StrokeShape="RoundRectangle 20" BackgroundColor="{DynamicResource Accent}"
+                />
 
-        <!-- DUMMY CARD SET
-        <ScrollView Grid.Column="0" Grid.Row="1" Margin="20" Orientation="Both">
-            <VerticalStackLayout Margin="25">
+            <ImageButton Source="ui_exitdark.png" Grid.Row="0" Grid.Column="0" HorizontalOptions="Start" WidthRequest="35" BackgroundColor="Transparent" Clicked="BtnMenuPopoutClose"
+                Aspect="AspectFit" Scale="0.5"/>
 
-                <HorizontalStackLayout HorizontalOptions="Center" Spacing="10" Margin="0, 10">
-                    <Label  Text="01" FontSize="14" TextColor="#99cc99" FontAttributes="Bold" VerticalOptions="Center"/>
-                    <Border BackgroundColor="White" StrokeThickness="5" Stroke="#99cc99" StrokeShape="RoundRectangle 20" Padding="10" HeightRequest="150" WidthRequest="200">
-                        <VerticalStackLayout VerticalOptions="Center">
+            <Label Text="Profile N." Grid.Row="1" Grid.Column="0" HorizontalOptions="Start" VerticalOptions="Center" TextColor="{DynamicResource Primary}" FontSize="24"
+                FontAttributes="Bold" Margin="30, 0, 15, 0" x:Name="MenuProfileNameLbl"/>
+            
+            <Image Source="pfpdark.png" Grid.Row="0" Grid.RowSpan="3" Grid.Column="1" Aspect="AspectFit" HorizontalOptions="Start" VerticalOptions="Center"
+                Margin="15, 20, 0, 80" HeightRequest="50"/>
 
-                            <Label Style="{StaticResource Label Font}" Text="What are the three form of rocks?" TextColor="#191919" HorizontalTextAlignment="Center"/>
-                        </VerticalStackLayout>
-                    </Border>
-                </HorizontalStackLayout>
-
-
-                <HorizontalStackLayout HorizontalOptions="Center" Spacing="10" Margin="0, 10">
-                    <Label  Text="02" FontSize="14" TextColor="#99cc99" FontAttributes="Bold" VerticalOptions="Center"/>
-                    <Border BackgroundColor="White" StrokeShape="RoundRectangle 20" Padding="10" HeightRequest="150" WidthRequest="200">
-                        <VerticalStackLayout VerticalOptions="Center">
-
-                            <Label Style="{StaticResource Label Font}" Text="What are the three form of rocks?" TextColor="#191919" HorizontalTextAlignment="Center"/>
-                        </VerticalStackLayout>
-                    </Border>
-                </HorizontalStackLayout>
-
-                <HorizontalStackLayout HorizontalOptions="Center" Spacing="10" Margin="0, 10">
-                    <Label  Text="03" FontSize="14" TextColor="#99cc99" FontAttributes="Bold" VerticalOptions="Center"/>
-                    <Border BackgroundColor="White" StrokeThickness="5" Stroke="Transparent" StrokeShape="RoundRectangle 20" Padding="10" HeightRequest="150" WidthRequest="200">
-                        <VerticalStackLayout VerticalOptions="Center">
-
-                            <Label Style="{StaticResource Label Font}" Text="What are the three form of rocks?" TextColor="#191919" HorizontalTextAlignment="Center"/>
-                        </VerticalStackLayout>
-                    </Border>
-                </HorizontalStackLayout>
-
-                <HorizontalStackLayout HorizontalOptions="Center" Spacing="10" Margin="0, 10">
-                    <Label  Text="05" FontSize="14" TextColor="#99cc99" FontAttributes="Bold" VerticalOptions="Center"/>
-                    <Border BackgroundColor="White" StrokeThickness="5" Stroke="Transparent" StrokeShape="RoundRectangle 20" Padding="10" HeightRequest="150" WidthRequest="200">
-                        <VerticalStackLayout VerticalOptions="Center">
-
-                            <Label Style="{StaticResource Label Font}" Text="What are the three form of rocks?" TextColor="#191919" HorizontalTextAlignment="Center"/>
-                        </VerticalStackLayout>
-                    </Border>
-                </HorizontalStackLayout>
-
-
+            <VerticalStackLayout Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" VerticalOptions="Start" HorizontalOptions="End" Margin="0, 0, 50, 0" BackgroundColor="Transparent"
+                WidthRequest="200">
+                <Button Text="Settings" BackgroundColor="Transparent" FontSize="18" HeightRequest="25" Margin="0" FontAttributes="Bold"
+                    Clicked="BtnSettings"/>
+                <Button Text="Sign Out" BackgroundColor="Transparent" FontSize="18" HeightRequest="25" Margin="0" FontAttributes="Bold"
+                    Clicked="BtnSignOut"/>
             </VerticalStackLayout>
-        </ScrollView>
-        -->
+        </Grid>
+        <!--END MASTER NAVBAR-->
 
         <CollectionView x:Name ="CollCards" Margin="20" Grid.Column="0" Grid.Row="1">
 
@@ -85,30 +59,56 @@
             </CollectionView.ItemsLayout>
 
             <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                            <Border Margin="10, 10, 10, 5" Padding="5" BackgroundColor="Transparent" StrokeShape="RoundRectangle 12" 
-                                    HeightRequest="65" WidthRequest="325" Stroke="{Binding IsHighlighted, Converter={StaticResource BoolToColorConverter}}" StrokeThickness="3">
-                                    <Border BackgroundColor="White" StrokeShape="RoundRectangle 8">
-                                        <Label/>
-                                    </Border>
+                <DataTemplate>
+                    <HorizontalStackLayout HorizontalOptions="Center" Spacing="10" Margin="10, 10" Padding="7">
+                        <Border BackgroundColor="{DynamicResource Tertiary}" HeightRequest="30" WidthRequest="30" StrokeShape="RoundRectangle 4">
+                            <Label  Text="{Binding CardID}" FontSize="14" TextColor="{DynamicResource Accent}" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="Center"/>
+                        </Border>
+
+                        <Border Margin="10, 15, 10, 5" Padding="5" BackgroundColor="Transparent" StrokeShape="RoundRectangle 20" 
+                            HeightRequest="150" WidthRequest="200" Stroke="{Binding IsHighlighted, Converter={StaticResource BoolToColorConverter}}" StrokeThickness="3">
+                            <Border BackgroundColor="{DynamicResource Tertiary}" StrokeShape="RoundRectangle 13" Stroke="Transparent">
+                                <Grid RowDefinitions="*" ColumnDefinitions="*">
+                                    <Label Text="{Binding CardQ}" TextColor="{DynamicResource MainText}" VerticalOptions="Center" HorizontalOptions="Center" Margin="10"/>  
+
+                                    <Button Background="Transparent" Clicked="BtnSelectCard" Pressed="BtnPressed" Released="BtnReleased" CommandParameter="{Binding CardID}"/>
+                                </Grid>
                             </Border>
-                    </DataTemplate>
+                        </Border>
+
+                        
+                    </HorizontalStackLayout>
+                </DataTemplate>
             </CollectionView.ItemTemplate>
 
         </CollectionView>
 
+        <Border BackgroundColor="Transparent" StrokeShape="RoundRectangle 20" Grid.Row="2" Grid.Column="0" Margin="50, 0, 0, 0"
+            HeightRequest="50" WidthRequest="160" Stroke="{Binding IsHighlighted, Converter={StaticResource BoolToColorConverter}}" StrokeThickness="3">
+            <Border BackgroundColor="{DynamicResource Accent}" StrokeShape="RoundRectangle 8" Stroke="Transparent">
+                <Grid RowDefinitions="*" ColumnDefinitions="*">
+                    <Label Text="New Card" TextColor="{DynamicResource Primary}" VerticalOptions="Center" HorizontalOptions="Center"/>  
+
+                    <Button Background="Transparent" Clicked="BtnAddCard" Pressed="BtnPressed" Released="BtnReleased"/>
+                </Grid>
+            </Border>
+        </Border>
+
         <!-- Center Separator-->
-        <VerticalStackLayout Grid.Row="1" Grid.Column="1" VerticalOptions="Center">
+        <VerticalStackLayout Grid.Row="1" Grid.Column="1"  Grid.RowSpan="2" VerticalOptions="Center">
             <Border BackgroundColor="{DynamicResource Accent}" HeightRequest="500"/>
         </VerticalStackLayout>
 
         <VerticalStackLayout Grid.Column="2" Grid.Row="1" Margin="25">
             <HorizontalStackLayout>
-                <Label Style="{StaticResource Label Font}" Text="Author Name" Margin="5" WidthRequest="175" FontSize="20" TextColor="#e5e3bd" HorizontalOptions="Start" FontAttributes="Bold"/>
-                <Label Style="{StaticResource Label Font}" Text="Last Edited" Margin="5" WidthRequest="175" FontSize="20" TextColor="#e5e3bd" FontAttributes="Bold"/>
+                <Label Style="{StaticResource Label Font}" Text="Author Name" Margin="5" WidthRequest="175" FontSize="20" TextColor="#e5e3bd" 
+                    HorizontalOptions="Start" FontAttributes="Bold" x:Name="authorLbl"/>
+                <Label Style="{StaticResource Label Font}" Text="Last Edited" Margin="5" WidthRequest="175" FontSize="20" TextColor="#e5e3bd" 
+                    FontAttributes="Bold" x:Name="lastEditedLbl"/>
             </HorizontalStackLayout>
 
-            <Label Style="{StaticResource Label Font}" Text="Stack title" FontSize="38" FontAttributes="Bold" TextColor="#e5e3bd" Margin="0,10"/>
+            <Label Style="{StaticResource Label Font}" Text="Stack title" FontSize="38" FontAttributes="Bold" TextColor="#e5e3bd" Margin="0,10"
+                x:Name="stackNameLbl"/>
 
             <Grid ColumnDefinitions="1*,1*" RowDefinitions="Auto, *" Padding="10" HeightRequest="350" WidthRequest="800" Margin="10, 0, 10, 10" >
                 
@@ -122,7 +122,8 @@
                         <Label Text="Question:" FontSize="14" FontAttributes="Bold" Margin="0,10,0,0" TextColor="Black"/>
                         <Border Stroke="{DynamicResource Primary}" StrokeShape="RoundRectangle 8" HeightRequest="200">
                             
-                        <Editor Placeholder="Enter your question..." FontSize="16" AutoSize="TextChanges" TextColor="Black"/>
+                        <Editor Placeholder="Enter your question..." FontSize="16" AutoSize="TextChanges" TextColor="Black"
+                            x:Name="qEditor"/>
                         </Border>
 
                     </VerticalStackLayout>
@@ -135,59 +136,82 @@
 
                         <Label Text="Answer (Short):" FontSize="14" FontAttributes="Bold" TextColor="Black"/>
                         <Border Stroke="{DynamicResource Primary}" StrokeShape="RoundRectangle 8" Padding="5" >
-                            <Entry Placeholder="Enter short answer..." FontSize="16" TextColor="Black" BackgroundColor="Transparent"/>
+                            <Entry Placeholder="Enter short answer..." FontSize="16" TextColor="{DynamicResource Black}" BackgroundColor="Transparent"
+                                x:Name="aShortEditor"/>
                         </Border>
 
                         <Label Text="Extra Information:" FontSize="14" FontAttributes="Bold" Margin="0,10,0,0" TextColor="Black"/>
                         <Border Stroke="{DynamicResource Primary}" StrokeShape="RoundRectangle 8" Padding="5" HeightRequest="120">
-                            <Editor Placeholder="Enter detailed explanation..." 
-                                    FontSize="14" 
-                                    AutoSize="TextChanges" 
-                                    TextColor="Black" 
-                                    BackgroundColor="Transparent"
-                                    />
+                            <Editor Placeholder="Enter detailed explanation..." x:Name="aLongEditor"
+                                    FontSize="14" AutoSize="TextChanges" TextColor="{DynamicResource Black}" BackgroundColor="Transparent"/>
                         </Border>
 
                     </VerticalStackLayout>
 
                 </Border>
+
+                <BoxView x:Name="previewShield" Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" Grid.ColumnSpan="2" ZIndex="-1" BackgroundColor="{DynamicResource Secondary}"></BoxView>
             </Grid>
+
         </VerticalStackLayout>
         <FlexLayout Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" JustifyContent="Center" AlignItems="Center" BackgroundColor="Transparent" Padding="20" >
-
-            <!-- Swap Face Contents 
-            <Grid RowDefinitions="*" ColumnDefinitions="Auto, *">
-
-                <Border Grid.Row="0" Grid.Column="0" Margin="5" VerticalOptions="Center" HorizontalOptions="Center" StrokeShape="RoundRectangle 20"
-                        BackgroundColor="{DynamicResource Accent}" WidthRequest="37" HeightRequest="37" InputTransparent="True"/>
-
-                <Image Source ="swap_icondark.png" Grid.Row="0" Grid.Column="0" VerticalOptions="Center" HorizontalOptions="Center"
-                        Aspect="AspectFit" Background="Transparent" Margin="5" InputTransparent="True"/>
-
-                <Button BackgroundColor="Transparent" WidthRequest="15" Grid.Row="0" Grid.Column="0"/>
-
-
-                <Label Text="Swap Face Contents" TextColor="#e5e3bd" FontSize="14" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"
-                    Grid.Row="0" Grid.Column="1"/>
-            </Grid>
-            -->
-
-            <!-- Spacer 
-            <BoxView WidthRequest="100"/>-->
-
             <!-- Navigation Arrows -->
             <HorizontalStackLayout HorizontalOptions="Center">
+                <Border BackgroundColor="Transparent" StrokeShape="RoundRectangle 20" Margin="25, 0, 15, 0"
+                    HeightRequest="50" WidthRequest="100" Stroke="{Binding IsHighlighted, Converter={StaticResource BoolToColorConverter}}" StrokeThickness="3">
+                    <Border BackgroundColor="{DynamicResource Accent}" StrokeShape="RoundRectangle 8" Stroke="Transparent">
+                        <Grid RowDefinitions="*" ColumnDefinitions="*">
+                            <Label Text="Move Card" TextColor="{DynamicResource Primary}" VerticalOptions="Center" HorizontalOptions="Center"/>  
 
-                <ImageButton Source="left_arrow.png" WidthRequest="75" HorizontalOptions="Start"  BackgroundColor="Transparent"/>
-                <Border Margin="10" BackgroundColor="#2f2e2f" StrokeShape="RoundRectangle 12" WidthRequest="100" HeightRequest="40">
-                    <Label Text="01"
-                HorizontalOptions="Center"
-                VerticalOptions="Center"
-                FontSize="18"
-                FontAttributes="Bold"
-                TextColor="AliceBlue"/>
+                            <Button Background="Transparent" Clicked="BtnMoveCard" Pressed="BtnPressed" Released="BtnReleased"/>
+                        </Grid>
+                    </Border>
                 </Border>
-                <ImageButton Source="left_arrow.png" WidthRequest="75" HorizontalOptions="Start"  BackgroundColor="Transparent" ScaleX="-1"/>
+
+                <Border BackgroundColor="Transparent" StrokeShape="RoundRectangle 20" Margin="0, 0, 50, 0"
+                    HeightRequest="50" WidthRequest="100" Stroke="{Binding IsHighlighted, Converter={StaticResource BoolToColorConverter}}" StrokeThickness="3">
+                    <Border BackgroundColor="{DynamicResource Accent}" StrokeShape="RoundRectangle 8" Stroke="Transparent">
+                        <Grid RowDefinitions="*" ColumnDefinitions="*">
+                            <Label Text="Delete" TextColor="{DynamicResource Primary}" VerticalOptions="Center" HorizontalOptions="Center"/>  
+
+                            <Button Background="Transparent" Clicked="BtnDeleteCard" Pressed="BtnPressed" Released="BtnReleased"/>
+                        </Grid>
+                    </Border>
+                </Border>
+
+                <ImageButton Source="left_arrow.png" WidthRequest="75" HorizontalOptions="Start"  BackgroundColor="Transparent"
+                    Clicked="BtnPrevCard"/>
+
+                <Border Margin="10" BackgroundColor="#2f2e2f" StrokeShape="RoundRectangle 12" WidthRequest="100" HeightRequest="40">
+                    <Entry Text="1" HorizontalOptions="Center" VerticalOptions="Center" FontSize="18" FontAttributes="Bold" WidthRequest="95"
+                        TextColor="{DynamicResource HeaderText}" Placeholder="" PlaceholderColor="{DynamicResource HeaderText}"
+                        Completed="EntryCardSelection" Unfocused="EntryCardSelection" x:Name="indexSelector" Visual="None" HorizontalTextAlignment="Center"/>
+                </Border>
+
+                <ImageButton Source="left_arrow.png" WidthRequest="75" HorizontalOptions="Start"  BackgroundColor="Transparent" ScaleX="-1"
+                    Clicked="BtnNextCard"/>
+
+                <Border BackgroundColor="Transparent" StrokeShape="RoundRectangle 20" Margin="50, 0, 15, 0"
+                    HeightRequest="50" WidthRequest="100" Stroke="{Binding IsHighlighted, Converter={StaticResource BoolToColorConverter}}" StrokeThickness="3">
+                    <Border BackgroundColor="{DynamicResource Accent}" StrokeShape="RoundRectangle 8" Stroke="Transparent">
+                        <Grid RowDefinitions="*" ColumnDefinitions="*">
+                            <Label Text="Revert" TextColor="{DynamicResource Primary}" VerticalOptions="Center" HorizontalOptions="Center"/>  
+
+                            <Button Background="Transparent" Clicked="BtnRevertCard" Pressed="BtnPressed" Released="BtnReleased"/>
+                        </Grid>
+                    </Border>
+                </Border>
+
+                <Border BackgroundColor="Transparent" StrokeShape="RoundRectangle 20" Margin="0, 0, 50, 0"
+                    HeightRequest="50" WidthRequest="100" Stroke="{Binding IsHighlighted, Converter={StaticResource BoolToColorConverter}}" StrokeThickness="3">
+                    <Border BackgroundColor="{DynamicResource Accent}" StrokeShape="RoundRectangle 8" Stroke="Transparent">
+                        <Grid RowDefinitions="*" ColumnDefinitions="*">
+                            <Label Text="Apply" TextColor="{DynamicResource Primary}" VerticalOptions="Center" HorizontalOptions="Center"/>  
+
+                            <Button Background="Transparent" Clicked="BtnApplyCard" Pressed="BtnPressed" Released="BtnReleased"/>
+                        </Grid>
+                    </Border>
+                </Border>
             </HorizontalStackLayout>
 
         </FlexLayout>

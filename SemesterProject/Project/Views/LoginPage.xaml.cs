@@ -8,7 +8,6 @@ namespace SemesterProject;
 
 public partial class LoginPage : ContentPage
 {
-	private string selectedProfile = "";
 	private Controllers.ProfileController profileController;
 
 	private float highlightTint = 0.05f;
@@ -21,13 +20,15 @@ public partial class LoginPage : ContentPage
 	{
 		InitializeComponent();
 
+		MauiProgram.activeID = -1;
 		updateSignInState(false);
+
+		JsonObject masterProf = MauiProgram.InstantiateProfile();
 
 		//does the profiles file exist on the system?
 		if(File.Exists((MauiProgram.dirPath + MauiProgram.prefFile)))
 		{
 			//retrieve profile file as array, has length > 0?
-			JsonObject masterProf = MauiProgram.InstantiateProfile();
 			profileDataset = MauiProgram.LoadJSONArrayFromFile(MauiProgram.dirPath + MauiProgram.prefFile);
 			if (profileDataset.Count > 0)
 			{
@@ -97,7 +98,7 @@ public partial class LoginPage : ContentPage
 
 		string name = await DisplayPromptAsync("Add New Profile", "Enter Name:");
 
-		if (name != null)
+		if (name != null && name.Length > 0)
 		{
 			int tmpID = profileController.Profiles.Count;
 			profileController.AddNewProfile(name);
@@ -109,7 +110,7 @@ public partial class LoginPage : ContentPage
 			//save modified JSON array to file
 			MauiProgram.SaveJSONArrayToFile(profileDataset, (MauiProgram.dirPath + MauiProgram.prefFile));
 		}
-		else
+		else if (name != null)
 		{
 			DisplayAlert("Profile not added", "You must provide a name for the profile.", "OK");
 		}
@@ -195,7 +196,7 @@ public partial class LoginPage : ContentPage
 		//set active profile fields to match profile at active id
 		MauiProgram.checkinProfile(profileDataset[MauiProgram.activeID].AsObject());
 
-		App.Current.Windows[0].Page = new EditPage();
+		App.Current.Windows[0].Page = new MainPage();
 	}
 
 	private void clearHighlights()

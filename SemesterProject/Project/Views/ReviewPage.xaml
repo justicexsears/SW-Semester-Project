@@ -15,7 +15,7 @@
             <HorizontalStackLayout>
 
                 <ImageButton Source="left_arrow.png" WidthRequest="75" HorizontalOptions="Start"  BackgroundColor="Transparent"/>
-                <Label Style="{StaticResource Label Font}" Text="Review" VerticalOptions="Center" Padding="20" FontSize="30" TextColor="#e5e3bd"/>
+                <Label Style="{StaticResource Label Font}" Text="Review" VerticalOptions="Center" Padding="20" FontSize="30" TextColor="{DynamicResource MainText}"/>
             </HorizontalStackLayout>
             <HorizontalStackLayout>
                 <ImageButton Source="hamburger_icon.png" WidthRequest="75" HorizontalOptions="Start"  BackgroundColor="Transparent"/>

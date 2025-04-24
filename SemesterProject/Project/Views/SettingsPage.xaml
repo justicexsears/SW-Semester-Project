@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SemesterProject.SettingsPage"
-             BackgroundColor ="#3f3c40">
+             BackgroundColor ="{DynamicResource Secondary}">
 
     <ContentPage.Resources>
         <Style TargetType="Label" x:Key="Label Font">
@@ -14,11 +14,17 @@
         <FlexLayout BackgroundColor="{DynamicResource Primary}" Grid.ColumnSpan="3"  JustifyContent="SpaceBetween" Padding="10, 0">
             <HorizontalStackLayout>
 
-                <ImageButton Source="left_arrow.png" WidthRequest="75" HorizontalOptions="Start"  BackgroundColor="Transparent"/>
-                <Label Style="{StaticResource Label Font}" Text="Settings" VerticalOptions="Center" Padding="20" FontSize="30" TextColor="#e5e3bd"/>
+                <ImageButton Source="left_arrow.png" WidthRequest="75" HorizontalOptions="Start"  BackgroundColor="Transparent" Clicked="BtnBack"/>
+                <Label Style="{StaticResource Label Font}" Text="Settings" VerticalOptions="Center" Padding="20" FontSize="30" TextColor="{DynamicResource MainText}"/>
             </HorizontalStackLayout>
             <HorizontalStackLayout>
-                <ImageButton Source="hamburger_icon.png" WidthRequest="75" HorizontalOptions="Start"  BackgroundColor="Transparent"/>
+                <ImageButton Source="hamburger_icon.png" WidthRequest="75" HorizontalOptions="Start"  BackgroundColor="Transparent">
+                    <FlyoutBase.ContextFlyout>
+                    <MenuFlyout>
+                        <MenuFlyoutItem Text="Sign Out" Clicked="BtnSignOut"/>
+                    </MenuFlyout>
+                </FlyoutBase.ContextFlyout>
+                </ImageButton>
                 <ImageButton Source="logo.png" WidthRequest="75" Background="Transparent" HorizontalOptions="End"/>
             </HorizontalStackLayout>
         </FlexLayout>
@@ -27,12 +33,12 @@
         <ScrollView Grid.Column="0" Grid.Row="1" Margin="50">
             <VerticalStackLayout Margin="25">
 
-                <Label Style="{StaticResource Label Font}" Text="UI Settings" HorizontalOptions="Center" FontSize="20" TextColor="#e5e3bd"/>
+                <Label Style="{StaticResource Label Font}" Text="UI Settings" HorizontalOptions="Center" FontSize="20" TextColor="{DynamicResource MainText}"/>
                 <Border BackgroundColor="#e5e3bd" StrokeThickness="1.5"/>
 
                 <HorizontalStackLayout HorizontalOptions="Center" Margin="5">
-                    <Label Style="{StaticResource Label Font}" Text="Theme Base" VerticalOptions="Center" HorizontalTextAlignment="Center" WidthRequest="175" FontSize="15" TextColor="#e5e3bd"/>
-                    <Picker WidthRequest="100" x:Name="ThemePicker" SelectedIndexChanged="themePickerPreview">
+                    <Label Style="{StaticResource Label Font}" Text="Theme Base" VerticalOptions="Center" HorizontalTextAlignment="Center" WidthRequest="175" FontSize="15" TextColor="{DynamicResource MainText}"/>
+                    <Picker WidthRequest="100" x:Name="ThemePicker" SelectedIndexChanged="themePickerPreview" TextColor="{DynamicResource MainText}">
                         <Picker.ItemsSource>
                                 <x:Array Type="{x:Type x:String}">
                                     <x:String>Light Theme</x:String>
@@ -43,8 +49,8 @@
                 </HorizontalStackLayout>
 
                 <HorizontalStackLayout HorizontalOptions="Center" Margin="5">
-                    <Label Style="{StaticResource Label Font}" Text="Theme Accent" VerticalOptions="Center" HorizontalTextAlignment="Center" WidthRequest="175" FontSize="15" TextColor="#e5e3bd"/>
-                    <Picker WidthRequest="100" x:Name="AccentPicker" SelectedIndexChanged="accentPickerPreview">
+                    <Label Style="{StaticResource Label Font}" Text="Theme Accent" VerticalOptions="Center" HorizontalTextAlignment="Center" WidthRequest="175" FontSize="15" TextColor="{DynamicResource MainText}"/>
+                    <Picker WidthRequest="100" x:Name="AccentPicker" SelectedIndexChanged="accentPickerPreview" TextColor="{DynamicResource MainText}">
                         <Picker.ItemsSource>
                                 <x:Array Type="{x:Type x:String}">
                                     <x:String>Red</x:String>
@@ -59,8 +65,8 @@
                 </HorizontalStackLayout>
 
                 <HorizontalStackLayout HorizontalOptions="Center" Margin="5">
-                    <Label Style="{StaticResource Label Font}" Text="Card Style" VerticalOptions="Center" HorizontalTextAlignment="Center" WidthRequest="175" FontSize="15" TextColor="#e5e3bd"/>
-                    <Picker WidthRequest="100" x:Name="CStylePicker" SelectedIndexChanged="cStylePickerPreview">
+                    <Label Style="{StaticResource Label Font}" Text="Card Style" VerticalOptions="Center" HorizontalTextAlignment="Center" WidthRequest="175" FontSize="15" TextColor="{DynamicResource MainText}"/>
+                    <Picker WidthRequest="100" x:Name="CStylePicker" SelectedIndexChanged="cStylePickerPreview" TextColor="{DynamicResource MainText}">
                         <Picker.ItemsSource>
                                 <x:Array Type="{x:Type x:String}">
                                     <x:String>Black on White</x:String>
@@ -72,16 +78,16 @@
                 </HorizontalStackLayout>
 
                 <HorizontalStackLayout HorizontalOptions="Center" Margin="5">
-                    <Label Style="{StaticResource Label Font}" Text="Card Animations" VerticalOptions="Center" HorizontalTextAlignment="Center" WidthRequest="175" FontSize="15" TextColor="#e5e3bd"/>
+                    <Label Style="{StaticResource Label Font}" Text="Card Animations" VerticalOptions="Center" HorizontalTextAlignment="Center" WidthRequest="175" FontSize="15" TextColor="{DynamicResource MainText}"/>
                     <CheckBox Color="{DynamicResource Accent}" x:Name="CAniCheckbox" CheckedChanged="cAniPreview"/>
                 </HorizontalStackLayout>
 
-                <Label Style="{StaticResource Label Font}" Text="Quiz Mode Settings" HorizontalOptions="Center" FontSize="20" TextColor="#e5e3bd"/>
+                <Label Style="{StaticResource Label Font}" Text="Quiz Mode Settings" HorizontalOptions="Center" FontSize="20" TextColor="{DynamicResource MainText}"/>
                 <Border BackgroundColor="#e5e3bd" StrokeThickness="1.5"/>
 
                 <HorizontalStackLayout HorizontalOptions="Center" Margin="5">
-                    <Label Style="{StaticResource Label Font}" Text="Question Time" VerticalOptions="Center" HorizontalTextAlignment="Center" WidthRequest="175" FontSize="15" TextColor="#e5e3bd"/>
-                    <Picker WidthRequest="100" x:Name="QTimePicker" SelectedIndexChanged="qTimePickerPreview">
+                    <Label Style="{StaticResource Label Font}" Text="Question Time" VerticalOptions="Center" HorizontalTextAlignment="Center" WidthRequest="175" FontSize="15" TextColor="{DynamicResource MainText}"/>
+                    <Picker WidthRequest="100" x:Name="QTimePicker" SelectedIndexChanged="qTimePickerPreview" TextColor="{DynamicResource MainText}">
                         <Picker.ItemsSource>
                                 <x:Array Type="{x:Type x:String}">
                                     <x:String>30 sec</x:String>
@@ -95,8 +101,8 @@
                 </HorizontalStackLayout>
 
                 <HorizontalStackLayout HorizontalOptions="Center" Margin="5">
-                    <Label Style="{StaticResource Label Font}" Text="Question Attempts" VerticalOptions="Center" HorizontalTextAlignment="Center" WidthRequest="175" FontSize="15" TextColor="#e5e3bd"/>
-                    <Picker WidthRequest="100" x:Name="QAttemptPicker" SelectedIndexChanged="qAttemptPickerPreview">
+                    <Label Style="{StaticResource Label Font}" Text="Question Attempts" VerticalOptions="Center" HorizontalTextAlignment="Center" WidthRequest="175" FontSize="15" TextColor="{DynamicResource MainText}"/>
+                    <Picker WidthRequest="100" x:Name="QAttemptPicker" SelectedIndexChanged="qAttemptPickerPreview" TextColor="{DynamicResource MainText}">
                         <Picker.ItemsSource>
                                 <x:Array Type="{x:Type x:String}">
                                     <x:String>Inf</x:String>
@@ -110,17 +116,17 @@
                 </HorizontalStackLayout>
 
                 <HorizontalStackLayout HorizontalOptions="Center" Margin="5">
-                    <Label Style="{StaticResource Label Font}" Text="Shuffle Questions" VerticalOptions="Center" HorizontalTextAlignment="Center" WidthRequest="175" FontSize="15" TextColor="#e5e3bd"/>
+                    <Label Style="{StaticResource Label Font}" Text="Shuffle Questions" VerticalOptions="Center" HorizontalTextAlignment="Center" WidthRequest="175" FontSize="15" TextColor="{DynamicResource MainText}"/>
                     <CheckBox Color="{DynamicResource Accent}" x:Name="ShuffCheckbox" CheckedChanged="shuffPreview"/>
                 </HorizontalStackLayout>
 
                 <HorizontalStackLayout HorizontalOptions="Center" Margin="5">
-                    <Label Style="{StaticResource Label Font}" Text="Show Incorrect Guesses" VerticalOptions="Center" HorizontalTextAlignment="Center" WidthRequest="175" FontSize="15" TextColor="#e5e3bd"/>
+                    <Label Style="{StaticResource Label Font}" Text="Show Incorrect Guesses" VerticalOptions="Center" HorizontalTextAlignment="Center" WidthRequest="175" FontSize="15" TextColor="{DynamicResource MainText}"/>
                     <CheckBox Color="{DynamicResource Accent}" x:Name="GuessCheckbox" CheckedChanged="guessPreview"/>
                 </HorizontalStackLayout>
 
                 <HorizontalStackLayout HorizontalOptions="Center" Margin="5">
-                    <Label Style="{StaticResource Label Font}" Text="Give Half-Time Hint" VerticalOptions="Center" HorizontalTextAlignment="Center" WidthRequest="175" FontSize="15" TextColor="#e5e3bd"/>
+                    <Label Style="{StaticResource Label Font}" Text="Give Half-Time Hint" VerticalOptions="Center" HorizontalTextAlignment="Center" WidthRequest="175" FontSize="15" TextColor="{DynamicResource MainText}"/>
                     <CheckBox Color="{DynamicResource Accent}" x:Name="HintCheckbox" CheckedChanged="hintPreview"/>
                 </HorizontalStackLayout>
 
@@ -134,21 +140,21 @@
         </VerticalStackLayout> 
 
         <VerticalStackLayout Grid.Column="2" Grid.Row="1" Margin="75">
-            <Label Style="{StaticResource Label Font}" Text="Preview Changes" Margin="5" WidthRequest="175" FontSize="15" TextColor="#e5e3bd" HorizontalOptions="Start"/>
+            <Label Style="{StaticResource Label Font}" Text="Preview Changes" Margin="5" WidthRequest="175" FontSize="15" TextColor="{DynamicResource MainText}" HorizontalOptions="Start"/>
 
             <Border BackgroundColor="White" StrokeThickness="2" HeightRequest="350" WidthRequest="595" StrokeShape="RoundRectangle 5" Margin="5">
                 <Image Source="quizpreviewgreen.png" />
             </Border>
 
-            <Label Style="{StaticResource Label Font}" Text="Changes hightlighted in sidebar" FontSize="10" TextColor="#e5e3bd"/>
+            <Label Style="{StaticResource Label Font}" Text="Changes hightlighted in sidebar" FontSize="10" TextColor="{DynamicResource MainText}"/>
 
             <HorizontalStackLayout HorizontalOptions="End">
                 <Border Margin="5,0,10,0" WidthRequest="100" BackgroundColor="{DynamicResource Secondary}" StrokeShape="RoundRectangle 8" Stroke="Transparent">
-                    <Button Margin ="0" WidthRequest="98" BackgroundColor="Transparent" TextColor="#e5e3bd"
+                    <Button Margin ="0" WidthRequest="98" BackgroundColor="Transparent" TextColor="{DynamicResource MainText}"
                         Text="Cancel" FontFamily="Roboto" FontAttributes="Bold" Clicked="BtnRevertChanges" Pressed="BtnPressed" Released="BtnReleased"/>
                 </Border>
                 <Border Margin="5,0,10,0" WidthRequest="100" BackgroundColor="{DynamicResource Accent}" StrokeShape="RoundRectangle 8" Stroke="Transparent">
-                    <Button Margin ="0" WidthRequest="98" Background="Transparent" TextColor="#2f2e2f"
+                    <Button Margin ="0" WidthRequest="98" Background="Transparent" TextColor="{DynamicResource MainText}"
                         Text="Apply" FontFamily="Roboto" FontAttributes="Bold" Clicked="BtnApplyChanges" Pressed="BtnPressed" Released="BtnReleased"/>
                 </Border>
             </HorizontalStackLayout>

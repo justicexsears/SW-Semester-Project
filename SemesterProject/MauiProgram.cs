@@ -8,51 +8,89 @@ namespace SemesterProject;
 
 public static class MauiProgram
 {
+	public enum PageIndex
+	{
+		LOGIN, HOME, SETTINGS, EDIT, QUIZ, REVIEW
+	}
 
 	//declare globally accessible field for page loading, profile selections, and file info
 	public static string dirPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\CardStack\\";
 	public static string prefFile = "profiles.json";
 	public static string setFile = "stackCollection.json";
 	public static string stackFolder = "stacks\\";
+	public static PageIndex prevPage = PageIndex.LOGIN;
+	
 
 	//declare globally accesible profile fields
 	public static int activeID { get; set; } = -1;
 	public static JsonObject activeProfile { get; set; } = InstantiateProfile();
 
+	//declare globally accessible stack fields
 	public static int stackID { get; set; } = -1;
 	public static JsonObject activeStack { get; set; } = InstantiateStack();
 
 
+	public static void returnFromPage()
+	{
+		switch(prevPage)
+		{
+			default:
+			case PageIndex.LOGIN:
+				App.Current.Windows[0].Page = new LoginPage();
+				break;
+			case PageIndex.HOME:
+				App.Current.Windows[0].Page = new MainPage();
+				break;
+			case PageIndex.SETTINGS:
+				App.Current.Windows[0].Page = new SettingsPage();
+				break;
+			case PageIndex.EDIT:
+				App.Current.Windows[0].Page = new EditPage();
+				break;
+			case PageIndex.QUIZ:
+				App.Current.Windows[0].Page = new QuizPage();
+				break;
+			case PageIndex.REVIEW:
+				App.Current.Windows[0].Page = new ReviewPage();
+				break;
+		}
+	}
+
 	public static void updateTheme(JsonObject pref)
 	{
-		string themename = "DarkGreen";
+		string themeName = "DarkGreen";
 
-		if (activeProfile["theme"].GetValue<int>() == 0 && activeProfile["accent"].GetValue<int>() == 0)
-			themename = "LightRed";
-		else if (activeProfile["theme"].GetValue<int>() == 0 && activeProfile["accent"].GetValue<int>() == 1)
-			themename = "LightOrange";
-		else if (activeProfile["theme"].GetValue<int>() == 0 && activeProfile["accent"].GetValue<int>() == 2)
-			themename = "LightYellow";
-		else if (activeProfile["theme"].GetValue<int>() == 0 && activeProfile["accent"].GetValue<int>() == 3)
-			themename = "LightGreen";
-		else if (activeProfile["theme"].GetValue<int>() == 0 && activeProfile["accent"].GetValue<int>() == 4)
-			themename = "LightBlue";
-		else if (activeProfile["theme"].GetValue<int>() == 0 && activeProfile["accent"].GetValue<int>() == 5)
-			themename = "LightPurple";
-		else if (activeProfile["theme"].GetValue<int>() == 1 && activeProfile["accent"].GetValue<int>() == 0)
-			themename = "DarkRed";
-		else if (activeProfile["theme"].GetValue<int>() == 1 && activeProfile["accent"].GetValue<int>() == 1)
-			themename = "DarkOrange";
-		else if (activeProfile["theme"].GetValue<int>() == 1 && activeProfile["accent"].GetValue<int>() == 2)
-			themename = "DarkYellow";
-		else if (activeProfile["theme"].GetValue<int>() == 1 && activeProfile["accent"].GetValue<int>() == 3)
-			themename = "DarkGreen";
-		else if (activeProfile["theme"].GetValue<int>() == 1 && activeProfile["accent"].GetValue<int>() == 4)
-			themename = "DarkBlue";
-		else if (activeProfile["theme"].GetValue<int>() == 1 && activeProfile["accent"].GetValue<int>() == 5)
-			themename = "DarkPurple";
+		string prefTheme = (pref["theme"]?.GetValue<int>() ?? 0) == 0 ? "Light" : "Dark";
+		int prefAccent = pref["accent"]?.GetValue<int>() ?? 0;
+		switch(prefAccent)
+		{
+			default:
+			case 0:
+				themeName = prefTheme + "Red";
+				break;
+			case 1:
+				themeName = prefTheme + "Orange";
+				break;
+			case 2:
+				themeName = prefTheme + "Yellow";
+				break;
+			case 3:
+				themeName = prefTheme + "Green";
+				break;
+			case 4:
+				themeName = prefTheme + "Blue";
+				break;
+			case 5:
+				themeName = prefTheme + "Purple";
+				break;
+		}
 
-		SetTheme(themename);
+		SetTheme(themeName);
+	}
+
+	public static void updateTheme()
+	{
+		updateTheme(activeProfile);
 	}
 
 	public static void SetTheme(string themename)
@@ -79,6 +117,10 @@ public static class MauiProgram
 				var accentFound = dictionaries.TryGetValue(themename + "Accent", out var accent);
 				if (accentFound)
 					dictionaries["Accent"] = accent;
+				
+				var textFound = dictionaries.TryGetValue(themename + "Text", out var text);
+				if (textFound)
+					dictionaries["MainText"] = text;
 			}
 		}
 	}
@@ -86,6 +128,11 @@ public static class MauiProgram
 	public static void checkinProfile(JsonObject data)
 	{
 		activeProfile = data;
+	}
+
+	public static void checkinStack(JsonObject data)
+	{
+		activeStack = data;
 	}
 
 	public static JsonArray LoadJSONArrayFromFile(string path)
@@ -150,8 +197,20 @@ public static class MauiProgram
 		JsonObject tmpStack = new JsonObject {
 			["id"] 			= id,
 			["set-name"]	= name,
-			["author-name"]	= "",
+			["author-name"]	= "No Author",
 			["last-edited"] = "01/01/1970" //unix epoch time, because why not i guess
+		};
+
+		return tmpStack;
+	}
+
+	public static JsonObject InstantiateStack(string name, int id, string authName, string editDate)
+	{
+		JsonObject tmpStack = new JsonObject {
+			["id"] 			= id,
+			["set-name"]	= name,
+			["author-name"]	= authName,
+			["last-edited"] = editDate
 		};
 
 		return tmpStack;
