@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SemesterProject.ReviewPage"
-             BackgroundColor="#3f3c40">
+             BackgroundColor="{DynamicResource Secondary}">
 
     <ContentPage.Resources>
         <Style TargetType="Label" x:Key="Label Font">
@@ -11,128 +11,109 @@
     </ContentPage.Resources>
 
     <Grid RowDefinitions="80,*" ColumnDefinitions="400,5,*">
-        <FlexLayout BackgroundColor="#191919" Grid.ColumnSpan="3"  JustifyContent="SpaceBetween" Padding="10, 0">
+        <FlexLayout BackgroundColor="{DynamicResource Primary}" Grid.ColumnSpan="3"  JustifyContent="SpaceBetween" Padding="10, 0">
             <HorizontalStackLayout>
 
-                <ImageButton Source="left_arrow.png" WidthRequest="75" HorizontalOptions="Start"  BackgroundColor="Transparent"/>
+                <ImageButton Source="left_arrow.png" WidthRequest="75" HorizontalOptions="Start"  BackgroundColor="Transparent" Clicked="BtnBack"/>
                 <Label Style="{StaticResource Label Font}" Text="Review" VerticalOptions="Center" Padding="20" FontSize="30" TextColor="{DynamicResource MainText}"/>
             </HorizontalStackLayout>
             <HorizontalStackLayout>
-                <ImageButton Source="hamburger_icon.png" WidthRequest="75" HorizontalOptions="Start"  BackgroundColor="Transparent"/>
-            <ImageButton Source="logo.png" WidthRequest="75" Background="Transparent" HorizontalOptions="End"/>
+                <ImageButton Source="hamburger_icon.png" WidthRequest="75" HorizontalOptions="Start"  BackgroundColor="Transparent">
+                    <FlyoutBase.ContextFlyout>
+                        <MenuFlyout>
+                            <MenuFlyoutItem Text="Settings" Clicked="BtnSettings"/>
+                            <MenuFlyoutItem Text="Sign Out" Clicked="BtnSignOut"/>
+                        </MenuFlyout>
+                    </FlyoutBase.ContextFlyout> 
+                </ImageButton>
+            <ImageButton Source="logo.png" WidthRequest="75" Background="Transparent" HorizontalOptions="End">
+                <FlyoutBase.ContextFlyout>
+                    <MenuFlyout>
+                        <MenuFlyoutItem Text="Settings" Clicked="BtnSettings"/>
+                        <MenuFlyoutItem Text="Sign Out" Clicked="BtnSignOut"/>
+                    </MenuFlyout>
+                </FlyoutBase.ContextFlyout>
+            </ImageButton>
             </HorizontalStackLayout>
         </FlexLayout>
 
 
-        <ScrollView Grid.Column="0" Grid.Row="1" Margin="50">
-            <VerticalStackLayout Margin="25">
-                
-                <!--Selected -->
-                <HorizontalStackLayout HorizontalOptions="Center" Spacing="10" Margin="0, 10">
-                    <Label  Text="01" FontSize="14" TextColor="#99cc99" FontAttributes="Bold" VerticalOptions="Center"/>
-                    <Border BackgroundColor="White" StrokeThickness="5" Stroke="#99cc99" StrokeShape="RoundRectangle 20" Padding="10" HeightRequest="150" WidthRequest="200">
-                        <VerticalStackLayout VerticalOptions="Center">
+        <CollectionView x:Name="CollFlashCards" Grid.Column="0" Grid.Row="1" Margin="50">
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout Orientation="Vertical" Span="1"/>
+            </CollectionView.ItemsLayout>
 
-                            <Label Style="{StaticResource Label Font}" Text="What are the three form of rocks?" TextColor="#191919" HorizontalTextAlignment="Center"/>
-                        </VerticalStackLayout>
-                    </Border>
-                </HorizontalStackLayout>
-                
-                
-                <!--Other Questions-->
-                <HorizontalStackLayout HorizontalOptions="Center" Spacing="10" Margin="0, 10">
-                    <Label  Text="02" FontSize="14" TextColor="#99cc99" FontAttributes="Bold" VerticalOptions="Center"/>
-                    <Border BackgroundColor="White" StrokeShape="RoundRectangle 20" Padding="10" HeightRequest="150" WidthRequest="200">
-                        <VerticalStackLayout VerticalOptions="Center">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <HorizontalStackLayout HorizontalOptions="Center" Spacing="10" Margin="10, 10" Padding="7">
+                        <Border BackgroundColor="{DynamicResource Tertiary}" HeightRequest="30" WidthRequest="30" StrokeShape="RoundRectangle 4">
+                            <Label  Text="{Binding CardID}" FontSize="14" TextColor="{DynamicResource Accent}" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="Center"/>
+                        </Border>
 
-                            <Label Style="{StaticResource Label Font}" Text="What are the three form of rocks?" TextColor="#191919" HorizontalTextAlignment="Center"/>
-                        </VerticalStackLayout>
-                    </Border>
-                </HorizontalStackLayout>
+                        <Border Margin="10, 15, 10, 5" Padding="5" BackgroundColor="Transparent" StrokeShape="RoundRectangle 20" 
+                            HeightRequest="150" WidthRequest="200" Stroke="{Binding IsHighlighted, Converter={StaticResource BoolToColorConverter}}" StrokeThickness="3">
+                            <Border BackgroundColor="{DynamicResource Primary}" StrokeShape="RoundRectangle 8" Stroke="Transparent" Padding="10">
+                                <Grid RowDefinitions="7*, 3*" ColumnDefinitions="*,*">
+                                    <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="{Binding CardQ}" TextColor="{DynamicResource MainText}"
+                                        VerticalOptions="Center" HorizontalOptions="Center"/>  
 
-                <HorizontalStackLayout HorizontalOptions="Center" Spacing="10" Margin="0, 10">
-                    <Label  Text="03" FontSize="14" TextColor="#99cc99" FontAttributes="Bold" VerticalOptions="Center"/>
-                    <Border BackgroundColor="White" StrokeThickness="5" Stroke="Transparent" StrokeShape="RoundRectangle 20" Padding="10" HeightRequest="150" WidthRequest="200">
-                        <VerticalStackLayout VerticalOptions="Center">
+                                    <Button Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="2" Background="Transparent"
+                                        Clicked="BtnSelectCard" Pressed="BtnPressed" Released="BtnReleased" CommandParameter="{Binding CardID}"/>
+                                </Grid>
+                            </Border>
+                        </Border>
 
-                            <Label Style="{StaticResource Label Font}" Text="What are the three form of rocks?" TextColor="#191919" HorizontalTextAlignment="Center"/>
-                        </VerticalStackLayout>
-                    </Border>
-                </HorizontalStackLayout>
-
-                <HorizontalStackLayout HorizontalOptions="Center" Spacing="10" Margin="0, 10">
-                    <Label  Text="05" FontSize="14" TextColor="#99cc99" FontAttributes="Bold" VerticalOptions="Center"/>
-                    <Border BackgroundColor="White" StrokeThickness="5" Stroke="Transparent" StrokeShape="RoundRectangle 20" Padding="10" HeightRequest="150" WidthRequest="200">
-                        <VerticalStackLayout VerticalOptions="Center">
-
-                            <Label Style="{StaticResource Label Font}" Text="What are the three form of rocks?" TextColor="#191919" HorizontalTextAlignment="Center"/>
-                        </VerticalStackLayout>
-                    </Border>
-                </HorizontalStackLayout>
-
-
-            </VerticalStackLayout>
-        </ScrollView>
+                        
+                    </HorizontalStackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
 
         <!-- Center Separator-->
         <VerticalStackLayout Grid.Row="1" Grid.Column="1" VerticalOptions="Center"> 
-            <Border BackgroundColor="#99cc99" HeightRequest="500"/>
+            <Border BackgroundColor="{DynamicResource Accent}" HeightRequest="500"/>
         </VerticalStackLayout>
 
         
         
-        <VerticalStackLayout Grid.Column="2" Grid.Row="1" Margin="75">
+        <VerticalStackLayout Grid.Column="2" Grid.Row="1" Margin="50">
             <HorizontalStackLayout>
-                <Label Style="{StaticResource Label Font}" Text="Justice S." Margin="5" WidthRequest="175" FontSize="20" TextColor="#e5e3bd" HorizontalOptions="Start" FontAttributes="Bold"/>
-                <Label Style="{StaticResource Label Font}" Text="03/12/2025" Margin="5" WidthRequest="175" FontSize="20" TextColor="#e5e3bd" FontAttributes="Bold"/>
+                <Label x:Name="AuthorLabel" Style="{StaticResource Label Font}" Text="Justice S." Margin="10" WidthRequest="175" FontSize="20" TextColor="{DynamicResource MainText}" HorizontalOptions="Start" FontAttributes="Bold"/>
+                <Label x:Name="DateLabel" Style="{StaticResource Label Font}" Text="03/12/2025" Margin="10" WidthRequest="175" FontSize="20" TextColor="{DynamicResource MainText}" FontAttributes="Bold"/>
             </HorizontalStackLayout>
 
-            <Label Style="{StaticResource Label Font}" Text="Mineral Sciences Chapter 1" FontSize="38" FontAttributes="Bold" TextColor="#e5e3bd"/>
+            <Label x:Name="NameLabel" Style="{StaticResource Label Font}" Text="Mineral Sciences Chapter 1" FontSize="38" FontAttributes="Bold" TextColor="{DynamicResource MainText}" Margin="5"/>
 
-            <Border BackgroundColor="White"  HeightRequest="350" WidthRequest="595" StrokeShape="RoundRectangle 20" Margin="10">
+            <Border BackgroundColor="{DynamicResource Tertiary}"  HeightRequest="340" WidthRequest="595" StrokeShape="RoundRectangle 20" Margin="10">
                 <VerticalStackLayout VerticalOptions="Center">
                     
-                        
-                        <Label Style="{StaticResource Label Font}" Text=" What are the three forms of the rock?"
-                               TextColor="Black"
+                    <Grid RowDefinitions="*, *" ColumnDefinitions="*,*">
+                        <Label Style="{StaticResource Label Font}" Text=""
+                               Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="2"
+                               TextColor="{DynamicResource MainText}"
                                FontSize="30"
                                Padding="50,0"
-                               HorizontalTextAlignment="Center"/> 
-                    
-                    
+                               HorizontalTextAlignment="Center"
+                               VerticalTextAlignment="Center"
+                               x:Name="MainCardLabel"/>
+
+                        <Button Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="2" Background="Transparent"
+                                Clicked="BtnFlipCard" Pressed="BtnPressed" Released="BtnReleased" HeightRequest="340"/>
+                    </Grid>    
+                     
                 </VerticalStackLayout>
             </Border>
 
-            <Label Style="{StaticResource Label Font}"
+            
+
+            <Label Style="{StaticResource Label Font}" 
                    Text ="Click Card to Flip"
                    HorizontalOptions="Center"
                    FontSize="18"
-                   TextColor="#e5e3bd"
+                   TextColor="{DynamicResource MainText}"
                    FontAttributes="Bold"
                    />
-            <HorizontalStackLayout HorizontalOptions="Center">
-
-                <ImageButton Source="left_arrow.png" WidthRequest="75" HorizontalOptions="Start"  BackgroundColor="Transparent"/>
-                <Border Margin="10" BackgroundColor="#2f2e2f" StrokeShape="RoundRectangle 12" WidthRequest="100" HeightRequest="40">
-                    <Label Text="01"
-                           HorizontalOptions="Center"
-                           VerticalOptions="Center"
-                           FontSize="18"
-                           FontAttributes="Bold"
-                           TextColor="AliceBlue"/>
-                </Border>
-                <ImageButton Source="left_arrow.png" WidthRequest="75" HorizontalOptions="Start"  BackgroundColor="Transparent" ScaleX="-1"/>
-            </HorizontalStackLayout>
-
-            <!--<Label Style="{StaticResource Label Font}" Text="Changes hightlighted in sidebar" FontSize="10" TextColor="#e5e3bd"/>
-
-            <HorizontalStackLayout HorizontalOptions="End">
-                <Button Margin ="5,0,10,0" WidthRequest="100" BackgroundColor="#2f2e2f" TextColor="#e5e3bd"
-                Text="Cancel" FontFamily="Roboto" FontAttributes="Bold"/>
-                <Button Margin ="5,0,10,0" WidthRequest="100" BackgroundColor="#99cc99" TextColor="#2f2e2f"
-               Text="Apply" FontFamily="Roboto" FontAttributes="Bold"/>
-            </HorizontalStackLayout>-->
-
+        
         </VerticalStackLayout>
 
     </Grid>
