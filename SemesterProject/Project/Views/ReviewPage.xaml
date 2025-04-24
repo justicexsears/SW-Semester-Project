@@ -52,7 +52,7 @@
 
                         <Border Margin="10, 15, 10, 5" Padding="5" BackgroundColor="Transparent" StrokeShape="RoundRectangle 20" 
                             HeightRequest="150" WidthRequest="200" Stroke="{Binding IsHighlighted, Converter={StaticResource BoolToColorConverter}}" StrokeThickness="3">
-                            <Border BackgroundColor="{DynamicResource Primary}" StrokeShape="RoundRectangle 8" Stroke="Transparent" Padding="10">
+                            <Border BackgroundColor="{DynamicResource Tertiary}" StrokeShape="RoundRectangle 8" Stroke="Transparent" Padding="10">
                                 <Grid RowDefinitions="7*, 3*" ColumnDefinitions="*,*">
                                     <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="{Binding CardQ}" TextColor="{DynamicResource MainText}"
                                         VerticalOptions="Center" HorizontalOptions="Center"/>  
