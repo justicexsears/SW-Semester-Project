@@ -19,18 +19,88 @@ public static class MauiProgram
 	public static int activeID { get; set; } = -1;
 	public static JsonObject activeProfile { get; set; } = InstantiateProfile();
 
+	//declare globally accessible stack fields
 	public static int stackID { get; set; } = -1;
 	public static JsonObject activeStack { get; set; } = InstantiateStack();
 
 
 	public static void updateTheme(JsonObject pref)
 	{
+		string themeName = "DarkGreen";
 
+		string prefTheme = (pref["theme"]?.GetValue<int>() ?? 0) == 0 ? "Light" : "Dark";
+		int prefAccent = pref["accent"]?.GetValue<int>() ?? 0;
+		switch(prefAccent)
+		{
+			default:
+			case 0:
+				themeName = prefTheme + "Red";
+				break;
+			case 1:
+				themeName = prefTheme + "Orange";
+				break;
+			case 2:
+				themeName = prefTheme + "Yellow";
+				break;
+			case 3:
+				themeName = prefTheme + "Green";
+				break;
+			case 4:
+				themeName = prefTheme + "Blue";
+				break;
+			case 5:
+				themeName = prefTheme + "Purple";
+				break;
+		}
+
+		SetTheme(themeName);
+	}
+
+	public static void updateTheme()
+	{
+		updateTheme(activeProfile);
+	}
+
+	public static void SetTheme(string themename)
+	{
+		Preferences.Set("Theme", themename);
+
+		ICollection<ResourceDictionary> mergedDictionaries = Application.Current.Resources.MergedDictionaries;
+		if (mergedDictionaries != null)
+		{
+			foreach (ResourceDictionary dictionaries in mergedDictionaries)
+			{
+				var primaryFound = dictionaries.TryGetValue(themename + "Primary", out var primary);
+				if (primaryFound)
+					dictionaries["Primary"] = primary;
+				
+				var secondaryFound = dictionaries.TryGetValue(themename + "Secondary", out var secondary);
+				if (secondaryFound)
+					dictionaries["Secondary"] = secondary;
+
+				var tertiaryFound = dictionaries.TryGetValue(themename + "Tertiary", out var tertiary);
+				if (tertiaryFound)
+					dictionaries["Tertiary"] = tertiary;
+
+				var accentFound = dictionaries.TryGetValue(themename + "Accent", out var accent);
+				if (accentFound)
+					dictionaries["Accent"] = accent;
+				
+				var textFound = dictionaries.TryGetValue(themename + "Text", out var text);
+				if (textFound)
+					dictionaries["MainText"] = text;
+			}
+		}
 	}
 
 	public static void checkinProfile(JsonObject data)
 	{
 		activeProfile = data;
+	}
+
+	public static void checkinStack(JsonObject data)
+	{
+		activeStack = data;
 	}
 
 	public static JsonArray LoadJSONArrayFromFile(string path)
@@ -95,8 +165,20 @@ public static class MauiProgram
 		JsonObject tmpStack = new JsonObject {
 			["id"] 			= id,
 			["set-name"]	= name,
-			["author-name"]	= "",
+			["author-name"]	= "No Author",
 			["last-edited"] = "01/01/1970" //unix epoch time, because why not i guess
+		};
+
+		return tmpStack;
+	}
+
+	public static JsonObject InstantiateStack(string name, int id, string authName, string editDate)
+	{
+		JsonObject tmpStack = new JsonObject {
+			["id"] 			= id,
+			["set-name"]	= name,
+			["author-name"]	= authName,
+			["last-edited"] = editDate
 		};
 
 		return tmpStack;
@@ -119,10 +201,22 @@ public static class MauiProgram
 	{
 		return InstantiateProfile("NONE", -1);
 	}
-
-	public static JsonObject InstantiateStack()
+  
+  public static JsonObject InstantiateStack()
 	{
 		return InstantiateStack("NONE", -1);
+	}
+
+	public static void applyProfileChanges(JsonObject data)
+	{
+		activeProfile = data;
+		
+		JsonArray fromDisk = LoadJSONArrayFromFile(dirPath + prefFile);
+		JsonObject fromLocal = JsonNode.Parse(data.ToJsonString()).AsObject();
+
+		fromDisk[activeProfile["id"].GetValue<int>()] = fromLocal;
+
+		SaveJSONArrayToFile(fromDisk, dirPath + prefFile);
 	}
 
 	public static MauiApp CreateMauiApp()

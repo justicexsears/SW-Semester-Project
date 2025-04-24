@@ -8,7 +8,6 @@ namespace SemesterProject;
 
 public partial class LoginPage : ContentPage
 {
-	private string selectedProfile = "";
 	private Controllers.ProfileController profileController;
 
 	private float highlightTint = 0.05f;
@@ -21,7 +20,10 @@ public partial class LoginPage : ContentPage
 	{
 		InitializeComponent();
 
+		MauiProgram.activeID = -1;
 		updateSignInState(false);
+
+		JsonObject masterProf = MauiProgram.InstantiateProfile();
 
 		//does the profiles file exist on the system?
 		if(File.Exists((MauiProgram.dirPath + MauiProgram.prefFile)))
@@ -30,9 +32,10 @@ public partial class LoginPage : ContentPage
 			profileDataset = MauiProgram.LoadJSONArrayFromFile(MauiProgram.dirPath + MauiProgram.prefFile);
 			if (profileDataset.Count > 0)
 			{
+				masterProf = profileDataset[0].AsObject();
 				//update global theme fields, and update local UI controls
-				MauiProgram.updateTheme(profileDataset[0].AsObject());
-				updateUI(profileDataset[0].AsObject());
+				//MauiProgram.updateTheme(profileDataset[0].AsObject());
+				updateUI(masterProf);
 			}
 		}
 
@@ -71,7 +74,7 @@ public partial class LoginPage : ContentPage
 
 	private void updateUI(JsonObject pref)
 	{
-
+		MauiProgram.updateTheme(pref);
 	}
 
 	private void BtnPressed(object sender, EventArgs e)
@@ -95,7 +98,7 @@ public partial class LoginPage : ContentPage
 
 		string name = await DisplayPromptAsync("Add New Profile", "Enter Name:");
 
-		if (name != null)
+		if (name != null && name.Length > 0)
 		{
 			int tmpID = profileController.Profiles.Count;
 			profileController.AddNewProfile(name);
@@ -107,7 +110,7 @@ public partial class LoginPage : ContentPage
 			//save modified JSON array to file
 			MauiProgram.SaveJSONArrayToFile(profileDataset, (MauiProgram.dirPath + MauiProgram.prefFile));
 		}
-		else
+		else if (name != null)
 		{
 			DisplayAlert("Profile not added", "You must provide a name for the profile.", "OK");
 		}
@@ -193,7 +196,7 @@ public partial class LoginPage : ContentPage
 		//set active profile fields to match profile at active id
 		MauiProgram.checkinProfile(profileDataset[MauiProgram.activeID].AsObject());
 
-		App.Current.Windows[0].Page = new EditPage();
+		App.Current.Windows[0].Page = new MainPage();
 	}
 
 	private void clearHighlights()

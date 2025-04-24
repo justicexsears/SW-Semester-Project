@@ -79,12 +79,14 @@ namespace SemesterProject.Controllers
             return false;
         }
 
-        public void AddNewFlashCardSet(string name)
+        public void AddNewFlashCardSet(string name, string edited, string author)
         {
             var flashcardset = new Models.FlashSetModel
             {
                 set_name = name,
-                _setID = FlashCardSets.Count
+                _setID = FlashCardSets.Count,
+                set_date = edited,
+                set_auth = author
             };
 
             FlashCardSets.Add(new FlashSetConverter(flashcardset));
@@ -116,30 +118,6 @@ namespace SemesterProject.Controllers
         public FlashSetController(CollectionView view)
         {
             FlashCardSets = new ObservableCollection<FlashSetConverter>();
-
-            var flashcardset = new Models.FlashSetModel
-            {
-                set_name = "Example Set1",
-                set_auth = "Author Name",
-                set_date = "01/01/1970"
-            };
-            FlashCardSets.Add(new FlashSetConverter(flashcardset));
-
-            flashcardset = new Models.FlashSetModel
-            {
-                set_name = "Example Set2",
-                set_auth = "Author Name",
-                set_date = "01/01/1970"
-            };
-            FlashCardSets.Add(new FlashSetConverter(flashcardset));
-
-            flashcardset = new Models.FlashSetModel
-            {
-                set_name = "Example Set3",
-                set_auth = "Author Name",
-                set_date = "01/01/1970"
-            };
-            FlashCardSets.Add(new FlashSetConverter(flashcardset));
 
             view.ItemsSource = FlashCardSets;
         }
