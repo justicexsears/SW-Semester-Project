@@ -120,7 +120,7 @@
 
             <Label x:Name="NameLabel" Style="{StaticResource Label Font}" Text="Mineral Sciences Chapter 1" FontSize="38" FontAttributes="Bold" TextColor="{DynamicResource HeaderText}" Margin="5"/>
 
-            <Grid RowDefinitions="*" ColumnDefinitions="*">
+            <Grid RowDefinitions="*" ColumnDefinitions="*" Margin="5">
                 <Border BackgroundColor="{DynamicResource CardBackground}"  HeightRequest="340" WidthRequest="595" StrokeShape="RoundRectangle 20" Margin="10"
                     Grid.Row="0" Grid.Column="0" x:Name="cardFront" IsVisible="True">
                     <VerticalStackLayout VerticalOptions="Center">
@@ -163,16 +163,32 @@
                     </VerticalStackLayout>
                 </Border>
             </Grid>
+            <HorizontalStackLayout HorizontalOptions="Center" Margin="5">
 
-            
-
-            <Label Style="{StaticResource Label Font}" 
+                <Label Style="{StaticResource Label Font}" 
                    Text ="Click Card to Flip"
                    HorizontalOptions="Center"
                    FontSize="18"
                    TextColor="{DynamicResource MainText}"
                    FontAttributes="Bold"
                    />
+                <ImageButton Source="left_arrow.png" WidthRequest="75" HorizontalOptions="Start"  BackgroundColor="Transparent"
+                    Clicked="BtnPrevCard"/>
+
+                <Border Margin="10" BackgroundColor="#2f2e2f" StrokeShape="RoundRectangle 12" WidthRequest="100" HeightRequest="40">
+                    <Entry Text="1" HorizontalOptions="Center" VerticalOptions="Center" FontSize="18" FontAttributes="Bold" WidthRequest="95"
+                        TextColor="{DynamicResource HeaderText}" Placeholder="" PlaceholderColor="{DynamicResource HeaderText}"
+                        Completed="EntryCardSelection" Unfocused="EntryCardSelection" x:Name="indexSelector" Visual="None" HorizontalTextAlignment="Center"/>
+                </Border>
+
+                <ImageButton Source="left_arrow.png" WidthRequest="75" HorizontalOptions="Start"  BackgroundColor="Transparent" ScaleX="-1"
+                    Clicked="BtnNextCard"/>
+            </HorizontalStackLayout>
+            
+
+            
+
+            
         
         </VerticalStackLayout>
 

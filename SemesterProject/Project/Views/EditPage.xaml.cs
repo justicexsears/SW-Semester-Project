@@ -128,6 +128,7 @@ public partial class EditPage : ContentPage
 		RevealPreview(true);
 
 		indexSelector.Text = activeCardID.ToString();
+		CollCards.ScrollTo(id);
 	}
 
 	private async void BtnDeleteCard(object sender, EventArgs e)
@@ -319,6 +320,7 @@ public partial class EditPage : ContentPage
 		int id = (int) btn.CommandParameter; 
 
 		flashcardscontroller.FlashCards[id].IsHighlighted = true;
+		CollCards.ScrollTo(id);
 	}
 
 	private void DirectHighlightCard(int id)
