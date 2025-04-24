@@ -45,6 +45,8 @@ public partial class MainPage : ContentPage
 				} catch {}
 			}
 		}
+
+		MauiProgram.prevPage = MauiProgram.PageIndex.HOME;
 	}
 
 	//stack management functions

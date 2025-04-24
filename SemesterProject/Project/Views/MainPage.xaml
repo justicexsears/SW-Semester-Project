@@ -62,17 +62,17 @@
                 </HorizontalStackLayout>
 
                 <HorizontalStackLayout Margin="0,10,0,10" HorizontalOptions="End" VerticalOptions="End">
-                    <Button Text="Edit" BackgroundColor="{DynamicResource Primary}" WidthRequest="75" Margin="5,0" Clicked="BtnEditPage" TextColor="{DynamicResource MainText}"
+                    <Button Text="Edit" BackgroundColor="{DynamicResource Primary}" WidthRequest="75" Margin="5,0" Clicked="BtnEditPage" TextColor="{DynamicResource Primary}"
                         x:Name="EditBtn"/>
-                    <Button Text="Quiz" BackgroundColor="{DynamicResource Primary}" WidthRequest="75" Margin="5,0" Clicked="BtnQuizPage" TextColor="{DynamicResource MainText}"
+                    <Button Text="Quiz" BackgroundColor="{DynamicResource Primary}" WidthRequest="75" Margin="5,0" Clicked="BtnQuizPage" TextColor="{DynamicResource Primary}"
                         x:Name="QuizBtn"/>
-                    <Button Text="Review" BackgroundColor="{DynamicResource Primary}" WidthRequest="75" Margin="5,0" Clicked="BtnReviewPage" TextColor="{DynamicResource MainText}"
+                    <Button Text="Review" BackgroundColor="{DynamicResource Primary}" WidthRequest="75" Margin="5,0" Clicked="BtnReviewPage" TextColor="{DynamicResource Primary}"
                         x:Name="ReviewBtn"/>
                 </HorizontalStackLayout>
 
                 <HorizontalStackLayout Margin="0,10,0,10" HorizontalOptions="End" VerticalOptions="End">
                     <Button Text="Add" BackgroundColor="{DynamicResource Accent}" WidthRequest="75" Margin="5,0"
-                        x:Name="AddSetBtn" Clicked="BtnAddSet" TextColor="{DynamicResource MainText}"/>
+                        x:Name="AddSetBtn" Clicked="BtnAddSet" TextColor="{DynamicResource Primary}"/>
                 </HorizontalStackLayout>
 
             </VerticalStackLayout>

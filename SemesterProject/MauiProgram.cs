@@ -8,12 +8,18 @@ namespace SemesterProject;
 
 public static class MauiProgram
 {
+	public enum PageIndex
+	{
+		LOGIN, HOME, SETTINGS, EDIT, QUIZ, REVIEW
+	}
 
 	//declare globally accessible field for page loading, profile selections, and file info
 	public static string dirPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\CardStack\\";
 	public static string prefFile = "profiles.json";
 	public static string setFile = "stackCollection.json";
 	public static string stackFolder = "stacks\\";
+	public static PageIndex prevPage = PageIndex.LOGIN;
+	
 
 	//declare globally accesible profile fields
 	public static int activeID { get; set; } = -1;
@@ -23,6 +29,32 @@ public static class MauiProgram
 	public static int stackID { get; set; } = -1;
 	public static JsonObject activeStack { get; set; } = InstantiateStack();
 
+
+	public static void returnFromPage()
+	{
+		switch(prevPage)
+		{
+			default:
+			case PageIndex.LOGIN:
+				App.Current.Windows[0].Page = new LoginPage();
+				break;
+			case PageIndex.HOME:
+				App.Current.Windows[0].Page = new MainPage();
+				break;
+			case PageIndex.SETTINGS:
+				App.Current.Windows[0].Page = new SettingsPage();
+				break;
+			case PageIndex.EDIT:
+				App.Current.Windows[0].Page = new EditPage();
+				break;
+			case PageIndex.QUIZ:
+				App.Current.Windows[0].Page = new QuizPage();
+				break;
+			case PageIndex.REVIEW:
+				App.Current.Windows[0].Page = new ReviewPage();
+				break;
+		}
+	}
 
 	public static void updateTheme(JsonObject pref)
 	{
