@@ -23,7 +23,13 @@ namespace SemesterProject.Controllers
             }
         }
 
-        public int CardID {get {return FlashCardModel._cardID;} set{FlashCardModel._cardID = value;}}
+        public int CardID {
+            get {return FlashCardModel._cardID;} 
+            set{
+                FlashCardModel._cardID = value;
+                OnPropertyChanged(nameof(CardID));
+            }
+        }
 
         public string CardQ
         {
@@ -32,6 +38,7 @@ namespace SemesterProject.Controllers
             }
             set{
                 FlashCardModel.card_q = value;
+                OnPropertyChanged(nameof(CardQ));
             }
         }
 

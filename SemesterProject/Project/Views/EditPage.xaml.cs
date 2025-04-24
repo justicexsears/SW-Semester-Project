@@ -1,4 +1,5 @@
 using System.Text.Json.Nodes;
+using System.Diagnostics;
 
 namespace SemesterProject;
 
@@ -27,6 +28,13 @@ public partial class EditPage : ContentPage
 		lastEditedLbl.Text = MauiProgram.activeStack["last-edited"]?.GetValue<string>() ?? "MM/dd/yyyy";
 		authorLbl.Text = MauiProgram.activeStack["author-name"]?.GetValue<string>() ?? "John Doe";
 
+		MenuProfileNameLbl.Text = MauiProgram.activeProfile["name"]?.GetValue<string>() ?? "Author N.";
+
+		if (!Directory.Exists((MauiProgram.dirPath + MauiProgram.stackFolder)))
+		{
+			Directory.CreateDirectory((MauiProgram.dirPath + MauiProgram.stackFolder));
+		}
+
 		if(File.Exists((MauiProgram.dirPath + MauiProgram.stackFolder + stackFile)))
 		{
 			//retrieve profile file as array
@@ -38,9 +46,6 @@ public partial class EditPage : ContentPage
 		//profiles array length > 0?
 		if (cardDataset.Count > 0)
 		{
-			activeCardID = 0;
-			RevealPreview(true);
-
 			for (int p = 0; p < cardDataset.Count; p++)
 			{
 				string question = "";
@@ -54,9 +59,13 @@ public partial class EditPage : ContentPage
 					flashcardscontroller.DisplayCard(question);
 				} catch {}
 			}
-		}
 
-		RevealPreview(false);
+			DirectSelectCard(0);
+		}
+		else 
+			RevealPreview(false);
+
+		MauiProgram.prevPage = MauiProgram.PageIndex.EDIT;
 	}
 
 	//stack management functions
@@ -80,6 +89,8 @@ public partial class EditPage : ContentPage
 
 		//save modified JSON array to file
 		MauiProgram.SaveJSONArrayToFile(cardDataset, (MauiProgram.dirPath + MauiProgram.stackFolder + stackFile));
+
+		DirectSelectCard(tmpID);
 	}
 
 	private async void BtnSelectCard(object sender, EventArgs e)
@@ -100,11 +111,28 @@ public partial class EditPage : ContentPage
 		}
 	}
 
+	private void DirectSelectCard(int id)
+	{
+		if (id < 0 || id >= flashcardscontroller.FlashCards.Count)
+		{
+			return; //id outside of range
+		}
+
+		//dehighlight all profiles
+		clearHighlights();
+		//highlight selected profile
+		DirectHighlightCard(id);
+
+		activeCardID = id;
+
+		RevealPreview(true);
+
+		indexSelector.Text = activeCardID.ToString();
+	}
+
 	private async void BtnDeleteCard(object sender, EventArgs e)
 	{
-		Button btn = sender as Button;
-
-		int id = (int) btn.CommandParameter; 
+		int id = activeCardID;
 
 		bool answer = await DisplayAlert("Remove Card","Are you sure you want to remove this card?","Yes","No");
 
@@ -112,7 +140,7 @@ public partial class EditPage : ContentPage
 		{
 			//dehighlight all cards
 			clearHighlights();
-			//clear activeID
+			//reduce activeID
 			activeCardID -= 1;
 
 
@@ -130,7 +158,149 @@ public partial class EditPage : ContentPage
 			{
 				RevealPreview(false);
 			}
+			else
+			{
+				DirectSelectCard(activeCardID);
+			}
 		}
+	}
+
+	private async void BtnMoveCard(object sender, EventArgs e)
+	{
+		int id = activeCardID;
+
+		int index = -1;
+		
+		int.TryParse((await DisplayPromptAsync("Move Card","Enter new index:")), out index);
+
+		if (index == -1)
+			return;
+
+		//clamp target index to reasonable bounds
+		if (index >= flashcardscontroller.FlashCards.Count)
+			index = flashcardscontroller.FlashCards.Count - 1;
+		
+		if (index <= 0)
+			index = 0;
+
+
+		flashcardscontroller.FlashCards.Move(id, index);
+		flashcardscontroller.ReindexCards();
+
+		JsonNode tmpCard = cardDataset[id];
+
+		cardDataset.RemoveAt(id);
+
+		cardDataset.Insert(index, tmpCard);
+
+		ReindexJSONArray();
+
+		//save modified JSON array to file
+		MauiProgram.SaveJSONArrayToFile(cardDataset, (MauiProgram.dirPath + MauiProgram.stackFolder + stackFile));
+
+		activeCardID = index;
+	}
+
+	private async void BtnApplyCard(object sender, EventArgs e)
+	{
+		checkInCard();
+	}
+
+	private async void BtnRevertCard(object sender, EventArgs e)
+	{
+		//this actually pulls from the stored data to load the preview anyway, so effectively reverts.
+		RevealPreview(true);
+	}
+
+	private async void BtnPrevCard(object sender, EventArgs e)
+	{
+		int tmpID = activeCardID - 1;
+
+		if (tmpID < 0 || tmpID >= flashcardscontroller.FlashCards.Count)
+			return;
+
+		DirectSelectCard(tmpID);
+	}
+
+	private async void BtnNextCard(object sender, EventArgs e)
+	{
+		int tmpID = activeCardID + 1;
+
+		if (tmpID < 0 || tmpID >= flashcardscontroller.FlashCards.Count)
+			return;
+
+		DirectSelectCard(tmpID);
+	}
+
+	private async void EntryCardSelection(object sender, EventArgs e)
+	{
+		Entry selector = sender as Entry;
+
+		int index = -1;
+
+		int.TryParse(selector.Text, out index);
+
+		if (index == -1)
+		{
+			indexSelector.Text = activeCardID.ToString();
+			return;
+		}
+
+		//clamp target index to reasonable bounds
+		if (index >= flashcardscontroller.FlashCards.Count)
+			index = flashcardscontroller.FlashCards.Count - 1;
+		
+		if (index <= 0)
+			index = 0;
+
+		DirectSelectCard(index);
+
+		indexSelector.Text = index.ToString();
+	}
+
+	private void checkInCard()
+	{
+		//commit entry field datas to local object
+		cardDataset[activeCardID].AsObject()["question"] = qEditor.Text;
+		cardDataset[activeCardID].AsObject()["a-short"] = aShortEditor.Text;
+		cardDataset[activeCardID].AsObject()["a-long"] = aLongEditor.Text;
+
+		flashcardscontroller.FlashCards[activeCardID].CardQ = qEditor.Text;
+
+		//commit local object to file
+		MauiProgram.SaveJSONArrayToFile(cardDataset, (MauiProgram.dirPath + MauiProgram.stackFolder + stackFile));
+	}
+
+	//navigation button events
+	private async void BtnHome(object sender, EventArgs e)
+	{
+		App.Current.Windows[0].Page = new MainPage();
+	}
+
+	private async void BtnBack(object sender, EventArgs e)
+	{
+		BtnHome(sender, e);
+	}
+
+	private async void BtnMenuPopout(object sender, EventArgs e)
+	{
+		MenuPopout.IsVisible = true;
+	}
+
+	private async void BtnMenuPopoutClose(object sender, EventArgs e)
+	{
+		MenuPopout.IsVisible = false;
+	}
+
+	private async void BtnSignOut(object sender, EventArgs e)
+	{
+		App.Current.Windows[0].Page = new LoginPage();
+	}
+
+	private async void BtnSettings(object sender, EventArgs e)
+	{
+		MauiProgram.prevPage = MauiProgram.PageIndex.EDIT;
+		App.Current.Windows[0].Page = new SettingsPage();
 	}
 
 	//visual helper functions
@@ -151,6 +321,11 @@ public partial class EditPage : ContentPage
 		flashcardscontroller.FlashCards[id].IsHighlighted = true;
 	}
 
+	private void DirectHighlightCard(int id)
+	{
+		flashcardscontroller.FlashCards[id].IsHighlighted = true;
+	}
+
 	private void RevealPreview(bool state)
 	{
 		if (state)
@@ -163,5 +338,21 @@ public partial class EditPage : ContentPage
 
 		//shift preview shield forward or backward to show or hide other preview elements
 		previewShield.ZIndex = state ? -1 : 2;
+	}
+
+	private void BtnPressed(object sender, EventArgs e)
+	{
+		Button btn = sender as Button;
+
+		Color btnBG = Color.FromRgba(highlightTint, highlightTint, highlightTint, tintStrength);
+		btn.Background = btnBG;
+	}
+
+	private void BtnReleased(object sender, EventArgs e)
+	{
+		Button btn = sender as Button;
+
+		Color btnBG = Color.FromRgba(0f, 0f, 0f, 0f);
+		btn.Background = btnBG;
 	}
 }

@@ -35,7 +35,7 @@ public partial class SettingsPage : ContentPage
 
 	private async void BtnBack(object sender, EventArgs e)
 	{
-		App.Current.Windows[0].Page = new MainPage();
+		MauiProgram.returnFromPage();
 	}
 
 	private void BtnReleased(object sender, EventArgs e)

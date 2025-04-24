@@ -14,6 +14,7 @@
     <Color x:Key="Tertiary">#343434</Color>
     <Color x:Key="Accent">#99cc99</Color>
     <Color x:Key="MainText">White</Color>
+    <Color x:Key="HeaderText">#e5e3bd</Color>
 
     <Color x:Key="White">White</Color>
     <Color x:Key="Black">Black</Color>
