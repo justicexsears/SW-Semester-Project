@@ -11,23 +11,41 @@
     </ContentPage.Resources>
 
     <Grid RowDefinitions="80,*" ColumnDefinitions="Auto,5,*">
+        <!--BEGIN MASTER NAVBAR-->
         <FlexLayout BackgroundColor="{DynamicResource Primary}" Grid.ColumnSpan="3"  JustifyContent="SpaceBetween" Padding="10, 0">
             <HorizontalStackLayout>
-
-                <ImageButton Source="left_arrow.png" WidthRequest="75" HorizontalOptions="Start"  BackgroundColor="Transparent" Clicked="BtnBack"/>
-                <Label Style="{StaticResource Label Font}" Text="Settings" VerticalOptions="Center" Padding="20" FontSize="30" TextColor="{DynamicResource MainText}"/>
+                <ImageButton Source="left_arrow.png" WidthRequest="75" HorizontalOptions="Start"  BackgroundColor="Transparent" Clicked="BtnBack" Scale="0.75"/>
+                <Label Style="{StaticResource Label Font}" Text="Settings" VerticalOptions="Center" Padding="20" FontSize="30" TextColor="{DynamicResource HeaderText}"/>
             </HorizontalStackLayout>
             <HorizontalStackLayout>
-                <ImageButton Source="hamburger_icon.png" WidthRequest="75" HorizontalOptions="Start"  BackgroundColor="Transparent">
-                    <FlyoutBase.ContextFlyout>
-                    <MenuFlyout>
-                        <MenuFlyoutItem Text="Sign Out" Clicked="BtnSignOut"/>
-                    </MenuFlyout>
-                </FlyoutBase.ContextFlyout>
-                </ImageButton>
-                <ImageButton Source="logo.png" WidthRequest="75" Background="Transparent" HorizontalOptions="End"/>
+                <ImageButton Source="hamburger_icon.png" WidthRequest="75" HorizontalOptions="Start"  BackgroundColor="Transparent" Clicked="BtnMenuPopout" Scale="0.5"/>
+                <ImageButton Source="logo.png" WidthRequest="75" Background="Transparent" HorizontalOptions="End" Clicked="BtnHome" Scale="0.75"/>
             </HorizontalStackLayout>
         </FlexLayout>
+
+        <Grid Grid.Row="0" Grid.RowSpan="2" Grid.Column="2" WidthRequest="350" HeightRequest="200" RowDefinitions="1*, 1*, 2*" ColumnDefinitions="3*, 2*" 
+            VerticalOptions="Start" HorizontalOptions="End" ZIndex="3" IsVisible="False" x:Name="MenuPopout" Margin="0, 0, -50, 0">
+            <Border Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="2" Stroke="Transparent" StrokeShape="RoundRectangle 20" BackgroundColor="{DynamicResource Accent}"
+                />
+
+            <ImageButton Source="ui_exitdark.png" Grid.Row="0" Grid.Column="0" HorizontalOptions="Start" WidthRequest="35" BackgroundColor="Transparent" Clicked="BtnMenuPopoutClose"
+                Aspect="AspectFit" Scale="0.5"/>
+
+            <Label Text="Profile N." Grid.Row="1" Grid.Column="0" HorizontalOptions="Start" VerticalOptions="Center" TextColor="{DynamicResource Primary}" FontSize="24"
+                FontAttributes="Bold" Margin="30, 0, 15, 0" x:Name="MenuProfileNameLbl"/>
+            
+            <Image Source="pfpdark.png" Grid.Row="0" Grid.RowSpan="3" Grid.Column="1" Aspect="AspectFit" HorizontalOptions="Start" VerticalOptions="Center"
+                Margin="15, 20, 0, 80" HeightRequest="50"/>
+
+            <VerticalStackLayout Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" VerticalOptions="Start" HorizontalOptions="End" Margin="0, 0, 50, 0" BackgroundColor="Transparent"
+                WidthRequest="200">
+                <BoxView BackgroundColor="Transparent" HeightRequest="25" Margin="0"/>
+                
+                <Button Text="Sign Out" BackgroundColor="Transparent" FontSize="18" HeightRequest="25" Margin="0" FontAttributes="Bold"
+                    Clicked="BtnSignOut"/>
+            </VerticalStackLayout>
+        </Grid>
+        <!--END MASTER NAVBAR-->
 
 
         <ScrollView Grid.Column="0" Grid.Row="1" Margin="50">

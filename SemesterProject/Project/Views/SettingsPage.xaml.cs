@@ -16,6 +16,8 @@ public partial class SettingsPage : ContentPage
 		localProf = JsonNode.Parse(MauiProgram.activeProfile.ToJsonString()).AsObject();
 		InitializeComponent();
 
+		MenuProfileNameLbl.Text = MauiProgram.activeProfile["name"]?.GetValue<string>() ?? "Author N.";
+
 		setDefaults();
 		MauiProgram.updateTheme(localProf);
 	}
@@ -36,6 +38,21 @@ public partial class SettingsPage : ContentPage
 	private async void BtnBack(object sender, EventArgs e)
 	{
 		MauiProgram.returnFromPage();
+	}
+
+	private async void BtnMenuPopout(object sender, EventArgs e)
+	{
+		MenuPopout.IsVisible = true;
+	}
+
+	private async void BtnMenuPopoutClose(object sender, EventArgs e)
+	{
+		MenuPopout.IsVisible = false;
+	}
+
+	private async void BtnHome(object sender, EventArgs e)
+	{
+		App.Current.Windows[0].Page = new MainPage();
 	}
 
 	private void BtnReleased(object sender, EventArgs e)

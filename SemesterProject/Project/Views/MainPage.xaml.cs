@@ -16,6 +16,8 @@ public partial class MainPage : ContentPage
 		InitializeComponent();
 		MauiProgram.updateTheme(MauiProgram.activeProfile);
 
+		MenuProfileNameLbl.Text = MauiProgram.activeProfile["name"]?.GetValue<string>() ?? "Author N.";
+
 		if(File.Exists((MauiProgram.dirPath + MauiProgram.setFile)))
 		{
 			//retrieve profile file as array
@@ -47,6 +49,8 @@ public partial class MainPage : ContentPage
 		}
 
 		MauiProgram.prevPage = MauiProgram.PageIndex.HOME;
+
+		MauiProgram.stackID = -1;
 	}
 
 	//stack management functions
@@ -107,6 +111,21 @@ public partial class MainPage : ContentPage
 	private async void BtnBack(object sender, EventArgs e)
 	{
 		App.Current.Windows[0].Page = new LoginPage(); //back from home = sign out
+	}
+
+	private async void BtnMenuPopout(object sender, EventArgs e)
+	{
+		MenuPopout.IsVisible = true;
+	}
+
+	private async void BtnMenuPopoutClose(object sender, EventArgs e)
+	{
+		MenuPopout.IsVisible = false;
+	}
+
+	private async void BtnHome(object sender, EventArgs e)
+	{
+		App.Current.Windows[0].Page = new MainPage();
 	}
 
 
