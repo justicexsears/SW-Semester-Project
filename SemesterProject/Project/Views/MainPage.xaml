@@ -122,9 +122,9 @@
                 <DataTemplate>
                         <Border Margin="10, 15, 10, 5" Padding="5" BackgroundColor="Transparent" StrokeShape="RoundRectangle 12" 
                             HeightRequest="160" WidthRequest="220" Stroke="{Binding IsHighlighted, Converter={StaticResource BoolToColorConverter}}" StrokeThickness="3">
-                            <Border BackgroundColor="{DynamicResource Primary}" StrokeShape="RoundRectangle 8" Stroke="Transparent">
+                            <Border BackgroundColor="{DynamicResource CardBackground}" StrokeShape="RoundRectangle 8" Stroke="Transparent">
                                 <Grid RowDefinitions="7*, 3*" ColumnDefinitions="*,*">
-                                    <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="{Binding SetName}" TextColor="{DynamicResource MainText}"
+                                    <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="{Binding SetName}" TextColor="{DynamicResource CardText}"
                                         VerticalOptions="Center" HorizontalOptions="Center"/>  
 
                                     <BoxView Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" BackgroundColor="{DynamicResource Accent}"></BoxView>

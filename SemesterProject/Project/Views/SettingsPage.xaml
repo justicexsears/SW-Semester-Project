@@ -88,7 +88,7 @@
                         <Picker.ItemsSource>
                                 <x:Array Type="{x:Type x:String}">
                                     <x:String>Black on White</x:String>
-                                    <x:String>White on Black</x:String>
+                                    <x:String>Match Theme</x:String>
                                     
                                 </x:Array>
                         </Picker.ItemsSource>

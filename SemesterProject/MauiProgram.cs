@@ -59,9 +59,11 @@ public static class MauiProgram
 	public static void updateTheme(JsonObject pref)
 	{
 		string themeName = "DarkGreen";
+		string cardstyle = "BW";
 
 		string prefTheme = (pref["theme"]?.GetValue<int>() ?? 0) == 0 ? "Light" : "Dark";
 		int prefAccent = pref["accent"]?.GetValue<int>() ?? 0;
+		string prefCStyle = (pref["preferences"].AsObject()["card-style"]?.GetValue<int>() ?? 0) == 0 ? "BW" : "Match";
 		switch(prefAccent)
 		{
 			default:
@@ -86,7 +88,36 @@ public static class MauiProgram
 		}
 
 		SetTheme(themeName);
+
+		if (prefCStyle == "Match")
+			cardstyle = themeName;
+		else
+			cardstyle = prefCStyle;
+
+		SetCardTheme(cardstyle);
 	}
+
+	public static void SetCardTheme(string cardstyle)
+	{
+		Preferences.Set("CardStyle", cardstyle);
+
+		ICollection<ResourceDictionary> mergedDictionaries = Application.Current.Resources.MergedDictionaries;
+		if (mergedDictionaries != null)
+		{
+			foreach (ResourceDictionary dictionaries in mergedDictionaries)
+			{
+				var backgroundFound = dictionaries.TryGetValue(cardstyle + "CBG", out var cbg);
+				if (backgroundFound)
+					dictionaries["CardBackground"] = cbg;
+
+				var textFound = dictionaries.TryGetValue(cardstyle + "CT", out var ctext);
+				if (textFound)
+					dictionaries["CardText"] = ctext;
+			}
+		}
+
+	}
+
 
 	public static void updateTheme()
 	{
@@ -123,6 +154,8 @@ public static class MauiProgram
 					dictionaries["MainText"] = text;
 			}
 		}
+
+
 	}
 
 	public static void checkinProfile(JsonObject data)

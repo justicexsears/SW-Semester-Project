@@ -84,15 +84,15 @@
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <HorizontalStackLayout HorizontalOptions="Center" Spacing="10" Margin="10, 10" Padding="7">
-                        <Border BackgroundColor="{DynamicResource Tertiary}" HeightRequest="30" WidthRequest="30" StrokeShape="RoundRectangle 4">
-                            <Label  Text="{Binding CardID}" FontSize="14" TextColor="{DynamicResource Accent}" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="Center"/>
+                        <Border BackgroundColor="{DynamicResource CardBackground}" HeightRequest="30" WidthRequest="30" StrokeShape="RoundRectangle 4">
+                            <Label  Text="{Binding CardID}" FontSize="14" TextColor="{DynamicResource CardText}" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="Center"/>
                         </Border>
 
                         <Border Margin="10, 15, 10, 5" Padding="5" BackgroundColor="Transparent" StrokeShape="RoundRectangle 20" 
                             HeightRequest="150" WidthRequest="200" Stroke="{Binding IsHighlighted, Converter={StaticResource BoolToColorConverter}}" StrokeThickness="3">
-                            <Border BackgroundColor="{DynamicResource Tertiary}" StrokeShape="RoundRectangle 13" Stroke="Transparent">
+                            <Border BackgroundColor="{DynamicResource CardBackground}" StrokeShape="RoundRectangle 13" Stroke="Transparent">
                                 <Grid RowDefinitions="*" ColumnDefinitions="*">
-                                    <Label Text="{Binding CardQ}" TextColor="{DynamicResource MainText}" VerticalOptions="Center" HorizontalOptions="Center" Margin="10"/>  
+                                    <Label Text="{Binding CardQ}" TextColor="{DynamicResource CardText}" VerticalOptions="Center" HorizontalOptions="Center" Margin="10"/>  
 
                                     <Button Background="Transparent" Clicked="BtnSelectCard" Pressed="BtnPressed" Released="BtnReleased" CommandParameter="{Binding CardID}"/>
                                 </Grid>
@@ -121,13 +121,13 @@
             <Label x:Name="NameLabel" Style="{StaticResource Label Font}" Text="Mineral Sciences Chapter 1" FontSize="38" FontAttributes="Bold" TextColor="{DynamicResource HeaderText}" Margin="5"/>
 
             <Grid RowDefinitions="*" ColumnDefinitions="*">
-                <Border BackgroundColor="{DynamicResource Tertiary}"  HeightRequest="340" WidthRequest="595" StrokeShape="RoundRectangle 20" Margin="10"
+                <Border BackgroundColor="{DynamicResource CardBackground}"  HeightRequest="340" WidthRequest="595" StrokeShape="RoundRectangle 20" Margin="10"
                     Grid.Row="0" Grid.Column="0" x:Name="cardFront" IsVisible="True">
                     <VerticalStackLayout VerticalOptions="Center">
                         
                         <Grid RowDefinitions="*" ColumnDefinitions="*">
                             <Label Style="{StaticResource Label Font}" Text="" x:Name="MainCardLabel"
-                                Grid.Row="0" Grid.Column="0" TextColor="{DynamicResource MainText}" FontSize="30"
+                                Grid.Row="0" Grid.Column="0" TextColor="{DynamicResource CardText}" FontSize="30"
                                 Padding="50,0" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
 
                             <Button Grid.Row="0" Grid.Column="0" Background="Transparent"
@@ -137,22 +137,22 @@
                     </VerticalStackLayout>
                 </Border>
 
-                <Border BackgroundColor="{DynamicResource Tertiary}"  HeightRequest="340" WidthRequest="595" StrokeShape="RoundRectangle 20" Margin="10"
+                <Border BackgroundColor="{DynamicResource CardBackground}"  HeightRequest="340" WidthRequest="595" StrokeShape="RoundRectangle 20" Margin="10"
                     Grid.Row="0" Grid.Column="0" x:Name="cardBack" IsVisible="False">
                     <VerticalStackLayout VerticalOptions="Center">
                         
                         <Grid RowDefinitions="1*, 4*" ColumnDefinitions="*">
                             <Label Style="{StaticResource Label Font}" Text="" x:Name="CardAShort"
-                                Grid.Row="0" Grid.Column="0" Margin="25, 25, 5, 25"
-                                TextColor="{DynamicResource MainText}" FontSize="26"
-                                HorizontalTextAlignment="Start" VerticalTextAlignment="Start"/>
+                                Grid.Row="0" Grid.Column="0" Margin="25, 75, 5, 25"
+                                TextColor="{DynamicResource CardText}" FontSize="26"
+                                HorizontalTextAlignment="Center" VerticalTextAlignment="Start"/>
 
                             <ScrollView Grid.Row="1" Grid.Column="0" HeightRequest="200" WidthRequest="540" BackgroundColor="Transparent"
                                 VerticalOptions="Start" HorizontalOptions="Center">
                                 <VerticalStackLayout>
                                     <Label Style="{StaticResource Label Font}" Text="" x:Name="CardALong"
                                         TextColor="{DynamicResource MainText}" FontSize="24"
-                                        HorizontalTextAlignment="Start" VerticalTextAlignment="Start"/>
+                                        HorizontalTextAlignment="Center" VerticalTextAlignment="Start"/>
                                 </VerticalStackLayout>
                             </ScrollView>
 
