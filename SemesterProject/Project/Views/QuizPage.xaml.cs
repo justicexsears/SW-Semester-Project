@@ -546,10 +546,16 @@ public partial class QuizPage : ContentPage
 		{
 			//hide startBorder
 			startBorder.IsVisible = false;
+
+			//update to next card
+			timerCancellationSource = new CancellationTokenSource();
+			LoadCardComplete(startIndex + 1);
+
+			//reveal endBorder
 			endBorder.IsVisible = true;
 
 			if (activeCardID < cardDataset.Count - 1)
-				activeCardID++;
+			    activeCardID++;
 
 			awaitingFlip = false;
 
