@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using System.Diagnostics;
 
 using System;
 using System.IO;
@@ -152,6 +153,10 @@ public static class MauiProgram
 				var textFound = dictionaries.TryGetValue(themename + "Text", out var text);
 				if (textFound)
 					dictionaries["MainText"] = text;
+
+				var headerFound = dictionaries.TryGetValue(themename + "Header", out var header);
+				if (textFound)
+					dictionaries["HeaderTextPV"] = header;
 			}
 		}
 

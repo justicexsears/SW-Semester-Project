@@ -2,157 +2,192 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SemesterProject.QuizPage"
-             BackgroundColor="#3f3c40">
+             BackgroundColor="{DynamicResource Secondary}">
     <ContentPage.Resources>
         <Style TargetType="Label" x:Key="Label Font">
             <Setter Property="FontFamily" Value="Roboto"/>
         </Style>
     </ContentPage.Resources>
 
-    <Grid RowDefinitions="85,Auto,*,50" ColumnDefinitions="*,400">
+    <Grid RowDefinitions="80,Auto,*,50" ColumnDefinitions="*,400">
         
-        <FlexLayout BackgroundColor="#191919" Grid.ColumnSpan="2"  JustifyContent="SpaceBetween" Padding="10">
-            <HorizontalStackLayout Spacing="10">
-                
-                <ImageButton Source="left_arrow.png" WidthRequest="75" HorizontalOptions="Start"  BackgroundColor="Transparent"/>
-                <Label Style="{StaticResource Label Font}" Text="Quiz" VerticalOptions="Center" Padding="20" FontSize="30" TextColor="#e5e3bd"/>
+        <!--BEGIN MASTER NAVBAR-->
+        <FlexLayout BackgroundColor="{DynamicResource Primary}" Grid.ColumnSpan="3"  JustifyContent="SpaceBetween" Padding="10, 0">
+            <HorizontalStackLayout>
+                <ImageButton Source="left_arrow.png" WidthRequest="75" HorizontalOptions="Start"  BackgroundColor="Transparent" Clicked="BtnBack" Scale="0.75"/>
+                <Label Style="{StaticResource Label Font}" Text="Quizing" VerticalOptions="Center" Padding="20" FontSize="30" TextColor="{DynamicResource HeaderText}"/>
             </HorizontalStackLayout>
-            <HorizontalStackLayout Spacing="10">
-                <ImageButton Source="hamburger_icon.png" WidthRequest="75" HorizontalOptions="Start"  BackgroundColor="Transparent"/>
-                <ImageButton Source="logo.png" WidthRequest="75" Background="Transparent" HorizontalOptions="End"/>
+            <HorizontalStackLayout>
+                <ImageButton Source="hamburger_icon.png" WidthRequest="75" HorizontalOptions="Start"  BackgroundColor="Transparent" Clicked="BtnMenuPopout" Scale="0.5"/>
+                <ImageButton Source="logo.png" WidthRequest="75" Background="Transparent" HorizontalOptions="End" Clicked="BtnHome" Scale="0.75"/>
             </HorizontalStackLayout>
         </FlexLayout>
 
+        <Grid Grid.Row="0" Grid.RowSpan="2" Grid.Column="2" WidthRequest="350" HeightRequest="200" RowDefinitions="1*, 1*, 2*" ColumnDefinitions="3*, 2*" 
+            VerticalOptions="Start" HorizontalOptions="End" ZIndex="3" IsVisible="False" x:Name="MenuPopout" Margin="0, 0, -50, 0">
+            <Border Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="2" Stroke="Transparent" StrokeShape="RoundRectangle 20" BackgroundColor="{DynamicResource Accent}"
+                />
 
-        <VerticalStackLayout Grid.Column="0" Grid.Row="1" Margin="25">
+            <ImageButton Source="ui_exitdark.png" Grid.Row="0" Grid.Column="0" HorizontalOptions="Start" WidthRequest="35" BackgroundColor="Transparent" Clicked="BtnMenuPopoutClose"
+                Aspect="AspectFit" Scale="0.5"/>
+
+            <Label Text="Profile N." Grid.Row="1" Grid.Column="0" HorizontalOptions="Start" VerticalOptions="Center" TextColor="{DynamicResource Primary}" FontSize="24"
+                FontAttributes="Bold" Margin="30, 0, 15, 0" x:Name="MenuProfileNameLbl"/>
+            
+            <Image Source="pfpdark.png" Grid.Row="0" Grid.RowSpan="3" Grid.Column="1" Aspect="AspectFit" HorizontalOptions="Start" VerticalOptions="Center"
+                Margin="15, 20, 0, 80" HeightRequest="50"/>
+
+            <VerticalStackLayout Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" VerticalOptions="Start" HorizontalOptions="End" Margin="0, 0, 50, 0" BackgroundColor="Transparent"
+                WidthRequest="200">
+                <Button Text="Settings" BackgroundColor="Transparent" FontSize="18" HeightRequest="25" Margin="0" FontAttributes="Bold"
+                    Clicked="BtnSettings"/>
+                <Button Text="Sign Out" BackgroundColor="Transparent" FontSize="18" HeightRequest="25" Margin="0" FontAttributes="Bold"
+                    Clicked="BtnSignOut"/>
+            </VerticalStackLayout>
+        </Grid>
+        <!--END MASTER NAVBAR-->
+
+
+        <VerticalStackLayout Grid.Column="0" Grid.Row="1" Margin="75, 15">
             <HorizontalStackLayout>
-                <Label Style="{StaticResource Label Font}" Text="Justice S." Margin="5" WidthRequest="175" FontSize="20" TextColor="#e5e3bd" HorizontalOptions="Start" FontAttributes="Bold"/>
-                <Label Style="{StaticResource Label Font}" Text="03/12/2025" Margin="5" WidthRequest="175" FontSize="20" TextColor="#e5e3bd" FontAttributes="Bold"/>
+                <Label Style="{StaticResource Label Font}" Text="Justice S." Margin="5" WidthRequest="175" FontSize="20" TextColor="{DynamicResource HeaderText}" 
+                    HorizontalOptions="Start" FontAttributes="Bold" x:Name="AuthorLabel"/>
+                <Label Style="{StaticResource Label Font}" Text="03/12/2025" Margin="5" WidthRequest="175" FontSize="20" TextColor="{DynamicResource HeaderText}" 
+                    FontAttributes="Bold" x:Name="DateLabel"/>
             </HorizontalStackLayout>
 
-            <Label Style="{StaticResource Label Font}" Text="Mineral Sciences Chapter 1" FontSize="38" FontAttributes="Bold" TextColor="#e5e3bd"/>
+            <Label Style="{StaticResource Label Font}" Text="Mineral Sciences Chapter 1" FontSize="38" FontAttributes="Bold" TextColor="{DynamicResource HeaderText}"
+                x:Name="NameLabel"/>
 
         </VerticalStackLayout>
 
         <VerticalStackLayout Grid.Row="2" Grid.Column="0">
-            <Border BackgroundColor="White"  HeightRequest="350" WidthRequest="595" StrokeShape="RoundRectangle 20" Margin="10,50" VerticalOptions="Start">
-                    <VerticalStackLayout VerticalOptions="Center"> 
-
-
-                        <Label Style="{StaticResource Label Font}" Text=" What are the three forms of the rock?"
-                       TextColor="Black"
-                       FontSize="30"
-                       Padding="50,0"
-                       HorizontalTextAlignment="Center"/>
-
-
+            <Grid RowDefinitions="*" ColumnDefinitions="*" Margin="10" WidthRequest="595" HeightRequest="340">
+                <Border BackgroundColor="{DynamicResource CardBackground}"  HeightRequest="340" WidthRequest="595" StrokeShape="RoundRectangle 20" Margin="0"
+                    Grid.Row="0" Grid.Column="0" x:Name="cardFront" IsVisible="True">
+                    <VerticalStackLayout VerticalOptions="Center">
+                        
+                        <Grid RowDefinitions="*" ColumnDefinitions="*">
+                            <Label Style="{StaticResource Label Font}" Text="" x:Name="MainCardLabel"
+                                Grid.Row="0" Grid.Column="0" TextColor="{DynamicResource CardText}" FontSize="30"
+                                Padding="50,0" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+                        </Grid>    
+                        
                     </VerticalStackLayout>
-
                 </Border>
+
+                <Border BackgroundColor="{DynamicResource CardBackground}"  HeightRequest="340" WidthRequest="595" StrokeShape="RoundRectangle 20" Margin="0"
+                    Grid.Row="0" Grid.Column="0" x:Name="cardBack" IsVisible="False">
+                    <VerticalStackLayout VerticalOptions="Center">
+                        
+                        <Grid RowDefinitions="1*, 4*" ColumnDefinitions="*">
+                            <Label Style="{StaticResource Label Font}" Text="" x:Name="CardAShort"
+                                Grid.Row="0" Grid.Column="0" Margin="25, 45, 5, 25"
+                                TextColor="{DynamicResource CardText}" FontSize="26"
+                                HorizontalTextAlignment="Center" VerticalTextAlignment="Start"/>
+
+                            <ScrollView Grid.Row="1" Grid.Column="0" HeightRequest="200" WidthRequest="540" BackgroundColor="Transparent"
+                                VerticalOptions="Start" HorizontalOptions="Center">
+                                <VerticalStackLayout>
+                                    <Label Style="{StaticResource Label Font}" Text="" x:Name="CardALong"
+                                        TextColor="{DynamicResource CardText}" FontSize="24"
+                                        HorizontalTextAlignment="Center" VerticalTextAlignment="Start"/>
+                                </VerticalStackLayout>
+                            </ScrollView>
+                        </Grid>    
+                        
+                    </VerticalStackLayout>
+                </Border>
+            </Grid>
             
             <Grid ColumnDefinitions="Auto,Auto,*,Auto" MaximumWidthRequest="595" ColumnSpacing="10">
 
 
-                    <Label Style="{StaticResource Label Font}"
-                           Grid.Column="0"
-                            Text ="Question:"
-                            HorizontalTextAlignment="Start"
-                            FontSize="18"
-                            TextColor="#e5e3bd"
-                            FontAttributes="Bold"
-                            />
-                    <Label Style="{StaticResource Label Font}"
-                           Grid.Column="1"
-                            Text ="1/8"
-                            HorizontalTextAlignment="Start"
-                            FontSize="18"
-                            TextColor="#e5e3bd"
-                            FontAttributes="Bold"
-                            />
-                    <Label Style="{StaticResource Label Font}"
-                           Grid.Column="2"
-                            Text ="Total Score: "
-                            HorizontalTextAlignment="End"
-                            FontSize="18"
-                            TextColor="#e5e3bd"
-                            FontAttributes="Bold"
-                            />
-                    <Label Style="{StaticResource Label Font}"
-                           Grid.Column="3"
-                            Text ="00"
-                            HorizontalTextAlignment="Center"
-                            FontSize="18"
-                            TextColor="#e5e3bd"
-                            FontAttributes="Bold"
-                            />
+                    <Label Style="{StaticResource Label Font}" Grid.Column="0" Text ="Question:"
+                        HorizontalTextAlignment="Start" FontSize="18" TextColor="{DynamicResource HeaderText}" FontAttributes="Bold"/>
+
+
+                    <Label Style="{StaticResource Label Font}" Grid.Column="1" Text ="1/8" x:Name="QNumLabel"
+                        HorizontalTextAlignment="Start" FontSize="18" TextColor="{DynamicResource HeaderText}" FontAttributes="Bold"/>
+
+
+                    <Label Style="{StaticResource Label Font}" Grid.Column="2" Text ="Total Score: "
+                        HorizontalTextAlignment="End" FontSize="18" TextColor="{DynamicResource HeaderText}" FontAttributes="Bold"/>
+
+
+                    <Label Style="{StaticResource Label Font}" Grid.Column="3" Text ="0" x:Name="ScoreLabel"
+                        HorizontalTextAlignment="Center" FontSize="18" TextColor="{DynamicResource HeaderText}" FontAttributes="Bold" />
                 </Grid>
             
         </VerticalStackLayout>
 
-        <VerticalStackLayout Grid.Column="1" Grid.Row="2"
-                     Margin="20,50,75,0"
-                     Spacing="15"
-                     VerticalOptions="Start">
+        <VerticalStackLayout Grid.Column="1" Grid.Row="2" Margin="20,10,75,0" Spacing="15" VerticalOptions="Start">
 
            
-            <Border BackgroundColor="#2f2e2f"
-            Stroke="#e5e3bd"
-            StrokeThickness="2"
-            Padding="15"
-            HeightRequest="320"
-            StrokeShape="RoundRectangle 10">
+            <Border BackgroundColor="{DynamicResource Primary}" Stroke="{DynamicResource HeaderText}" StrokeThickness="2" Padding="15" 
+                HeightRequest="320" StrokeShape="RoundRectangle 10">
 
-                <Grid RowDefinitions="Auto,*,Auto">
+                <Grid RowDefinitions="5.3*,0.6*,0.1*,1*">
 
 
                     <!-- Incorrect Answers -->
-                    <Label Grid.Row="0"
-                   x:Name="IncorrectAnswersLabel"
-                   Text="Incorrect: Crystal, Slag, Metal&#10;Incorrect: Minerals, Gems, Ore"
-                   TextColor="#e5e3bd"
-                   FontSize="14"
-                   Margin="0,0,0,10" />
+                    <ScrollView Margin="0,0,0,10" Grid.Row="0" x:Name="messageFeed">
+                        <Label x:Name="IncorrectAnswersLabel" Text="" TextColor="{DynamicResource Tertiary}" FontSize="14" FontAttributes="Bold"
+                            VerticalOptions="End" Margin="0,0,10,0"/>
+                    </ScrollView>
 
-                    <!-- To manage space -->
-                    <BoxView Grid.Row="1"
-                             HeightRequest="0"
-                            IsVisible="False"/>
+                    
+                    <Label Grid.Row="1" Grid.Column="0" x:Name="hintLabel" Text="half-time hint: " TextColor="{DynamicResource HeaderText}" IsVisible="True"
+                        FontSize="14" Margin="0" VerticalOptions="Center" HorizontalOptions="Center" WidthRequest="290" HeightRequest="40"/>
+
+
+                    <!-- Divider -->
+                    <BoxView Grid.Row="2" HeightRequest="2" IsVisible="True" VerticalOptions="Center" HorizontalOptions="Center" WidthRequest="270" BackgroundColor="{DynamicResource Tertiary}"/>
 
                    
-                    <Entry Grid.Row="2"
-                   x:Name="AnswerInput"
-                   Placeholder="Enter Answers here..."
-                   PlaceholderColor="#e5e3bd"
-                   TextColor="White"
-                   BackgroundColor="#2f2e2f"
-                   FontSize="16"
-                   HeightRequest="40"
-                   HorizontalOptions="Fill"
-                   />
+                    <Entry Grid.Row="3" x:Name="AnswerInput" Placeholder="Enter Answers here..." PlaceholderColor="{DynamicResource HeaderText}" WidthRequest="300"
+                        TextColor="{DynamicResource MainText}" BackgroundColor="Transparent" FontSize="16" HeightRequest="40" HorizontalOptions="Center" IsEnabled="True"
+                        Unfocused="EntryCheckIn" TextChanged="EntryCheckIn"/>
                 </Grid>
             </Border>
 
             <!-- Buttons -->
 
             <HorizontalStackLayout>
-                <Button Margin ="5,0,10,0" WidthRequest="100" BackgroundColor="#2f2e2f" TextColor="#e5e3bd"
-                    Text="Pass" FontFamily="Roboto" FontAttributes="Bold"/>
-                <Button Margin ="5,0,10,0" WidthRequest="100" BackgroundColor="#99cc99" TextColor="#2f2e2f"
-                   Text="Submit" FontFamily="Roboto" FontAttributes="Bold"/>
+                <Grid RowDefinitions="*" ColumnDefinitions="115, 115, *">
+                    <Border Margin ="5,0,10,0" WidthRequest="100" BackgroundColor="{DynamicResource Primary}" x:Name="PassBtn" Grid.Column="0" Stroke="Transparent"
+                        StrokeShape="RoundRectangle 10">
+                        <Button Margin="0" Text="Pass" FontFamily="Roboto" FontAttributes="Bold" Clicked="PassEntry" TextColor="{DynamicResource HeaderText}"
+                            BackgroundColor="Transparent" Pressed="BtnPressed" Released="BtnReleased"/>
+                    </Border>
+
+                    <Border Margin ="5,0,10,0" WidthRequest="100" BackgroundColor="{DynamicResource Accent}" x:Name="SubmitBtn" Grid.Column="1" Stroke="Transparent"
+                        StrokeShape="RoundRectangle 10">
+                        <Button Margin="0" Text="Submit" FontFamily="Roboto" FontAttributes="Bold" Clicked="SubmitEntry" TextColor="{DynamicResource Secondary}"
+                            BackgroundColor="Transparent" Pressed="BtnPressed" Released="BtnReleased"/>
+                    </Border>
+
+                    <Border Margin ="5,0,10,0" WidthRequest="100" BackgroundColor="{DynamicResource Accent}" x:Name="NextBtn" Grid.Column="1" Stroke="Transparent"
+                        StrokeShape="RoundRectangle 10" IsVisible="False">
+                        <Button Margin="0" Text="Next" FontFamily="Roboto" FontAttributes="Bold" Clicked="BtnNextCard" TextColor="{DynamicResource Secondary}"
+                            BackgroundColor="Transparent" Pressed="BtnPressed" Released="BtnReleased"/>
+                    </Border>
+                </Grid>
             </HorizontalStackLayout>
         </VerticalStackLayout>
 
 
 
         <!--Progress Bar needs further look, here like this for now:-->
-        <ProgressBar Progress="0.5"
-                     Grid.ColumnSpan="2"
-                     Grid.Row="3"
-                     ProgressColor="#99cc99" 
-                     BackgroundColor="#2f2e2f"
-                     Margin="75,0,75,0"
-                     
-                     />
+        <ProgressBar Progress="0.5" Grid.ColumnSpan="2" Grid.Row="3" ProgressColor="{DynamicResource Accent}" 
+            BackgroundColor="{DynamicResource Primary}" Margin="75,0,75,0" x:Name="TimerBar"/>
+
+        <Border Grid.ColumnSpan="2" Grid.Row="3" BackgroundColor="{DynamicResource Accent}" WidthRequest="50" x:Name="LiveScoreBorder" TranslationX="0"
+            Margin="50, 0, 0, 0" VerticalOptions="Center" HorizontalOptions="Start" Stroke="Transparent" StrokeShape="RoundRectangle 8">
+            
+            <Label x:Name="LiveScoreLabel" Text="1000" TextColor="{DynamicResource Primary}" BackgroundColor="Transparent"
+                VerticalOptions="Center" HorizontalOptions="Center" FontAttributes="Bold"/>
+        </Border>
     </Grid>
     
 
