@@ -228,20 +228,20 @@ public partial class MainPage : ContentPage
         {
             // Apply sort order
             string sortOrder = NotePreferencesManager.GetSortOrder();
-            Console.WriteLine($"Applying Sort Order: {sortOrder}");
+            //Console.WriteLine($"Applying Sort Order: {sortOrder}");
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Error retrieving sort order: {ex.Message}");
+            //Console.WriteLine($"Error retrieving sort order: {ex.Message}");
         }
 
         // Apply search filter
         string searchFilter = NotePreferencesManager.GetSearchFilter();
-        Console.WriteLine($"Applying Search Filter: {searchFilter}");
+        //Console.WriteLine($"Applying Search Filter: {searchFilter}");
 
         // Apply theme preference
         string themePreference = NotePreferencesManager.GetThemePreference();
-        Console.WriteLine($"Applying Theme: {themePreference}");
+        //Console.WriteLine($"Applying Theme: {themePreference}");
     }
 }
 
