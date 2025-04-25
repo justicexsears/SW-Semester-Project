@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using System.Diagnostics;
 
 using System;
 using System.IO;
@@ -140,6 +141,8 @@ public static class MauiProgram
 				var secondaryFound = dictionaries.TryGetValue(themename + "Secondary", out var secondary);
 				if (secondaryFound)
 					dictionaries["Secondary"] = secondary;
+				else
+					Debug.WriteLine($"Secondary not found? {themename+"Secondary"}");
 
 				var tertiaryFound = dictionaries.TryGetValue(themename + "Tertiary", out var tertiary);
 				if (tertiaryFound)
@@ -152,6 +155,10 @@ public static class MauiProgram
 				var textFound = dictionaries.TryGetValue(themename + "Text", out var text);
 				if (textFound)
 					dictionaries["MainText"] = text;
+
+				var headerFound = dictionaries.TryGetValue(themename + "Header", out var header);
+				if (textFound)
+					dictionaries["HeaderTextPV"] = header;
 			}
 		}
 

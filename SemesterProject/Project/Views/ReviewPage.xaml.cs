@@ -18,6 +18,7 @@ public partial class ReviewPage : ContentPage
 	string stackFile = "err.json";
 	string stackName = "err";
 
+	bool animCards = true;
 	bool showingFront = true;
 	bool awaitingFlip = false;
 
@@ -76,7 +77,7 @@ public partial class ReviewPage : ContentPage
 		}
 
 		SetHeader();
-
+		animCards = MauiProgram.activeProfile["preferences"].AsObject()["card-anims"].GetValue<int>() == 0 ? false : true;
     }
 
 	
@@ -202,17 +203,19 @@ public partial class ReviewPage : ContentPage
 	{
 		if (awaitingFlip) return;
 
+		int t = animCards ? 550 : 0;
+
 		if (showingFront)
 		{
-			FlipCard(cardFront, cardBack);
+			FlipCard(cardFront, cardBack, t);
 			showingFront = false;
-			awaitingFlip = true;
+			awaitingFlip = animCards;
 		}
 		else
 		{
-			FlipCard(cardBack, cardFront);
+			FlipCard(cardBack, cardFront, t);
 			showingFront = true;
-			awaitingFlip = true;
+			awaitingFlip = animCards;
 		}
 	}
 
@@ -272,24 +275,36 @@ public partial class ReviewPage : ContentPage
 	}
 
 	//animation function
-	private async Task FlipCard(Border startBorder, Border endBorder)
-	{
-		// Squash horizontally
-		await startBorder.ScaleXTo(0.1, 250, Easing.CubicIn);
+	private async Task FlipCard(Border startBorder, Border endBorder, int tMillis)
+	{	
+		if (tMillis > 50)
+		{
+			uint phaseMillis = (uint) (tMillis - 50) / 2;
+			// Squash horizontally
+			await startBorder.ScaleXTo(0.1, phaseMillis, Easing.CubicIn);
 
-		//ensure endBorder is in position
-		await endBorder.ScaleXTo(0.1, 10);
+			//ensure endBorder is in position
+			await endBorder.ScaleXTo(0.1, 10);
 
-		//hide startBorder
-		startBorder.IsVisible = false;
-		endBorder.IsVisible = true;
+			//hide startBorder
+			startBorder.IsVisible = false;
+			endBorder.IsVisible = true;
 
-		// Stretch back out
-		await endBorder.ScaleXTo(1.02, 250, Easing.CubicOut);
+			// Stretch back out
+			await endBorder.ScaleXTo(1.02, phaseMillis, Easing.CubicOut);
 
-		// Optional bounce effect
-		await endBorder.ScaleXTo(1, 50);
+			// Optional bounce effect
+			await endBorder.ScaleXTo(1, 50);
 
-		awaitingFlip = false;
+			awaitingFlip = false;
+		}
+		else
+		{
+			//hide startBorder
+			startBorder.IsVisible = false;
+			endBorder.IsVisible = true;
+
+			awaitingFlip = false;
+		}
 	}
 }

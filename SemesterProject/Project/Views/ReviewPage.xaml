@@ -11,33 +11,6 @@
     </ContentPage.Resources>
 
     <Grid RowDefinitions="80,*" ColumnDefinitions="400,5,*">
-        <!--
-        <FlexLayout BackgroundColor="{DynamicResource Primary}" Grid.ColumnSpan="3"  JustifyContent="SpaceBetween" Padding="10, 0">
-            <HorizontalStackLayout>
-
-                <ImageButton Source="left_arrow.png" WidthRequest="75" HorizontalOptions="Start"  BackgroundColor="Transparent" Clicked="BtnBack"/>
-                <Label Style="{StaticResource Label Font}" Text="Review" VerticalOptions="Center" Padding="20" FontSize="30" TextColor="{DynamicResource MainText}"/>
-            </HorizontalStackLayout>
-            <HorizontalStackLayout>
-                <ImageButton Source="hamburger_icon.png" WidthRequest="75" HorizontalOptions="Start"  BackgroundColor="Transparent">
-                    <FlyoutBase.ContextFlyout>
-                        <MenuFlyout>
-                            <MenuFlyoutItem Text="Settings" Clicked="BtnSettings"/>
-                            <MenuFlyoutItem Text="Sign Out" Clicked="BtnSignOut"/>
-                        </MenuFlyout>
-                    </FlyoutBase.ContextFlyout> 
-                </ImageButton>
-            <ImageButton Source="logo.png" WidthRequest="75" Background="Transparent" HorizontalOptions="End">
-                <FlyoutBase.ContextFlyout>
-                    <MenuFlyout>
-                        <MenuFlyoutItem Text="Settings" Clicked="BtnSettings"/>
-                        <MenuFlyoutItem Text="Sign Out" Clicked="BtnSignOut"/>
-                    </MenuFlyout>
-                </FlyoutBase.ContextFlyout>
-            </ImageButton>
-            </HorizontalStackLayout>
-        </FlexLayout>
-        ORIGINAL NAVBAR -->
 
         <!--BEGIN MASTER NAVBAR-->
         <FlexLayout BackgroundColor="{DynamicResource Primary}" Grid.ColumnSpan="3"  JustifyContent="SpaceBetween" Padding="10, 0">
@@ -143,7 +116,7 @@
                         
                         <Grid RowDefinitions="1*, 4*" ColumnDefinitions="*">
                             <Label Style="{StaticResource Label Font}" Text="" x:Name="CardAShort"
-                                Grid.Row="0" Grid.Column="0" Margin="25, 75, 5, 25"
+                                Grid.Row="0" Grid.Column="0" Margin="25, 45, 5, 25"
                                 TextColor="{DynamicResource CardText}" FontSize="26"
                                 HorizontalTextAlignment="Center" VerticalTextAlignment="Start"/>
 
@@ -151,7 +124,7 @@
                                 VerticalOptions="Start" HorizontalOptions="Center">
                                 <VerticalStackLayout>
                                     <Label Style="{StaticResource Label Font}" Text="" x:Name="CardALong"
-                                        TextColor="{DynamicResource MainText}" FontSize="24"
+                                        TextColor="{DynamicResource CardText}" FontSize="24"
                                         HorizontalTextAlignment="Center" VerticalTextAlignment="Start"/>
                                 </VerticalStackLayout>
                             </ScrollView>
