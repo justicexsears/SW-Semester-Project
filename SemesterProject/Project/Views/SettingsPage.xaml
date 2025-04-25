@@ -233,8 +233,8 @@
 
 
                                 <!-- Incorrect Answers -->
-                                <ScrollView Margin="0,0,0,6.25" Grid.Row="0">
-                                    <Label x:Name="IncorrectAnswersLabel" Text="Incorrect:Mercury&#10;Incorrect: Jello" TextColor="{DynamicResource TertiaryPV}" FontSize="8.75" FontAttributes="Bold"
+                                <ScrollView Margin="0,0,0,10" Grid.Row="0" x:Name="messageFeed">
+                                    <Label x:Name="IncorrectAnswersLabel" Text="Incorrect: Mercury&#10;Incorrect: Jello" TextColor="{DynamicResource TertiaryPV}" FontSize="8.75" FontAttributes="Bold"
                                         VerticalOptions="End" Margin="0,0,6.25,0"/>
                                 </ScrollView>
 
@@ -248,7 +248,7 @@
 
                             
                                 <Entry Grid.Row="3" x:Name="AnswerInput" Placeholder="Enter Answers here..." PlaceholderColor="{DynamicResource HeaderTextPV}" WidthRequest="160" MinimumHeightRequest="0"
-                                    TextColor="{DynamicResource MainTextPV}" BackgroundColor="Transparent" FontSize="8.75" HeightRequest="30" HorizontalOptions="Center" IsEnabled="True"/>
+                                    TextColor="{DynamicResource MainTextPV}" BackgroundColor="Transparent" FontSize="8.75" HeightRequest="30" HorizontalOptions="Center" IsEnabled="False"/>
                             </Grid>
                         </Border>
 

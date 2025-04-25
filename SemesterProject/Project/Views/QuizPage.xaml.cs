@@ -87,7 +87,7 @@ public partial class QuizPage : ContentPage
 		LiveScoreBorder.TranslationX = TimerBar.Width;
 
 		animCards = MauiProgram.activeProfile["preferences"].AsObject()["card-anims"].GetValue<int>() == 0 ? false : true;
-		
+
 		activeAttempts = MauiProgram.activeProfile["preferences"]?.AsObject()["q-attempts"]?.GetValue<int>() ?? 0;
 	}
 
@@ -247,7 +247,8 @@ public partial class QuizPage : ContentPage
 		}
 
 		AnswerInput.Text = "";
-
+		
+		await Task.Delay(50);
 		await messageFeed.ScrollToAsync(0, IncorrectAnswersLabel.Height, animated: false);
 
 		if (cardAttempts >= activeAttempts)
@@ -280,6 +281,7 @@ public partial class QuizPage : ContentPage
 		showingFront = false;
 		AnswerInput.IsEnabled = false;
 
+		await Task.Delay(50);
 		await messageFeed.ScrollToAsync(0, IncorrectAnswersLabel.Height, animated: false);
 	}
 
@@ -300,6 +302,7 @@ public partial class QuizPage : ContentPage
 		showingFront = false;
 		AnswerInput.IsEnabled = false;
 
+		await Task.Delay(50);
 		await messageFeed.ScrollToAsync(0, IncorrectAnswersLabel.Height, animated: false);
 	}
 

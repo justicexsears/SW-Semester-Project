@@ -12,6 +12,8 @@ public partial class SettingsPage : ContentPage
 	
 	Label[] settingLabels;
 
+	string[] incorrectGuessFiller = {"mercury", "Spiers", "spiders", "Solids", "medicine", "jelly", "honey", "lemon", "salts", "forks"};
+
 	public SettingsPage()
 	{
 		localProf = JsonNode.Parse(MauiProgram.activeProfile.ToJsonString()).AsObject();
@@ -248,6 +250,8 @@ public partial class SettingsPage : ContentPage
 				break;
 		}
 
+		ShowIncorrects(tmpInt);
+
 		// Q shuffle
 		if (localProf["preferences"]?.AsObject()["q-shuffle"]?.GetValue<int>() == 1)
 			ShuffCheckbox.IsChecked = true;
@@ -259,6 +263,8 @@ public partial class SettingsPage : ContentPage
 			GuessCheckbox.IsChecked = true;
 		else
 			GuessCheckbox.IsChecked = false;
+
+		ToggleIncorrects(GuessCheckbox.IsChecked);
 		
 		// Q hint
 		if (localProf["preferences"]?.AsObject()["q-hint"]?.GetValue<int>() == 1)
@@ -266,6 +272,7 @@ public partial class SettingsPage : ContentPage
 		else
 			HintCheckbox.IsChecked = false;
 
+		ToggleHint(HintCheckbox.IsChecked);
 	}
 
 	public void themePickerPreview(object sender, EventArgs e)
@@ -390,11 +397,25 @@ public partial class SettingsPage : ContentPage
 		localProf["preferences"].AsObject()["q-attempts"] = resultInt;
 
 		//preview changes in small window
+		ShowIncorrects(resultInt);
 
 		//highlight label if change compared to active
 		bool emphasize = localProf["preferences"].AsObject()["q-attempts"].GetValue<int>() != MauiProgram.activeProfile["preferences"].AsObject()["q-attempts"].GetValue<int>();
 
 		emphasizeTextLabel(5, emphasize);
+	}
+
+	private async void ShowIncorrects(int index)
+	{
+		//use 10 previews to show infinite
+		int limit = (index == -1 ? 10 : index);
+		IncorrectAnswersLabel.Text = "";
+		for (int i = 0; i < limit - 1; i++) {
+			IncorrectAnswersLabel.Text += $"\nIncorrect: {incorrectGuessFiller[i]}";
+		}
+
+		await Task.Delay(50);
+		await messageFeed.ScrollToAsync(0, IncorrectAnswersLabel.Height, animated: false);
 	}
 
 	public void shuffPreview(object sender, EventArgs e)
@@ -403,7 +424,7 @@ public partial class SettingsPage : ContentPage
 
 		localProf["preferences"].AsObject()["q-shuffle"] = cb.IsChecked ? 1 : 0;
 
-		//preview changes in small window;
+		//no changes to preview in small window;
 
 		//highlight label if change compared to active
 		bool emphasize = localProf["preferences"].AsObject()["q-shuffle"].GetValue<int>() != MauiProgram.activeProfile["preferences"].AsObject()["q-shuffle"].GetValue<int>();
@@ -420,11 +441,17 @@ public partial class SettingsPage : ContentPage
 		localProf["preferences"].AsObject()["q-fails"] = cb.IsChecked ? 1 : 0;
 
 		//preview changes in small window
+		ToggleIncorrects(cb.IsChecked);
 
 		//highlight label if change compared to active
 		bool emphasize = localProf["preferences"].AsObject()["q-fails"].GetValue<int>() != MauiProgram.activeProfile["preferences"].AsObject()["q-fails"].GetValue<int>();
 
 		emphasizeTextLabel(7, emphasize);
+	}
+
+	private void ToggleIncorrects(bool state)
+	{
+		IncorrectAnswersLabel.IsVisible = state;
 	}
 
 	public void hintPreview(object sender, EventArgs e)
@@ -434,11 +461,17 @@ public partial class SettingsPage : ContentPage
 		localProf["preferences"].AsObject()["q-hint"] = cb.IsChecked ? 1 : 0;
 
 		//preview changes in small window
+		ToggleHint(cb.IsChecked);
 
 		//highlight label if change compared to active
 		bool emphasize = localProf["preferences"].AsObject()["q-hint"].GetValue<int>() != MauiProgram.activeProfile["preferences"].AsObject()["q-hint"].GetValue<int>();
 
 		emphasizeTextLabel(8, emphasize);
+	}
+
+	private void ToggleHint(bool state)
+	{
+		hintLabel.IsVisible = state;
 	}
 
 	public static void previewTheme(JsonObject pref)
