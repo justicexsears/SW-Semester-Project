@@ -1,4 +1,5 @@
 ﻿using System.Text.Json.Nodes;
+using SemesterProject.Utilities;
 
 namespace SemesterProject;
 
@@ -14,7 +15,8 @@ public partial class MainPage : ContentPage
 	public MainPage()
 	{
 		InitializeComponent();
-		MauiProgram.updateTheme(MauiProgram.activeProfile);
+        ApplyUserPreferences();
+        MauiProgram.updateTheme(MauiProgram.activeProfile);
 
 		MenuProfileNameLbl.Text = MauiProgram.activeProfile["name"]?.GetValue<string>() ?? "Author N.";
 
@@ -219,5 +221,27 @@ public partial class MainPage : ContentPage
 		Color btnBG = Color.FromRgba(0f, 0f, 0f, 0f);
 		btn.Background = btnBG;
 	}
+
+    private void ApplyUserPreferences()
+    {
+        try
+        {
+            // Apply sort order
+            string sortOrder = NotePreferencesManager.GetSortOrder();
+            Console.WriteLine($"Applying Sort Order: {sortOrder}");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error retrieving sort order: {ex.Message}");
+        }
+
+        // Apply search filter
+        string searchFilter = NotePreferencesManager.GetSearchFilter();
+        Console.WriteLine($"Applying Search Filter: {searchFilter}");
+
+        // Apply theme preference
+        string themePreference = NotePreferencesManager.GetThemePreference();
+        Console.WriteLine($"Applying Theme: {themePreference}");
+    }
 }
 
