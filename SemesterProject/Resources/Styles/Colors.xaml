@@ -15,6 +15,9 @@
     <Color x:Key="Accent">#99cc99</Color>
     <Color x:Key="MainText">White</Color>
     <Color x:Key="HeaderText">#e5e3bd</Color>
+    <Color x:Key="CardBackground">White</Color>
+    <Color x:Key="CardText">Black</Color>
+
 
     <Color x:Key="White">White</Color>
     <Color x:Key="Black">Black</Color>
@@ -47,12 +50,19 @@
     <SolidColorBrush x:Key="Gray950Brush" Color="{StaticResource Gray950}"/>
 
 
+
+
+    <!--B on W-->
+    <Color x:Key="BWCBG">White</Color>
+    <Color x:Key="BWCT">Black</Color>
     <!--DarkRed-->
     <Color x:Key="DarkRedPrimary">#191919</Color>
     <Color x:Key="DarkRedSecondary">#232323</Color>
     <Color x:Key="DarkRedTertiary">#343434</Color>
     <Color x:Key="DarkRedAccent">#f08a8a</Color>
     <Color x:Key="DarkRedText">White</Color>
+    <Color x:Key="DarkRedCBG">#343434</Color>
+    <Color x:Key="DarkRedCT">White</Color>
 
     <!--LightRed-->
     <Color x:Key="LightRedPrimary">#AFAFAF</Color>
@@ -60,6 +70,8 @@
     <Color x:Key="LightRedTertiary">#C6C6C6</Color>
     <Color x:Key="LightRedAccent">#c44040</Color>
     <Color x:Key="LightRedText">Black</Color>
+    <Color x:Key="LightRedCBG">#C6C6C6</Color>
+    <Color x:Key="LightRedCT">Black</Color>
 
     <!--DarkOrange-->
     <Color x:Key="DarkOrangePrimary">#191919</Color>
@@ -67,6 +79,8 @@
     <Color x:Key="DarkOrangeTertiary">#343434</Color>
     <Color x:Key="DarkOrangeAccent">#ff9255</Color>
     <Color x:Key="DarkOrangeText">White</Color>
+    <Color x:Key="DarkOrangeCBG">#343434</Color>
+    <Color x:Key="DarkOrangeCT">White</Color>
 
     <!--LightOrange-->
     <Color x:Key="LightOrangePrimary">#AFAFAF</Color>
@@ -74,6 +88,8 @@
     <Color x:Key="LightOrangeTertiary">#C6C6C6</Color>
     <Color x:Key="LightOrangeAccent">#f3a52f</Color>
     <Color x:Key="LightOrangeText">Black</Color>
+    <Color x:Key="LightOrangeCBG">#C6C6C6</Color>
+    <Color x:Key="LightOrangeCT">Black</Color>
 
     <!--DarkYellow-->
     <Color x:Key="DarkYellowPrimary">#191919</Color>
@@ -81,6 +97,8 @@
     <Color x:Key="DarkYellowTertiary">#343434</Color>
     <Color x:Key="DarkYellowAccent">#FFF175</Color>
     <Color x:Key="DarkYellowText">White</Color>
+    <Color x:Key="DarkYellowCBG">#343434</Color>
+    <Color x:Key="DarkYellowCT">White</Color>
 
     <!--LightYellow-->
     <Color x:Key="LightYellowPrimary">#AFAFAF</Color>
@@ -88,6 +106,8 @@
     <Color x:Key="LightYellowTertiary">#C6C6C6</Color>
     <Color x:Key="LightYellowAccent">#ffd129</Color>
     <Color x:Key="LightYellowText">Black</Color>
+    <Color x:Key="LightYellowCBG">#C6C6C6</Color>
+    <Color x:Key="LightYellowCT">Black</Color>
 
     <!--DarkGreen-->
     <Color x:Key="DarkGreenPrimary">#191919</Color>
@@ -95,6 +115,8 @@
     <Color x:Key="DarkGreenTertiary">#343434</Color>
     <Color x:Key="DarkGreenAccent">#99cc99</Color>
     <Color x:Key="DarkGreenText">White</Color>
+    <Color x:Key="DarkGreenCBG">#343434</Color>
+    <Color x:Key="DarkGreenCT">White</Color>
 
     <!--LightGreen-->
     <Color x:Key="LightGreenPrimary">#AFAFAF</Color>
@@ -102,6 +124,8 @@
     <Color x:Key="LightGreenTertiary">#C6C6C6</Color>
     <Color x:Key="LightGreenAccent">#58ff2e</Color>
     <Color x:Key="LightGreenText">Black</Color>
+    <Color x:Key="LightGreenCBG">#C6C6C6</Color>
+    <Color x:Key="LightGreenCT">Black</Color>
 
 
     <!--DarkBlue-->
@@ -110,6 +134,8 @@
     <Color x:Key="DarkBlueTertiary">#343434</Color>
     <Color x:Key="DarkBlueAccent">#8db9c4</Color>
     <Color x:Key="DarkBlueText">White</Color>
+    <Color x:Key="DarkBlueCBG">#343434</Color>
+    <Color x:Key="DarkBlueCT">White</Color>
 
     <!--LightBlue-->
     <Color x:Key="LightBluePrimary">#AFAFAF</Color>
@@ -117,6 +143,8 @@
     <Color x:Key="LightBlueTertiary">#C6C6C6</Color>
     <Color x:Key="LightBlueAccent">#6081fb</Color>
     <Color x:Key="LightBlueText">Black</Color>
+    <Color x:Key="LightBlueCBG">#C6C6C6</Color>
+    <Color x:Key="LightBlueCT">Black</Color>
 
     <!--DarkPurple-->
     <Color x:Key="DarkPurplePrimary">#191919</Color>
@@ -124,6 +152,8 @@
     <Color x:Key="DarkPurpleTertiary">#343434</Color>
     <Color x:Key="DarkPurpleAccent">#e378d3</Color>
     <Color x:Key="DarkPurpleText">White</Color>
+    <Color x:Key="DarkPurpleCBG">#343434</Color>
+    <Color x:Key="DarkPurpleCT">White</Color>
 
     <!--LightPurple-->
     <Color x:Key="LightPurplePrimary">#AFAFAF</Color>
@@ -131,5 +161,7 @@
     <Color x:Key="LightPurpleTertiary">#C6C6C6</Color>
     <Color x:Key="LightPurpleAccent">#df16cd</Color>
     <Color x:Key="LightPurpleText">Black</Color>
+    <Color x:Key="LightPurpleCBG">#C6C6C6</Color>
+    <Color x:Key="LightPurpleCT">Black</Color>
 
 </ResourceDictionary>

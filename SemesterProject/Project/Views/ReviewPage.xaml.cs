@@ -79,6 +79,8 @@ public partial class ReviewPage : ContentPage
 
     }
 
+	
+
 	private async void BtnBack(object sender, EventArgs e)
 	{
 		App.Current.Windows[0].Page = new MainPage(); 
@@ -145,8 +147,55 @@ public partial class ReviewPage : ContentPage
 		DirectHighlightCard(id);
 
 		activeCardID = id;
+		CollFlashCards.ScrollTo(id);
 
 		UpdateMainCard();
+	}
+
+	private async void BtnPrevCard(object sender, EventArgs e)
+	{
+		int tmpID = activeCardID - 1;
+
+		if (tmpID < 0 || tmpID >= flashcardscontroller.FlashCards.Count)
+			return;
+
+		DirectSelectCard(tmpID);
+	}
+
+	private async void BtnNextCard(object sender, EventArgs e)
+	{
+		int tmpID = activeCardID + 1;
+
+		if (tmpID < 0 || tmpID >= flashcardscontroller.FlashCards.Count)
+			return;
+
+		DirectSelectCard(tmpID);
+	}
+
+	private async void EntryCardSelection(object sender, EventArgs e)
+	{
+		Entry selector = sender as Entry;
+
+		int index = -1;
+
+		int.TryParse(selector.Text, out index);
+
+		if (index == -1)
+		{
+			indexSelector.Text = activeCardID.ToString();
+			return;
+		}
+
+		//clamp target index to reasonable bounds
+		if (index >= flashcardscontroller.FlashCards.Count)
+			index = flashcardscontroller.FlashCards.Count - 1;
+		
+		if (index <= 0)
+			index = 0;
+
+		DirectSelectCard(index);
+
+		indexSelector.Text = index.ToString();
 	}
 
 	private async void BtnFlipCard(object sender, EventArgs e)
@@ -186,6 +235,7 @@ public partial class ReviewPage : ContentPage
 		activeCardID = id;
 
 		UpdateMainCard();
+		CollFlashCards.ScrollTo(id);
 		
 	}
 

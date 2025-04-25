@@ -253,6 +253,7 @@ public partial class SettingsPage : ContentPage
 			HintCheckbox.IsChecked = true;
 		else
 			HintCheckbox.IsChecked = false;
+
 	}
 
 	public void themePickerPreview(object sender, EventArgs e)
@@ -378,6 +379,8 @@ public partial class SettingsPage : ContentPage
 		localProf["preferences"].AsObject()["q-hint"] = cb.IsChecked ? 1 : 0;
 
 		//preview changes in small window
+
+		
 	}
 }
 

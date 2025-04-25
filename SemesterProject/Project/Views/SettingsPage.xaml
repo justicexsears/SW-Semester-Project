@@ -55,7 +55,7 @@
                 <Border BackgroundColor="#e5e3bd" StrokeThickness="1.5"/>
 
                 <HorizontalStackLayout HorizontalOptions="Center" Margin="5">
-                    <Label Style="{StaticResource Label Font}" Text="Theme Base" VerticalOptions="Center" HorizontalTextAlignment="Center" WidthRequest="175" FontSize="15" TextColor="{DynamicResource MainText}"/>
+                    <Label Style="{StaticResource Label Font}" x:Name="ThemeLabel" Text="Theme Base" VerticalOptions="Center" HorizontalTextAlignment="Center" WidthRequest="175" FontSize="15" TextColor="{DynamicResource MainText}"/>
                     <Picker WidthRequest="100" x:Name="ThemePicker" SelectedIndexChanged="themePickerPreview" TextColor="{DynamicResource MainText}">
                         <Picker.ItemsSource>
                                 <x:Array Type="{x:Type x:String}">
@@ -67,7 +67,7 @@
                 </HorizontalStackLayout>
 
                 <HorizontalStackLayout HorizontalOptions="Center" Margin="5">
-                    <Label Style="{StaticResource Label Font}" Text="Theme Accent" VerticalOptions="Center" HorizontalTextAlignment="Center" WidthRequest="175" FontSize="15" TextColor="{DynamicResource MainText}"/>
+                    <Label Style="{StaticResource Label Font}" x:Name="AccentLabel" Text="Theme Accent" VerticalOptions="Center" HorizontalTextAlignment="Center" WidthRequest="175" FontSize="15" TextColor="{DynamicResource MainText}"/>
                     <Picker WidthRequest="100" x:Name="AccentPicker" SelectedIndexChanged="accentPickerPreview" TextColor="{DynamicResource MainText}">
                         <Picker.ItemsSource>
                                 <x:Array Type="{x:Type x:String}">
@@ -83,12 +83,12 @@
                 </HorizontalStackLayout>
 
                 <HorizontalStackLayout HorizontalOptions="Center" Margin="5">
-                    <Label Style="{StaticResource Label Font}" Text="Card Style" VerticalOptions="Center" HorizontalTextAlignment="Center" WidthRequest="175" FontSize="15" TextColor="{DynamicResource MainText}"/>
+                    <Label Style="{StaticResource Label Font}" x:Name="StyleLabel" Text="Card Style" VerticalOptions="Center" HorizontalTextAlignment="Center" WidthRequest="175" FontSize="15" TextColor="{DynamicResource MainText}"/>
                     <Picker WidthRequest="100" x:Name="CStylePicker" SelectedIndexChanged="cStylePickerPreview" TextColor="{DynamicResource MainText}">
                         <Picker.ItemsSource>
                                 <x:Array Type="{x:Type x:String}">
                                     <x:String>Black on White</x:String>
-                                    <x:String>White on Black</x:String>
+                                    <x:String>Match Theme</x:String>
                                     
                                 </x:Array>
                         </Picker.ItemsSource>
@@ -96,7 +96,7 @@
                 </HorizontalStackLayout>
 
                 <HorizontalStackLayout HorizontalOptions="Center" Margin="5">
-                    <Label Style="{StaticResource Label Font}" Text="Card Animations" VerticalOptions="Center" HorizontalTextAlignment="Center" WidthRequest="175" FontSize="15" TextColor="{DynamicResource MainText}"/>
+                    <Label Style="{StaticResource Label Font}" x:Name="CAniLabel" Text="Card Animations" VerticalOptions="Center" HorizontalTextAlignment="Center" WidthRequest="175" FontSize="15" TextColor="{DynamicResource MainText}"/>
                     <CheckBox Color="{DynamicResource Accent}" x:Name="CAniCheckbox" CheckedChanged="cAniPreview"/>
                 </HorizontalStackLayout>
 
@@ -104,7 +104,7 @@
                 <Border BackgroundColor="#e5e3bd" StrokeThickness="1.5"/>
 
                 <HorizontalStackLayout HorizontalOptions="Center" Margin="5">
-                    <Label Style="{StaticResource Label Font}" Text="Question Time" VerticalOptions="Center" HorizontalTextAlignment="Center" WidthRequest="175" FontSize="15" TextColor="{DynamicResource MainText}"/>
+                    <Label Style="{StaticResource Label Font}" x:Name="QTimeLabel" Text="Question Time" VerticalOptions="Center" HorizontalTextAlignment="Center" WidthRequest="175" FontSize="15" TextColor="{DynamicResource MainText}"/>
                     <Picker WidthRequest="100" x:Name="QTimePicker" SelectedIndexChanged="qTimePickerPreview" TextColor="{DynamicResource MainText}">
                         <Picker.ItemsSource>
                                 <x:Array Type="{x:Type x:String}">
@@ -119,7 +119,7 @@
                 </HorizontalStackLayout>
 
                 <HorizontalStackLayout HorizontalOptions="Center" Margin="5">
-                    <Label Style="{StaticResource Label Font}" Text="Question Attempts" VerticalOptions="Center" HorizontalTextAlignment="Center" WidthRequest="175" FontSize="15" TextColor="{DynamicResource MainText}"/>
+                    <Label Style="{StaticResource Label Font}" x:Name="QAttemptLabel" Text="Question Attempts" VerticalOptions="Center" HorizontalTextAlignment="Center" WidthRequest="175" FontSize="15" TextColor="{DynamicResource MainText}"/>
                     <Picker WidthRequest="100" x:Name="QAttemptPicker" SelectedIndexChanged="qAttemptPickerPreview" TextColor="{DynamicResource MainText}">
                         <Picker.ItemsSource>
                                 <x:Array Type="{x:Type x:String}">
@@ -134,17 +134,17 @@
                 </HorizontalStackLayout>
 
                 <HorizontalStackLayout HorizontalOptions="Center" Margin="5">
-                    <Label Style="{StaticResource Label Font}" Text="Shuffle Questions" VerticalOptions="Center" HorizontalTextAlignment="Center" WidthRequest="175" FontSize="15" TextColor="{DynamicResource MainText}"/>
+                    <Label Style="{StaticResource Label Font}" x:Name="ShuffleLabel" Text="Shuffle Questions" VerticalOptions="Center" HorizontalTextAlignment="Center" WidthRequest="175" FontSize="15" TextColor="{DynamicResource MainText}"/>
                     <CheckBox Color="{DynamicResource Accent}" x:Name="ShuffCheckbox" CheckedChanged="shuffPreview"/>
                 </HorizontalStackLayout>
 
                 <HorizontalStackLayout HorizontalOptions="Center" Margin="5">
-                    <Label Style="{StaticResource Label Font}" Text="Show Incorrect Guesses" VerticalOptions="Center" HorizontalTextAlignment="Center" WidthRequest="175" FontSize="15" TextColor="{DynamicResource MainText}"/>
+                    <Label Style="{StaticResource Label Font}" x:Name="GuessLabel" Text="Show Incorrect Guesses" VerticalOptions="Center" HorizontalTextAlignment="Center" WidthRequest="175" FontSize="15" TextColor="{DynamicResource MainText}"/>
                     <CheckBox Color="{DynamicResource Accent}" x:Name="GuessCheckbox" CheckedChanged="guessPreview"/>
                 </HorizontalStackLayout>
 
                 <HorizontalStackLayout HorizontalOptions="Center" Margin="5">
-                    <Label Style="{StaticResource Label Font}" Text="Give Half-Time Hint" VerticalOptions="Center" HorizontalTextAlignment="Center" WidthRequest="175" FontSize="15" TextColor="{DynamicResource MainText}"/>
+                    <Label Style="{StaticResource Label Font}" x:Name="HintLabel" Text="Give Half-Time Hint" VerticalOptions="Center" HorizontalTextAlignment="Center" WidthRequest="175" FontSize="15" TextColor="{DynamicResource MainText}"/>
                     <CheckBox Color="{DynamicResource Accent}" x:Name="HintCheckbox" CheckedChanged="hintPreview"/>
                 </HorizontalStackLayout>
 
