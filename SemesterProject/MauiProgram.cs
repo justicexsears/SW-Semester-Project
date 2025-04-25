@@ -141,8 +141,6 @@ public static class MauiProgram
 				var secondaryFound = dictionaries.TryGetValue(themename + "Secondary", out var secondary);
 				if (secondaryFound)
 					dictionaries["Secondary"] = secondary;
-				else
-					Debug.WriteLine($"Secondary not found? {themename+"Secondary"}");
 
 				var tertiaryFound = dictionaries.TryGetValue(themename + "Tertiary", out var tertiary);
 				if (tertiaryFound)

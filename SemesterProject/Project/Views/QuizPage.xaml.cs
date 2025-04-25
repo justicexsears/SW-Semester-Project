@@ -1,4 +1,5 @@
 using System.Text.Json.Nodes;
+using System.Diagnostics;
 namespace SemesterProject;
 
 public partial class QuizPage : ContentPage
@@ -21,12 +22,18 @@ public partial class QuizPage : ContentPage
 
 	int cardAttempts = -1;
 	int activeAttempts = 0;
+	bool printIncorrects = true;
 	
 	int activeTime = 0;
 	int cardTime = 0;
+	double ProgressWidth;
 	CancellationTokenSource timerCancellationSource;
 
 	int userScore = 0;
+	int answerableCount = 0;
+	bool hintGenerated = false;
+
+	Random rnd = new Random();
 
 	public QuizPage()
 	{
@@ -42,23 +49,25 @@ public partial class QuizPage : ContentPage
 		cardTime = MauiProgram.activeProfile["preferences"]?.AsObject()["q-time"].GetValue<int>() ?? 4;
 		switch(cardTime)
 		{
-			case 0:
+			case 30:
 				cardTime = 30000;
 				break;
-			case 1:
+			case 45:
 				cardTime = 45000;
 				break;
-			case 2:
+			case 60:
 				cardTime = 60000;
 				break;
-			case 3:
+			case 90:
 				cardTime = 90000;
 				break;
-			case 4:
+			case 120:
 			default:
 				cardTime = 120000;
 				break;
 		}
+
+		printIncorrects = (MauiProgram.activeProfile["preferences"]?.AsObject()["q-fails"]?.GetValue<int>() ?? 1) == 1 ? true : false;
 
 		if (!Directory.Exists((MauiProgram.dirPath + MauiProgram.stackFolder)))
 		{
@@ -78,17 +87,81 @@ public partial class QuizPage : ContentPage
 			App.Current.Windows[0].Page = new MainPage(); //file does not exist, cannot continue
 		}
 
+		bool shuffle = (MauiProgram.activeProfile["preferences"]?.AsObject()["q-shuffle"]?.GetValue<int>() ?? 1) == 1 ? true : false;
+
+		if (shuffle) ShuffleSet(4); //performs x sequential riffleshuffles with random imperfections
+
 		timerCancellationSource = new CancellationTokenSource();
 
 		SetHeader();
-		ShowHalfTimeLabel((MauiProgram.activeProfile["preferences"].AsObject()["q-hint"].GetValue<int>() == 0 ? false : true));
+		ShowHalfTimeLabel(((MauiProgram.activeProfile["preferences"]?.AsObject()["q-hint"]?.GetValue<int>() ?? 1) == 0 ? false : true));
 
-		LoadCardComplete(activeCardID);
-		LiveScoreBorder.TranslationX = TimerBar.Width;
+		delayedInitLoad();
 
-		animCards = MauiProgram.activeProfile["preferences"].AsObject()["card-anims"].GetValue<int>() == 0 ? false : true;
+		animCards = ((MauiProgram.activeProfile["preferences"]?.AsObject()["card-anims"]?.GetValue<int>() ?? 1) == 0 ? false : true);
 
 		activeAttempts = MauiProgram.activeProfile["preferences"]?.AsObject()["q-attempts"]?.GetValue<int>() ?? 0;
+	}
+
+	private void ShuffleSet(int repeat)
+	{
+		JsonArray fullStack = JsonNode.Parse(cardDataset.ToJsonString()).AsArray();
+
+		int halfCount = fullStack.Count / 2;
+
+		JsonArray leftHand = new JsonArray();
+		JsonArray rightHand = new JsonArray();
+
+		for (int cycle = 0; cycle < repeat; cycle++)
+		{
+			leftHand = new JsonArray();
+			rightHand = new JsonArray();
+
+			//split pile at halfway
+			for (int c = 0; c < halfCount; c++)
+			{
+				leftHand.Add(JsonNode.Parse(fullStack[c].ToJsonString()).AsObject());
+			}
+
+			for (int c = halfCount; c < fullStack.Count; c++)
+			{
+				rightHand.Add(JsonNode.Parse(fullStack[c].ToJsonString()).AsObject());
+			}
+
+			int lIndex = 0;
+			int rIndex = 0;
+
+			for (int c = 0; c < fullStack.Count; c++)
+			{
+				bool left = (rnd.Next(0, 2) == 0) ? true : false;
+
+				if (left && lIndex < leftHand.Count)
+				{
+					fullStack[c] = JsonNode.Parse(leftHand[lIndex].ToJsonString()).AsObject();
+					lIndex++;
+				}
+				else if (rIndex < rightHand.Count)
+				{
+					fullStack[c] = JsonNode.Parse(rightHand[rIndex].ToJsonString()).AsObject();
+					rIndex++;
+				}
+				else if (lIndex < leftHand.Count)
+				{
+					//to get to this point, left must be false, and right must be out of cards, 
+					//so pull form left anyway assuming it has the remaining cards
+					fullStack[c] = JsonNode.Parse(leftHand[lIndex].ToJsonString()).AsObject();
+					lIndex++;
+				}
+			}
+		}
+
+		cardDataset = JsonNode.Parse(fullStack.ToJsonString()).AsArray();
+	}
+
+	private async void delayedInitLoad()
+	{
+		await Task.Delay(250);
+		LoadCardComplete(activeCardID);
 	}
 
 	private void SetHeader()
@@ -116,13 +189,23 @@ public partial class QuizPage : ContentPage
 		activeShortAns = cardDataset[index]?.AsObject()["a-short"]?.GetValue<string>() ?? "";
 		if (activeShortAns == "")
 		{
-			IncorrectAnswersLabel.Text += $"Q #{activeCardID} has no quiz answer.";
+			IncorrectAnswersLabel.Text += $"Q #{activeCardID+1} has no quiz answer.";
 			activeTime = 0;
 		}
 		else
 		{
 			cardAttempts = 0;
+			answerableCount++; //card has possible answer, add for calculating max final score
 			//init timer
+			ProgressWidth = this.Width - 150; //-150 for margin dimensions
+			if (TimerBar.Width > 0)
+			{
+				LiveScoreBorder.TranslationX = TimerBar.Width;
+			}
+			else 
+				LiveScoreBorder.TranslationX = ProgressWidth;
+				//alternative method to identify end of progress bar for placement
+
 			try {
 				ProgressTimer(cardTime, 3000, timerCancellationSource.Token);
 			} catch(OperationCanceledException){}
@@ -216,9 +299,7 @@ public partial class QuizPage : ContentPage
 		if (userShortAns.ToLower() == activeShortAns.ToLower())
 		{
 			//answer was correct, print message to field
-			IncorrectAnswersLabel.Text += $"\nQ #{activeCardID} Correct: {activeShortAns}";
-
-			cardAttempts = 0;
+			IncorrectAnswersLabel.Text += $"\nQ #{activeCardID+1} Correct: {activeShortAns}";
 
 			//award score out of total time
 			timerCancellationSource?.Cancel();
@@ -240,16 +321,14 @@ public partial class QuizPage : ContentPage
 		else
 		{
 			//answer was incorrect
-			IncorrectAnswersLabel.Text += $"\nIncorrect: {userShortAns}";
+			if(printIncorrects)
+				IncorrectAnswersLabel.Text += $"\nIncorrect: {userShortAns}";
 
 			//inc failed attempts for card
 			cardAttempts++;
 		}
 
 		AnswerInput.Text = "";
-		
-		await Task.Delay(50);
-		await messageFeed.ScrollToAsync(0, IncorrectAnswersLabel.Height, animated: false);
 
 		if (cardAttempts >= activeAttempts)
 		{
@@ -259,13 +338,16 @@ public partial class QuizPage : ContentPage
 			showingFront = false;
 			AnswerInput.IsEnabled = false;
 		}
+		
+		await Task.Delay(50);
+		await messageFeed.ScrollToAsync(0, IncorrectAnswersLabel.Height, animated: false);
 	}
 
 	private async void PassEntry(object sender, EventArgs e)
 	{
 		if (!showingFront) return;
 
-		IncorrectAnswersLabel.Text += $"\nQ #{activeCardID} Passed.";
+		IncorrectAnswersLabel.Text += $"\nQ #{activeCardID+1} Passed.";
 
 		cardAttempts = 0;
 
@@ -287,7 +369,7 @@ public partial class QuizPage : ContentPage
 
 	private async void questionTimeOut()
 	{
-		IncorrectAnswersLabel.Text += $"\nQ #{activeCardID} Timed out.";
+		IncorrectAnswersLabel.Text += $"\nQ #{activeCardID+1} Timed out.";
 
 		cardAttempts = 0;
 
@@ -308,8 +390,41 @@ public partial class QuizPage : ContentPage
 
 	private async void BtnNextCard(object sender, EventArgs e)
 	{
+		if (activeCardID == cardDataset.Count - 1)
+		{
+			string blurb = "Another one down!"; //default generic for low scores or miscalculations
+			if (userScore > (answerableCount * 1000f * 0.85f)) //user scored 85% or higher
+			{
+				blurb = "Fantastic Work!";
+			}
+			else if (userScore > (answerableCount * 1000f * 0.7f)) //user scored 70% - 85%
+			{
+				blurb = "Keep up the good work!";
+			}
+			else if (userScore > (answerableCount * 1000f * 0.55f)) //user scored 55% - 70%
+			{
+				blurb = "Getting somewhere!";
+			}
+			else if (userScore > (answerableCount * 1000f * 0.30f)) //user scored 30% - 55%
+			{
+				blurb = "It's progress, but keep trying!";
+			}
+
+			//end of game reached, display score and prompt to try again
+			bool reattempt = await DisplayAlert($"Final Score: {userScore} / {(answerableCount * 1000)}", $"{blurb}\n\nWould you like to take this quiz again?", "Try Again", "Home Page");
+
+			if (reattempt)
+			{
+				App.Current.Windows[0].Page = new QuizPage();
+			}
+			else
+			{
+				App.Current.Windows[0].Page = new MainPage();
+			}
+		}
+
+
 		FlipNext(cardBack, cardFront, (animCards ? 550 : 0), activeCardID);
-		
 	}
 
 	private void ClearHalfTime()
@@ -448,13 +563,20 @@ public partial class QuizPage : ContentPage
 
 	private async Task ProgressTimer(int t, int millisDelay, CancellationToken ct)
 	{
-
 		activeTime = t;
 
 		TimerBar.Progress = 1f;
 		LiveScoreLabel.Text = "1000";
-		LiveScoreBorder.TranslationX = TimerBar.Width;
+		if (TimerBar.Width > 0)
+		{
+			LiveScoreBorder.TranslationX = TimerBar.Width;
+		}
+		else 
+			LiveScoreBorder.TranslationX = ProgressWidth;
+			//alternative method to identify end of progress bar for placement
 
+		hintLabel.Text = "half-time hint: ";
+		hintGenerated = false;
 
 		await Task.Delay(millisDelay);
 
@@ -467,6 +589,7 @@ public partial class QuizPage : ContentPage
 			float ratio = ((float) activeTime / (float) cardTime);
 
 			if (ratio <= 0) ratio = 0f;
+			if (ratio <= 0.5f && ratio >= 0.45f) GenerateHint(activeShortAns);
 
 			int remaining = (int) (ratio * 1000f);
 			TimerBar.Progress = ratio;
@@ -477,5 +600,18 @@ public partial class QuizPage : ContentPage
 
 		//time is up, no more points
 		questionTimeOut();
+	}
+
+	private async void GenerateHint(string ans)
+	{
+		if (ans == "" || hintGenerated) return;
+
+		hintGenerated = true;
+
+		hintLabel.Text = "half-time hint: ";
+		for (int c = 0; c < ans.Length; c++)
+		{
+			hintLabel.Text += (ans[c] == ' ') ? ' ' : '*';
+		}
 	}
 }
