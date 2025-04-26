@@ -1,6 +1,7 @@
 using System.Collections.ObjectModel;
 using System.Security.AccessControl;
 using SemesterProject.Models;
+using System.Diagnostics;
 
 namespace SemesterProject.Controllers
 {
@@ -23,7 +24,7 @@ namespace SemesterProject.Controllers
             }
         }
 
-        public int SetID {get {return FlashSetModel._setID;} set{FlashSetModel._setID = value;}}
+        public int SetID {get {return FlashSetModel._setID;} set{FlashSetModel._setID = value; OnPropertyChanged(nameof(SetID));}}
 
         public string SetName
         {
@@ -39,6 +40,7 @@ namespace SemesterProject.Controllers
             }
             set{
                 FlashSetModel.set_auth = value;
+                OnPropertyChanged(nameof(SetAuth));
             }
         }
 
@@ -49,6 +51,7 @@ namespace SemesterProject.Controllers
             }
             set{
                 FlashSetModel.set_date = value;
+                OnPropertyChanged(nameof(SetDate));
             }
         }
 
@@ -79,6 +82,25 @@ namespace SemesterProject.Controllers
             return false;
         }
 
+        public bool RemoveSetID(int _id)
+        {
+            int targetID = -1;
+            for (int i = 0; i < FlashCardSets.Count; i++)
+            {
+                if (FlashCardSets[i].SetID == _id)
+                {
+                    targetID = i;
+                }
+            }
+
+            if (targetID == -1) return false;
+
+            FlashCardSets.RemoveAt(targetID);
+            Debug.WriteLine("URGENT reindex");
+            ReindexSets();
+            return true;
+        }
+
         public void AddNewFlashCardSet(string name, string edited, string author)
         {
             var flashcardset = new Models.FlashSetModel
@@ -106,6 +128,42 @@ namespace SemesterProject.Controllers
             FlashCardSets[FlashCardSets.Count - 1].SetDate = date;
         }
 
+        public void DisplaySet(string name, string auth, string date, int id)
+        {
+            var flashcardset = new Models.FlashSetModel
+            {
+                set_name = name,
+                _setID = id
+            };
+
+            FlashCardSets.Add(new FlashSetConverter(flashcardset));
+
+            FlashCardSets[FlashCardSets.Count - 1].SetAuth = auth;
+            FlashCardSets[FlashCardSets.Count - 1].SetDate = date;
+        }
+
+        public FlashSetConverter GetByID(int id)
+        {
+            var flashcardset = new Models.FlashSetModel
+            {
+                set_name = "err",
+                _setID = -1
+            };
+
+            int targetID = -1;
+            for (int i = 0; i < FlashCardSets.Count; i++)
+            {
+                if (FlashCardSets[i].SetID == id)
+                {
+                    targetID = i;
+                }
+            }
+
+            if (targetID == -1) return new FlashSetConverter(flashcardset);
+
+            return FlashCardSets[targetID];
+        }
+
         public void ReindexSets()
         {
             //begin from 1, and step index nums back by 1, this accounts for ever present guest profile
@@ -120,6 +178,11 @@ namespace SemesterProject.Controllers
             FlashCardSets = new ObservableCollection<FlashSetConverter>();
 
             view.ItemsSource = FlashCardSets;
+        }
+
+        public void Clear()
+        {
+            FlashCardSets.Clear();
         }
     }
 }

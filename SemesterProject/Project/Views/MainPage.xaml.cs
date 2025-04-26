@@ -1,5 +1,6 @@
 ﻿using System.Text.Json.Nodes;
-using SemesterProject.Utilities;
+using System.Linq;
+using System.Diagnostics;
 
 namespace SemesterProject;
 
@@ -8,6 +9,7 @@ public partial class MainPage : ContentPage
 	private Controllers.FlashSetController flashsetscontroller;
 
 	private JsonArray setDataset = new JsonArray();
+	private List<setData> sortableDataset;
 
 	private float highlightTint = 0.05f;
 	private float tintStrength = 0.7f; 
@@ -15,7 +17,6 @@ public partial class MainPage : ContentPage
 	public MainPage()
 	{
 		InitializeComponent();
-        ApplyUserPreferences();
         MauiProgram.updateTheme(MauiProgram.activeProfile);
 
 		MenuProfileNameLbl.Text = MauiProgram.activeProfile["name"]?.GetValue<string>() ?? "Author N.";
@@ -28,31 +29,22 @@ public partial class MainPage : ContentPage
 
 		flashsetscontroller = new(CollFlashCardSets);
 
-		//profiles array length > 0?
-		if (setDataset.Count > 0)
-		{
-			for (int p = 0; p < setDataset.Count; p++)
-			{
-				string name = "";
-				string author = "";
-				string date = "";
-
-				JsonObject tmpSet = new JsonObject();
-				try {
-					tmpSet = setDataset[p].AsObject();
-
-					name = tmpSet["set-name"]?.ToString() ?? "";
-					author = tmpSet["author-name"]?.ToString() ?? "";
-					date = tmpSet["last-edited"]?.ToString() ?? "";
-
-					flashsetscontroller.DisplaySet(name, author, date);
-				} catch {}
-			}
-		}
-
 		MauiProgram.prevPage = MauiProgram.PageIndex.HOME;
 
 		MauiProgram.stackID = -1;
+
+		sortableDataset = setDataset
+			.Select(item => new setData(
+				item?["id"]?.GetValue<int>() ?? -1,
+				item?["author-name"]?.GetValue<string>() ?? "",
+				item?["set-name"]?.GetValue<string>() ?? "",
+				item?["last-edited"]?.GetValue<string>() ?? ""
+			))
+			.ToList();
+
+		PopulateDisplay(sortableDataset);
+		SearchTypePicker.SelectedIndex = 0;
+		SortTypePicker.SelectedIndex = 0;
 	}
 
 	//stack management functions
@@ -66,11 +58,22 @@ public partial class MainPage : ContentPage
 			string authName = MauiProgram.activeProfile["name"]?.ToString() ?? "No Author";
 			string editDate = DateTime.Today.ToString("MM/dd/yyyy");	
 
-			flashsetscontroller.AddNewFlashCardSet(name, editDate, authName);
+			//flashsetscontroller.AddNewFlashCardSet(name, editDate, authName);
 
 			//call JSON profile instantiator, give name & id, rest are defaults
 			JsonObject tmpSet = MauiProgram.InstantiateStack(name, tmpID, authName, editDate);
 			setDataset.Add(tmpSet);
+
+			//add to sortable dataset as well
+			sortableDataset.Add(new setData(
+				tmpSet?["id"]?.GetValue<int>() ?? -1,
+				tmpSet?["author-name"]?.GetValue<string>() ?? "",
+				tmpSet?["set-name"]?.GetValue<string>() ?? "",
+				tmpSet?["last-edited"]?.GetValue<string>() ?? ""
+			));
+
+			//call sort method to regenerate set
+			SortDataset();
 
 			//save modified JSON array to file
 			MauiProgram.SaveJSONArrayToFile(setDataset, (MauiProgram.dirPath + MauiProgram.setFile));
@@ -78,6 +81,58 @@ public partial class MainPage : ContentPage
 		else if (name != null)
 		{
 			DisplayAlert("Set not added", "You must provide a name for the set.", "OK");
+		}
+	}
+
+	private async void BtnRemoveSet(object sender, EventArgs e)
+    {
+		ImageButton btn = sender as ImageButton;
+
+		bool answer = await DisplayAlert("Remove Profile","Are you sure you want to remove this profile?","Yes","No");
+
+		if (answer == true)
+		{
+			//remove from sortable dataset
+			setData toRemove = sortableDataset[MauiProgram.stackID];
+			sortableDataset.Remove(toRemove);
+
+			//remove from collection view
+			var result = flashsetscontroller.RemoveSetID(MauiProgram.stackID);
+
+			//remove from stored dataset
+			setDataset.RemoveAt(MauiProgram.stackID);
+
+			DisplayAlert("Removed", "Profile Sucessfully Removed!", "OK"); 
+
+			ReindexJSONArray();
+
+			ReindexSortable();
+
+			//save modified JSON array to file
+			MauiProgram.SaveJSONArrayToFile(setDataset, (MauiProgram.dirPath + MauiProgram.setFile));
+
+			MauiProgram.stackID = -1;
+
+			if (MauiProgram.stackID == -1)
+			{
+				updatePageBtnStates(false);
+			}
+		}
+    }
+
+	private void ReindexJSONArray()
+	{
+		for (int s = 0; s < setDataset.Count; s++)
+		{
+			setDataset[s].AsObject()["id"] = s;
+		}
+	}
+
+	private void ReindexSortable()
+	{
+		for (int s = 0; s < setDataset.Count; s++)
+		{
+			sortableDataset[s].SetID = s;
 		}
 	}
 
@@ -187,7 +242,15 @@ public partial class MainPage : ContentPage
 
 		int id = (int) btn.CommandParameter; 
 
-		flashsetscontroller.FlashCardSets[id].IsHighlighted = true;
+		flashsetscontroller.GetByID(id).IsHighlighted = true;
+	}
+
+	private void highlightSetID (int id)
+	{
+		if (id >= 0 && id < flashsetscontroller.FlashCardSets.Count)
+		{
+			flashsetscontroller.GetByID(id).IsHighlighted = true;
+		}
 	}
 
 	private void updatePageBtnStates(bool state)
@@ -197,12 +260,14 @@ public partial class MainPage : ContentPage
 			EditBtn.SetDynamicResource(VisualElement.BackgroundColorProperty, "Accent");
 			QuizBtn.SetDynamicResource(VisualElement.BackgroundColorProperty, "Accent");
 			ReviewBtn.SetDynamicResource(VisualElement.BackgroundColorProperty, "Accent");
+			RemoveSetBtn.SetDynamicResource(VisualElement.BackgroundColorProperty, "Accent");
 		}
 		else
 		{
 			EditBtn.SetDynamicResource(VisualElement.BackgroundColorProperty, "Primary");
 			QuizBtn.SetDynamicResource(VisualElement.BackgroundColorProperty, "Primary");
 			ReviewBtn.SetDynamicResource(VisualElement.BackgroundColorProperty, "Primary");
+			RemoveSetBtn.SetDynamicResource(VisualElement.BackgroundColorProperty, "Primary");
 		}
 	}
 
@@ -222,26 +287,173 @@ public partial class MainPage : ContentPage
 		btn.Background = btnBG;
 	}
 
-    private void ApplyUserPreferences()
-    {
-        try
-        {
-            // Apply sort order
-            string sortOrder = NotePreferencesManager.GetSortOrder();
-            //Console.WriteLine($"Applying Sort Order: {sortOrder}");
-        }
-        catch (Exception ex)
-        {
-            //Console.WriteLine($"Error retrieving sort order: {ex.Message}");
-        }
+	private void SortTrigger(object sender, EventArgs e)
+	{
+		SortDataset();
+	}
 
-        // Apply search filter
-        string searchFilter = NotePreferencesManager.GetSearchFilter();
-        //Console.WriteLine($"Applying Search Filter: {searchFilter}");
+	private void SortDataset()
+	{
+		string searchTerm = searchEntry.Text?.ToLower() ?? "";
 
-        // Apply theme preference
-        string themePreference = NotePreferencesManager.GetThemePreference();
-        //Console.WriteLine($"Applying Theme: {themePreference}");
-    }
+		int searchType = SearchTypePicker.SelectedIndex;
+		int sortType = SortTypePicker.SelectedIndex;
+
+		bool dateFiltering = DateFiltering.IsChecked;
+		string start = StartDate.Date.ToString("yyyy-MM-dd");
+		string end = EndDate.Date.ToString("yyyy-MM-dd");
+
+		List<setData> sortedList;
+
+		//filter list to reduce sort cost
+		if (searchTerm != "")
+		{
+			switch (searchType)
+			{
+				default:
+				case 0: //searching by title
+					sortedList = sortableDataset
+						.Where(s => s.SetName.ToLower().Contains(searchTerm))
+						.ToList();
+					break;
+				case 1: //searching by author
+					sortedList = sortableDataset
+						.Where(s => s.SetAuth.ToLower().Contains(searchTerm))
+						.ToList();
+					break;
+			}
+		}
+		else //no search term provided, cannot filter by search, copy whole list
+			sortedList = new List<setData>(sortableDataset);
+
+		//filter by date if applicable
+		if (dateFiltering)
+		{
+			sortedList = sortedList
+				.Where(s => 
+					(string.Compare(s.SetFormattedDate, start) >= 0) &&
+					(string.Compare(s.SetFormattedDate, end) <= 0)
+				)
+				.ToList();
+		}
+
+		//determine sort parameters and sort filtered list
+		switch(sortType)
+		{
+			//default and sort by set name
+			default:
+			case 0:
+				sortedList.Sort((a, b) => a.SetName.CompareTo(b.SetName));
+				break;
+			case 1:
+				sortedList.Sort((a, b) => b.SetName.CompareTo(a.SetName));
+				break;
+
+			//sort by set author
+			case 2:
+				sortedList.Sort((a, b) => a.SetAuth.CompareTo(b.SetAuth));
+				break;
+			case 3:
+				sortedList.Sort((a, b) => b.SetAuth.CompareTo(a.SetAuth));
+				break;
+
+			//sort by set date
+			case 4:
+				sortedList.Sort((a, b) => a.SetFormattedDate.CompareTo(b.SetFormattedDate));
+				break;
+			case 5:
+				sortedList.Sort((a, b) => b.SetFormattedDate.CompareTo(a.SetFormattedDate));
+				break;
+		}
+
+		//check to see if highlighted is still available
+		if (MauiProgram.stackID >= 0)
+		{
+			bool present = false;
+			for (int s = 0; s < sortedList.Count; s++)
+			{
+				if (sortedList[s].SetID == MauiProgram.stackID)
+				{
+					present = true;
+					break;
+				}
+			}
+
+			if (!present)
+			{
+				MauiProgram.stackID = -1;
+				updatePageBtnStates(false);
+			}
+		}
+
+		RepopulateDisplay(sortedList);
+	}
+
+	private void PopulateDisplay(List<setData> displaySets)
+	{
+		if (displaySets.Count > 0)
+		{
+			for (int p = 0; p < displaySets.Count; p++)
+			{
+				int id = 0;
+				string name = "";
+				string author = "";
+				string date = "";
+
+				setData tmpSet;
+				try {
+					tmpSet = displaySets[p];
+
+					name = tmpSet.SetName;
+					author = tmpSet.SetAuth;
+					date = tmpSet.SetDate;
+					id = tmpSet.SetID;
+
+					flashsetscontroller.DisplaySet(name, author, date, id);
+				} catch {}
+			}
+		}
+	}
+
+	private void RepopulateDisplay(List<setData> sortedSets)
+	{
+		//clear current population
+		flashsetscontroller.Clear();
+
+		//populate with new data
+		PopulateDisplay(sortedSets);
+
+		//rehighlight active set
+		highlightSetID(MauiProgram.stackID);
+	}
 }
 
+public class setData
+{
+	public int SetID {get;set;} = 0;
+	public string SetAuth {get;set;} = "";
+	public string SetName {get;set;} = "";
+	public string SetDate {get;set;} = "";
+	public string SetFormattedDate {get;set;} = "";
+
+	public setData(int id, string a, string n, string d)
+	{
+		SetID = id;
+		SetAuth = a;
+		SetName = n;
+		SetDate = d;
+		SetFormattedDate = reformatJsonDate(d);
+	}
+
+	public string reformatJsonDate(string old)
+	{
+		string tmpDate = "";
+
+		//rearranges from MM-dd-yyyy to yyyy-MM-dd for alphabetic sorting properties
+		tmpDate += old.Substring(6) + "-";
+		tmpDate += old.Substring(0, 2) + "-";
+		tmpDate += old.Substring(3, 2);
+
+		return tmpDate;
+	}
+}

@@ -272,7 +272,7 @@ public static class MauiProgram
 		return InstantiateProfile("NONE", -1);
 	}
   
-  public static JsonObject InstantiateStack()
+  	public static JsonObject InstantiateStack()
 	{
 		return InstantiateStack("NONE", -1);
 	}
@@ -287,6 +287,12 @@ public static class MauiProgram
 		fromDisk[activeProfile["id"].GetValue<int>()] = fromLocal;
 
 		SaveJSONArrayToFile(fromDisk, dirPath + prefFile);
+	}
+
+	public static async void Bail(int tmillis)
+	{
+		await Task.Delay(tmillis);
+		App.Current.Windows[0].Page = new MainPage();
 	}
 
 	public static MauiApp CreateMauiApp()

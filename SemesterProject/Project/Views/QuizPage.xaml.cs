@@ -80,11 +80,11 @@ public partial class QuizPage : ContentPage
             cardDataset = MauiProgram.LoadJSONArrayFromFile(MauiProgram.dirPath + MauiProgram.stackFolder + stackFile);
 
 			if (cardDataset.Count <= 0)
-				App.Current.Windows[0].Page = new MainPage(); //file has no contents, cannot continue
+				MauiProgram.Bail(150); //file has no contents, cannot continue
         }
 		else
 		{
-			App.Current.Windows[0].Page = new MainPage(); //file does not exist, cannot continue
+			MauiProgram.Bail(150); //file does not exist, cannot continue
 		}
 
 		bool shuffle = (MauiProgram.activeProfile["preferences"]?.AsObject()["q-shuffle"]?.GetValue<int>() ?? 1) == 1 ? true : false;
@@ -290,6 +290,11 @@ public partial class QuizPage : ContentPage
 			//dehighlight submit
 			updateSubmitState(false);
 		}
+	}
+
+	private void TriggerSubmit(object sender, EventArgs e)
+	{
+		SubmitEntry(sender, e);
 	}
 
 	private async void SubmitEntry(object sender, EventArgs e)
