@@ -1,5 +1,6 @@
 using System.Text.Json.Nodes;
 using SemesterProject.Controllers;
+using System.Diagnostics;
 
 namespace SemesterProject;
 
@@ -44,7 +45,8 @@ public partial class ReviewPage : ContentPage
         }
 		else
 		{
-			App.Current.Windows[0].Page = new MainPage(); //file does not exist, cannot continue
+			MauiProgram.Bail(150);
+			 //file does not exist, cannot continue
 		}
 
         flashcardscontroller = new(CollFlashCards);
@@ -73,7 +75,7 @@ public partial class ReviewPage : ContentPage
 		else
 		{
 			//nothing to display? no set to review.. returning to main
-			App.Current.Windows[0].Page = new MainPage();
+			MauiProgram.Bail(150);
 		}
 
 		SetHeader();

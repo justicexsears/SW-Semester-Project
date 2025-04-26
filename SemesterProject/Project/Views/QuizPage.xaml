@@ -147,7 +147,7 @@
                    
                     <Entry Grid.Row="3" x:Name="AnswerInput" Placeholder="Enter Answers here..." PlaceholderColor="{DynamicResource HeaderText}" WidthRequest="300"
                         TextColor="{DynamicResource MainText}" BackgroundColor="Transparent" FontSize="16" HeightRequest="40" HorizontalOptions="Center" IsEnabled="True"
-                        Unfocused="EntryCheckIn" TextChanged="EntryCheckIn"/>
+                        Unfocused="EntryCheckIn" TextChanged="EntryCheckIn" Completed="TriggerSubmit"/>
                 </Grid>
             </Border>
 
