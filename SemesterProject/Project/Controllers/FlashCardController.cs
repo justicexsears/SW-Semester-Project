@@ -15,73 +15,94 @@ namespace SemesterProject.Controllers
             FlashCardModel = data;
         }
 
-        public int FlashCardID {get {return FlashCardModel.SetID;}}
+        public bool IsHighlighted { 
+            get {return FlashCardModel._isHighlighted;} 
+            set {
+                FlashCardModel._isHighlighted = value;
+                OnPropertyChanged(nameof(IsHighlighted));
+            }
+        }
 
-        public string SetName
+        public int CardID {
+            get {return FlashCardModel._cardID;} 
+            set{
+                FlashCardModel._cardID = value;
+                OnPropertyChanged(nameof(CardID));
+            }
+        }
+
+        public string CardQ
         {
             get{
-                return $"{FlashCardModel.set_name}";
+                return $"{FlashCardModel.card_q}";
+            }
+            set{
+                FlashCardModel.card_q = value;
+                OnPropertyChanged(nameof(CardQ));
             }
         }
 
         private void NotifyView()
         {
-            OnPropertyChanged(nameof(FlashCardID));
-            OnPropertyChanged(nameof(SetName));
+            OnPropertyChanged(nameof(CardID));
+            OnPropertyChanged(nameof(CardQ));
+            OnPropertyChanged(nameof(IsHighlighted));
         }
   
     }
 
     public class FlashCardController
     {
-        public ObservableCollection<FlashCardConverter> FlashCardSets {get; set;}
+        public ObservableCollection<FlashCardConverter> FlashCards {get; set;}
 
-        public bool RemoveSet(string _name)
+        public bool RemoveCard(int _ind)
         {
-            for(int i=0; i < FlashCardSets.Count; i++)
+            if (FlashCards.Count > _ind)
             {
-                if(FlashCardSets[i].SetName == _name)
-                {
-                    FlashCardSets.RemoveAt(i);
-                    return true;
-                }
+                FlashCards.RemoveAt(_ind);
+                ReindexCards();
+                return true;
             }
+
             return false;
         }
 
-        public void AddNewFlashCardSet(string name)
+        public void AddNewFlashCard()
         {
-            var flashcardset = new Models.FlashCardModel
+            var flashcard = new Models.FlashCardModel
             {
-                set_name = name
+                _cardID = FlashCards.Count,
+                card_q = ""
             };
 
-            FlashCardSets.Add(new FlashCardConverter(flashcardset));
+            FlashCards.Add(new FlashCardConverter(flashcard));
+        }
+
+        public void DisplayCard(string q)
+        {
+            var flashcard = new Models.FlashCardModel
+            {
+                _cardID = FlashCards.Count,
+                card_q = q
+            };
+
+            FlashCards.Add(new FlashCardConverter(flashcard));
+        }
+
+        public void ReindexCards()
+        {
+            //begin from 1, and step index nums back by 1, this accounts for ever present guest profile
+            for(int i = 0; i < FlashCards.Count; i++)
+            {
+                FlashCards[i].CardID = (i);
+            }
         }
 
         public FlashCardController(CollectionView view)
         {
-            FlashCardSets = new ObservableCollection<FlashCardConverter>();
+            FlashCards = new ObservableCollection<FlashCardConverter>();
 
-            var flashcardset = new Models.FlashCardModel
-            {
-                set_name = "Example Set1"
-            };
-            FlashCardSets.Add(new FlashCardConverter(flashcardset));
-
-            flashcardset = new Models.FlashCardModel
-            {
-                set_name = "Example Set2"
-            };
-            FlashCardSets.Add(new FlashCardConverter(flashcardset));
-
-            flashcardset = new Models.FlashCardModel
-            {
-                set_name = "Example Set3"
-            };
-            FlashCardSets.Add(new FlashCardConverter(flashcardset));
-
-            view.ItemsSource = FlashCardSets;
+            view.ItemsSource = FlashCards;
         }
     }
 }

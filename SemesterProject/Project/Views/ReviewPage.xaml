@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SemesterProject.ReviewPage"
+             BackgroundColor="{DynamicResource Secondary}">
+
+    <ContentPage.Resources>
+        <Style TargetType="Label" x:Key="Label Font">
+            <Setter Property="FontFamily" Value="Roboto"/>
+        </Style>
+    </ContentPage.Resources>
+
+    <Grid RowDefinitions="80,*" ColumnDefinitions="400,5,*">
+
+        <!--BEGIN MASTER NAVBAR-->
+        <FlexLayout BackgroundColor="{DynamicResource Primary}" Grid.ColumnSpan="3"  JustifyContent="SpaceBetween" Padding="10, 0">
+            <HorizontalStackLayout>
+                <ImageButton Source="left_arrow.png" WidthRequest="75" HorizontalOptions="Start"  BackgroundColor="Transparent" Clicked="BtnBack" Scale="0.75"/>
+                <Label Style="{StaticResource Label Font}" Text="Reviewing" VerticalOptions="Center" Padding="20" FontSize="30" TextColor="{DynamicResource HeaderText}"/>
+            </HorizontalStackLayout>
+            <HorizontalStackLayout>
+                <ImageButton Source="hamburger_icon.png" WidthRequest="75" HorizontalOptions="Start"  BackgroundColor="Transparent" Clicked="BtnMenuPopout" Scale="0.5"/>
+                <ImageButton Source="logo.png" WidthRequest="75" Background="Transparent" HorizontalOptions="End" Clicked="BtnHome" Scale="0.75"/>
+            </HorizontalStackLayout>
+        </FlexLayout>
+
+        <Grid Grid.Row="0" Grid.RowSpan="2" Grid.Column="2" WidthRequest="350" HeightRequest="200" RowDefinitions="1*, 1*, 2*" ColumnDefinitions="3*, 2*" 
+            VerticalOptions="Start" HorizontalOptions="End" ZIndex="3" IsVisible="False" x:Name="MenuPopout" Margin="0, 0, -50, 0">
+            <Border Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="2" Stroke="Transparent" StrokeShape="RoundRectangle 20" BackgroundColor="{DynamicResource Accent}"
+                />
+
+            <ImageButton Source="ui_exitdark.png" Grid.Row="0" Grid.Column="0" HorizontalOptions="Start" WidthRequest="35" BackgroundColor="Transparent" Clicked="BtnMenuPopoutClose"
+                Aspect="AspectFit" Scale="0.5"/>
+
+            <Label Text="Profile N." Grid.Row="1" Grid.Column="0" HorizontalOptions="Start" VerticalOptions="Center" TextColor="{DynamicResource Primary}" FontSize="24"
+                FontAttributes="Bold" Margin="30, 0, 15, 0" x:Name="MenuProfileNameLbl"/>
+            
+            <Image Source="pfpdark.png" Grid.Row="0" Grid.RowSpan="3" Grid.Column="1" Aspect="AspectFit" HorizontalOptions="Start" VerticalOptions="Center"
+                Margin="15, 20, 0, 80" HeightRequest="50"/>
+
+            <VerticalStackLayout Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" VerticalOptions="Start" HorizontalOptions="End" Margin="0, 0, 50, 0" BackgroundColor="Transparent"
+                WidthRequest="200">
+                <Button Text="Settings" BackgroundColor="Transparent" FontSize="18" HeightRequest="25" Margin="0" FontAttributes="Bold"
+                    Clicked="BtnSettings"/>
+                <Button Text="Sign Out" BackgroundColor="Transparent" FontSize="18" HeightRequest="25" Margin="0" FontAttributes="Bold"
+                    Clicked="BtnSignOut"/>
+            </VerticalStackLayout>
+        </Grid>
+        <!--END MASTER NAVBAR-->
+
+
+        <CollectionView x:Name="CollFlashCards" Grid.Column="0" Grid.Row="1" Margin="50">
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout Orientation="Vertical" Span="1"/>
+            </CollectionView.ItemsLayout>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <HorizontalStackLayout HorizontalOptions="Center" Spacing="10" Margin="10, 10" Padding="7">
+                        <Border BackgroundColor="{DynamicResource CardBackground}" HeightRequest="30" WidthRequest="30" StrokeShape="RoundRectangle 4">
+                            <Label  Text="{Binding CardID}" FontSize="14" TextColor="{DynamicResource CardText}" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="Center"/>
+                        </Border>
+
+                        <Border Margin="10, 15, 10, 5" Padding="5" BackgroundColor="Transparent" StrokeShape="RoundRectangle 20" 
+                            HeightRequest="150" WidthRequest="200" Stroke="{Binding IsHighlighted, Converter={StaticResource BoolToColorConverter}}" StrokeThickness="3">
+                            <Border BackgroundColor="{DynamicResource CardBackground}" StrokeShape="RoundRectangle 13" Stroke="Transparent">
+                                <Grid RowDefinitions="*" ColumnDefinitions="*">
+                                    <Label Text="{Binding CardQ}" TextColor="{DynamicResource CardText}" VerticalOptions="Center" HorizontalOptions="Center" Margin="10"/>  
+
+                                    <Button Background="Transparent" Clicked="BtnSelectCard" Pressed="BtnPressed" Released="BtnReleased" CommandParameter="{Binding CardID}"/>
+                                </Grid>
+                            </Border>
+                        </Border>
+
+                        
+                    </HorizontalStackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <!-- Center Separator-->
+        <VerticalStackLayout Grid.Row="1" Grid.Column="1" VerticalOptions="Center"> 
+            <Border BackgroundColor="{DynamicResource Accent}" HeightRequest="500"/>
+        </VerticalStackLayout>
+
+        
+        
+        <VerticalStackLayout Grid.Column="2" Grid.Row="1" Margin="50">
+            <HorizontalStackLayout>
+                <Label x:Name="AuthorLabel" Style="{StaticResource Label Font}" Text="Justice S." Margin="10" WidthRequest="175" FontSize="20" TextColor="{DynamicResource HeaderText}" HorizontalOptions="Start" FontAttributes="Bold"/>
+                <Label x:Name="DateLabel" Style="{StaticResource Label Font}" Text="03/12/2025" Margin="10" WidthRequest="175" FontSize="20" TextColor="{DynamicResource HeaderText}" FontAttributes="Bold"/>
+            </HorizontalStackLayout>
+
+            <Label x:Name="NameLabel" Style="{StaticResource Label Font}" Text="Mineral Sciences Chapter 1" FontSize="38" FontAttributes="Bold" TextColor="{DynamicResource HeaderText}" Margin="5"/>
+
+            <Grid RowDefinitions="*" ColumnDefinitions="*" Margin="5">
+                <Border BackgroundColor="{DynamicResource CardBackground}"  HeightRequest="340" WidthRequest="595" StrokeShape="RoundRectangle 20" Margin="10"
+                    Grid.Row="0" Grid.Column="0" x:Name="cardFront" IsVisible="True">
+                    <VerticalStackLayout VerticalOptions="Center">
+                        
+                        <Grid RowDefinitions="*" ColumnDefinitions="*">
+                            <Label Style="{StaticResource Label Font}" Text="" x:Name="MainCardLabel"
+                                Grid.Row="0" Grid.Column="0" TextColor="{DynamicResource CardText}" FontSize="30"
+                                Padding="50,0" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+
+                            <Button Grid.Row="0" Grid.Column="0" Background="Transparent"
+                                    Clicked="BtnFlipCard" Pressed="BtnPressed" Released="BtnReleased" HeightRequest="340"/>
+                        </Grid>    
+                        
+                    </VerticalStackLayout>
+                </Border>
+
+                <Border BackgroundColor="{DynamicResource CardBackground}"  HeightRequest="340" WidthRequest="595" StrokeShape="RoundRectangle 20" Margin="10"
+                    Grid.Row="0" Grid.Column="0" x:Name="cardBack" IsVisible="False">
+                    <VerticalStackLayout VerticalOptions="Center">
+                        
+                        <Grid RowDefinitions="1*, 4*" ColumnDefinitions="*">
+                            <Label Style="{StaticResource Label Font}" Text="" x:Name="CardAShort"
+                                Grid.Row="0" Grid.Column="0" Margin="25, 45, 5, 25"
+                                TextColor="{DynamicResource CardText}" FontSize="26"
+                                HorizontalTextAlignment="Center" VerticalTextAlignment="Start"/>
+
+                            <ScrollView Grid.Row="1" Grid.Column="0" HeightRequest="200" WidthRequest="540" BackgroundColor="Transparent"
+                                VerticalOptions="Start" HorizontalOptions="Center">
+                                <VerticalStackLayout>
+                                    <Label Style="{StaticResource Label Font}" Text="" x:Name="CardALong"
+                                        TextColor="{DynamicResource CardText}" FontSize="24"
+                                        HorizontalTextAlignment="Center" VerticalTextAlignment="Start"/>
+                                </VerticalStackLayout>
+                            </ScrollView>
+
+                            <Button Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Background="Transparent" HeightRequest="340"
+                                Clicked="BtnFlipCard" Pressed="BtnPressed" Released="BtnReleased"/>
+                        </Grid>    
+                        
+                    </VerticalStackLayout>
+                </Border>
+            </Grid>
+            <HorizontalStackLayout HorizontalOptions="Center" Margin="5">
+
+                <Label Style="{StaticResource Label Font}" 
+                   Text ="Click Card to Flip"
+                   HorizontalOptions="Center"
+                   FontSize="18"
+                   TextColor="{DynamicResource MainText}"
+                   FontAttributes="Bold"
+                   />
+                <ImageButton Source="left_arrow.png" WidthRequest="75" HorizontalOptions="Start"  BackgroundColor="Transparent"
+                    Clicked="BtnPrevCard"/>
+
+                <Border Margin="10" BackgroundColor="#2f2e2f" StrokeShape="RoundRectangle 12" WidthRequest="100" HeightRequest="40">
+                    <Entry Text="1" HorizontalOptions="Center" VerticalOptions="Center" FontSize="18" FontAttributes="Bold" WidthRequest="95"
+                        TextColor="{DynamicResource HeaderText}" Placeholder="" PlaceholderColor="{DynamicResource HeaderText}"
+                        Completed="EntryCardSelection" Unfocused="EntryCardSelection" x:Name="indexSelector" Visual="None" HorizontalTextAlignment="Center"/>
+                </Border>
+
+                <ImageButton Source="left_arrow.png" WidthRequest="75" HorizontalOptions="Start"  BackgroundColor="Transparent" ScaleX="-1"
+                    Clicked="BtnNextCard"/>
+            </HorizontalStackLayout>
+            
+
+            
+
+            
+        
+        </VerticalStackLayout>
+
+    </Grid>
+
+</ContentPage>

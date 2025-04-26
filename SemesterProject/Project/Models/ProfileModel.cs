@@ -8,18 +8,20 @@ namespace SemesterProject.Models
 {
     public class ProfileModel
     {
-        private static int _profile_counter = 0;
-
-        private int _id;
-
-        public int Id {get {return _id; } }
+        public int _id { get; set;} = 0;
     
         public string profile_name { get; set;} = "";
 
-    public ProfileModel()
-    {
-        _id = _profile_counter++;
-    }
+        public bool _isHighlighted = false;
+
+        public int profile_theme { get; set;} = 0;
+        public int profile_accent { get; set;} = 0;
+
+        public ProfileModel()
+        {
+            //_id = _profile_counter++;
+        }
+
 
     }
 

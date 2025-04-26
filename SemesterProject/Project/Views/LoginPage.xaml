@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SemesterProject.LoginPage"
+             xmlns:converters="clr-namespace:SemesterProject.Converters"
+             BackgroundColor ="#3f3c40">
+
+        <ContentPage.Resources>
+                <converters:BoolToColorConverter x:Key="BoolToColorConverter" />
+        </ContentPage.Resources>
+    
+        <VerticalStackLayout
+            Padding="0,100"
+            Spacing="25"
+            WidthRequest ="350">
+            <Image Source="logo.png" HeightRequest="75"/>
+            <Label Text ="Select a Profile" HorizontalOptions="Center" FontFamily="Miriam" FontSize="25"/>
+            <Border HeightRequest="320" 
+                    WidthRequest ="350"
+                    BackgroundColor="{DynamicResource Primary}"
+                    StrokeShape="RoundRectangle 15">
+                    <VerticalStackLayout>
+                        <CollectionView x:Name ="CollProfiles" Margin="0, 10, 0, 5" HeightRequest="235">
+
+                                <CollectionView.ItemsLayout>
+                                        <LinearItemsLayout Orientation="Vertical"/>
+                                </CollectionView.ItemsLayout>
+
+                                <CollectionView.ItemTemplate>
+                                        <DataTemplate>
+                                                <Border Margin="10, 10, 10, 5" Padding="5" BackgroundColor="Transparent" StrokeShape="RoundRectangle 12" 
+                                                        HeightRequest="65" WidthRequest="325" Stroke="{Binding IsHighlighted, Converter={StaticResource BoolToColorConverter}}" StrokeThickness="3">
+                                                        <Border BackgroundColor="{DynamicResource Tertiary}" StrokeShape="RoundRectangle 8">
+                                                                <Grid>
+                                                                        <Grid.RowDefinitions>
+                                                                                <RowDefinition Height="*" /> <!-- This takes up the entire vertical space -->
+                                                                        </Grid.RowDefinitions>
+
+                                                                        <Grid.ColumnDefinitions>
+                                                                                <ColumnDefinition Width="50" /> <!-- pfp column -->
+                                                                                <ColumnDefinition Width="*" /> <!-- text column -->
+                                                                                <ColumnDefinition Width="50" /> <!-- delete column -->
+                                                                        </Grid.ColumnDefinitions>
+
+                                                                        <!-- info underlay -->
+                                                                        <Border Grid.Row="0" Grid.Column="0" Margin="5" VerticalOptions="Center" HorizontalOptions="Center" StrokeShape="RoundRectangle 20"
+                                                                                BackgroundColor="{Binding AccentResource}" WidthRequest="37" HeightRequest="37" InputTransparent="True"/>
+
+                                                                        <Image Source ="pfpdark.png" Grid.Row="0" Grid.Column="0" VerticalOptions="Center" HorizontalOptions="Center"
+                                                                                Aspect="AspectFit" Background="Transparent" Margin="5" InputTransparent="True"/>
+
+                                                                        <Label Text="{Binding ProfileName}" Grid.Row="0" Grid.Column="1" Padding="10,5" VerticalOptions="Center" HorizontalOptions="Start"
+                                                                                TextColor="{DynamicResource White}" InputTransparent="True"/>
+
+                                                                        
+                                                                        <!-- overlying clickable btns -->
+                                                                        <Button Background="Transparent" WidthRequest="320" HeightRequest="60"
+                                                                                HorizontalOptions="Center" VerticalOptions="Center" CommandParameter="{Binding ProfileID}" Grid.Row="0" Grid.ColumnSpan="3"
+                                                                                Clicked="BtnSelectProfile" Pressed="BtnPressed" Released="BtnReleased"/>
+
+                                                                        <ImageButton Source="ui_delete_tinted.png" Background="Transparent" Aspect="AspectFit" Padding="15" CommandParameter="{Binding ProfileID}" Clicked="BtnRemoveProfile"
+                                                                                HorizontalOptions="Center" VerticalOptions="Center" Grid.Row="0" Grid.Column="2"/> 
+                                                                </Grid>
+                                                        </Border>
+                                                </Border>
+                                        </DataTemplate>
+                                </CollectionView.ItemTemplate>
+
+                        </CollectionView>   
+
+                        <Button Margin="10" HeightRequest="30" WidthRequest="200" Text="New Profile" BackgroundColor="{DynamicResource Accent}" FontAttributes="Bold"
+                                        x:Name="AddProfileBtn" Clicked="BtnAddProfile"/>
+                    </VerticalStackLayout>
+            </Border>
+            <HorizontalStackLayout HorizontalOptions="End">
+                <Button Margin="10,0,10,0" WidthRequest="80" Text="Sign In" BackgroundColor="{DynamicResource Accent}" FontAttributes="Bold"
+                        x:Name="SignInBtn" Clicked="BtnSignIn"/>
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+
+</ContentPage>
